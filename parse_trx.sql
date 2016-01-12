@@ -22,6 +22,8 @@
 -- #define LOG_SEQUENCE_64   12 /* series name, count */
 -- #define LOG_USER_TEXT     15 /* SQL string log'd by an user */
 
+-- see also: http://docs.openlinksw.com/virtuoso/rdfdatarepresentation.html
+
 create procedure parse_trx (in f any, in inpos int := 0)
 {
   declare grepmarker, h, op, indexOrSomething, g, s, p, o any;
