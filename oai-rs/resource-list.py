@@ -39,25 +39,24 @@ for filename in listdir(args.resource_dir):
 	timestamps.append(ts)
 	rl.add(Resource(args.resource_url + filename, lastmod=ts))
 
-# TODO: print to file at given location
+# TODO: print to file at args.resource_dir
 print rl.as_xml()
 
 timestamps.sort()
 
 # TODO: create capability list from ResourceList rl (see: https://github.com/resync/resync/blob/master/resync/test/test_capability_list.py)
 caps = CapabilityList()
-caps.add_capability( rl, "http://WHEREDOIPOINTTHISQUESTIONMARK/resource-list.xml")
+caps.add_capability( rl, args.resource_url + "/resource-list.xml")
 if len(timestamps) > 0:
 	caps.md['from'] = timestamps[0]
 
-# TODO: print to file at given location
-# print caps.as_xml()
+# TODO: print to file at args.resource_dir
+print caps.as_xml()
 
 # TODO: create source description (see: https://github.com/resync/resync/blob/master/resync/test/test_source_description.py)
 rsd = SourceDescription()
-rsd.describedby = "http://YETANOTHERURLIDONOTKNOWWHERETOPUT"
 rsd.md_at = None
-rsd.add_capability_list("http://WHEREDOIPOINTTHISQUESTIONMARK/capability-list.xml")
+rsd.add_capability_list(args.resource_url + "/capability-list.xml")
 
-# TODO: print to file at given location
-# print rsd.as_xml()
+# TODO: print to file at args.resource_dir + "/resourcesync"
+print rsd.as_xml()
