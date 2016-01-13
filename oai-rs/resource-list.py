@@ -28,4 +28,11 @@ for filename in listdir(args.resource_dir):
 	)
 	rl.add(Resource(args.resource_url + filename, lastmod=ts))
 
+# TODO: print to file at given location
 print rl.as_xml()
+
+
+# TODO: create capability list from ResourceList rl
+
+
+# TODO: create source description
