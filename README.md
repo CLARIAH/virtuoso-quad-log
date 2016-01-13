@@ -26,17 +26,6 @@ This initializes the container. You then rerun the container when needed:
 
 	docker start -a grabber
 
-Each time it runs it will output a new list of quads in the following format
-
-	A <s> <p> <o> <g>
-	A <s> <p> <o> <g>
-	D <s> <p> <o> <g>
-	# current position: 500
-
-Make sure to set CheckpointAuditTrail=1 in the ini or else your transaction files will be emptied before the grabber might see them.
-
-The container maintains the location in the log. So if you ever remove the container, you need to restart it with `-e "CURPOS=<last current position>"`.
-
 # Background
 
 > The availability of massive quantities of digital sources (textual, audio-visual and structured data) for research is
@@ -120,6 +109,10 @@ We're therefore leaning towards RDF Patch, though that specification is stale af
  - [x] check if CheckpointAuditTrail is enabled when running this logger (cfg_item_value)
  - [x] multiple trx files (wrapper script)
  - [ ] escaping literals (at least newlines and quotes, check the nquads spec)
- - [ ] make it stateful so we don't re-parse the same files over and over again
  - [ ] remove checkpoint statement before committing and deploying
+
  - [ ] try multiple insertion strategies and see if we can trigger all cases in the log (LOG_INSERT, LOG_INSERT_SOFT etc.)
+
+ - [ ] make it stateful so we don't re-parse the same files over and over again
+ - [ ] being able to go over the 50k rdf-patch files using resource-list indexes
+ - [ ] make the update process atomic

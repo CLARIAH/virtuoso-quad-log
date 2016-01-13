@@ -64,7 +64,7 @@ create procedure parse_trx (in f varchar) {
     for (i := 0; i < length (lines); i := i + 1) {
       line := lines[i];
       if (line[0] in (1, 8, 9, 13)) { -- LOG_INSERT, LOG_INSERT_SOFT, LOG_INSERT_REPL and LOG_KEY_INSERT are all additions
-        op := '+';
+        op := 'A';
         if (line[0] = 13) {
           quad := line[2]; -- with LOG_KEY_INSERT a flag is inserted in the line so the quad ends up in line[2] instead of line[1]
         }
@@ -73,7 +73,7 @@ create procedure parse_trx (in f varchar) {
         }
       }
       else if (line[0] in (3, 14)) {-- LOG_DELETE and LOG_KEY_DELETE are both deletions
-        op := '-';
+        op := 'D';
         quad := line[1];
       }
 
@@ -94,7 +94,7 @@ create procedure parse_trx (in f varchar) {
 --see also: 'IRI_ID Type' in http://docs.openlinksw.com/virtuoso/rdfdatarepresentation.html
 create procedure parse_trx_format_iri (in iri any) {
   if (iri > min_64bit_bnode_iri_id()) {
-    return concat('_:', ltrim(concat(iri, ''), '#'));
+    return concat('<_:', ltrim(concat(iri, ''), '#'), '>');
   } else {
     return concat('<', __ro2sq(iri), '>');
   }
