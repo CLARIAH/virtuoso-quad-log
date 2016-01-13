@@ -35,4 +35,4 @@ print rl.as_xml()
 # TODO: create capability list from ResourceList rl (see: https://github.com/resync/resync/blob/master/resync/test/test_capability_list.py)
 
 
-# TODO: create source description
+# TODO: create source description (see: https://github.com/resync/resync/blob/master/resync/test/test_source_description.py)
