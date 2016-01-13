@@ -2,6 +2,8 @@
 
 from resync.resource_list import ResourceList
 from resync.capability_list import CapabilityList
+from resync.source_description import SourceDescription
+
 from resync.resource import Resource
 from argparse import ArgumentParser
 
@@ -43,10 +45,18 @@ print rl.as_xml()
 timestamps.sort()
 
 # TODO: create capability list from ResourceList rl (see: https://github.com/resync/resync/blob/master/resync/test/test_capability_list.py)
-# caps = CapabilityList()
-# caps.add_capability( rl, "http://WHEREDOIPOINTTHISQUESTIONMARK/resource-list.xml")
-# caps.md['from'] = timestamps[0]
+caps = CapabilityList()
+caps.add_capability( rl, "http://WHEREDOIPOINTTHISQUESTIONMARK/resource-list.xml")
+caps.md['from'] = timestamps[0]
 
+# TODO: print to file at given location
 # print caps.as_xml()
 
 # TODO: create source description (see: https://github.com/resync/resync/blob/master/resync/test/test_source_description.py)
+rsd = SourceDescription()
+rsd.describedby = "http://YETANOTHERURLIDONOTKNOWWHERETOPUT"
+rsd.md_at = None
+rsd.add_capability_list("http://WHEREDOIPOINTTHISQUESTIONMARK/capability-list.xml")
+
+# TODO: print to file at given location
+# print rsd.as_xml()
