@@ -15,7 +15,12 @@ Once you have a virtuoso container running you can run the quad-log like this:
 
 Or with any virtuoso server like this
 
-	docker run -i -t -e="VIRTUOSO_ISQL_ADDRESS=127.0.01" -E="VIRTUOSO_ISQL_PORT=1111"  --name grabber jauco/virtuoso-quad-log
+	docker run -i -t --name grabber \
+		-e="VIRTUOSO_ISQL_ADDRESS=127.0.01" \
+		-e="VIRTUOSO_ISQL_PORT=1111" \
+		-e="VIRTUOSO_USER=dba" \
+		-e="VIRTUOSO_PASSWORD=dba" \
+		jauco/virtuoso-quad-log
 
 This initializes the container. You then rerun the container when needed:
 
@@ -107,12 +112,14 @@ We're therefore leaning towards RDF Patch, though that specification is stale af
 
 # Things to test and do (aka issues/tickets)
 
- - [ ] blank nodes
- - [ ] multiple trx files (after checkpointing has been run)
- - [ ] offsets with multiple trx files (is the offset global or file specific. How to handle the offset after a checkpoint has run. What if multiple checkpoints have run in between grabs)
- - [ ] strange characters in literals or hyperlinks. How to handle spaces.
- - [ ] make it a process that exposes its results in oai-rs instead logging a list to the console
- - [ ] check if CheckpointAuditTrail is enabled when running this logger
+ - [x] offsets with multiple trx files (is the offset global or file specific. How to handle the offset after a checkpoint has run. What if multiple checkpoints have run in between grabs)
+ - [x] non-default literals (stuff tagged as a date for example)
+ - [x] literals vs hyperlinks
+ - [x] blank nodes
+ - [x] handle the fact that the last trx might still be changing (handling it by skipping the current transaction log)
+ - [x] check if CheckpointAuditTrail is enabled when running this logger (cfg_item_value)
+ - [x] multiple trx files (wrapper script)
+ - [ ] escaping literals (at least newlines and quotes, check the nquads spec)
+ - [ ] make it stateful so we don't re-parse the same files over and over again
+ - [ ] remove checkpoint statement before committing and deploying
  - [ ] try multiple insertion strategies and see if we can trigger all cases in the log (LOG_INSERT, LOG_INSERT_SOFT etc.)
- - [ ] non-default literals (stuff tagged as a date for example)
-
