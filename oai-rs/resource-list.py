@@ -12,11 +12,9 @@ from os.path import isfile, isdir, join
 
 parser = ArgumentParser()
 
-# TODO: which arguments? 
-# - dir A containing files to be synced (now called --resource-dir)
-# - public url A pointing to dir A (now called --resource-url)
-# - dir B to write these oai-rs files to...
-# - public url B to access these oai-rs files from (used in refs in capability list and source description)...
+# argparse arguments:
+# --resource-dir: containing files to be synced
+# --resource-url: public url pointing to resource dir
 parser.add_argument('--resource-url', required=True)
 parser.add_argument('--resource-dir', required=True)
 args = parser.parse_args()
@@ -37,26 +35,35 @@ for filename in listdir(args.resource_dir):
 		raw_ts[12:14] + "Z"
 	)
 	timestamps.append(ts)
-	rl.add(Resource(args.resource_url + filename, lastmod=ts))
+	rl.add(Resource(args.resource_url + "/" + filename, lastmod=ts))
 
-# TODO: print to file at args.resource_dir
-print rl.as_xml()
+# Print to file at args.resource_dir + "/resource-list.xml"
+resource_list_file = open(args.resource_dir + "/resource-list.xml", "w")
+resource_list_file.write(rl.as_xml())
+resource_list_file.close()
+print "Wrote resource list to: " + args.resource_dir + "/resource-list.xml"
 
 timestamps.sort()
 
-# TODO: create capability list from ResourceList rl (see: https://github.com/resync/resync/blob/master/resync/test/test_capability_list.py)
 caps = CapabilityList()
-caps.add_capability( rl, args.resource_url + "/resource-list.xml")
+caps.add_capability(rl, args.resource_url + "/resource-list.xml")
 if len(timestamps) > 0:
 	caps.md['from'] = timestamps[0]
 
-# TODO: print to file at args.resource_dir
-print caps.as_xml()
+# Print to file at args.resource_dir + "/capability-list.xml"
+capability_list_file = open(args.resource_dir + "/capability-list.xml", "w")
+capability_list_file.write(caps.as_xml())
+capability_list_file.close()
 
-# TODO: create source description (see: https://github.com/resync/resync/blob/master/resync/test/test_source_description.py)
+print "Wrote capability list to: " + args.resource_dir + "/capability-list.xml"
+
 rsd = SourceDescription()
 rsd.md_at = None
 rsd.add_capability_list(args.resource_url + "/capability-list.xml")
 
-# TODO: print to file at args.resource_dir + "/resourcesync"
-print rsd.as_xml()
+# Print to file at args.resource_dir + "/resourcesync"
+source_description_file = open(args.resource_dir + "/resourcesync", "w")
+source_description_file.write(rsd.as_xml())
+source_description_file.close()
+
+print "Wrote source description to: " + args.resource_dir + "/resourcesync"
