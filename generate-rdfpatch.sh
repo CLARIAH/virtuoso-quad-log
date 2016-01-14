@@ -55,7 +55,7 @@ done
 rm output
 cd ..
 
-if [ -n "${CUR_USER:-}"]; then
+if [ -n "${CUR_USER:-}" ]; then
 	chown -R "$CUR_USER:$CUR_USER" datadir
 fi
 
