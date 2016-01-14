@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -o nounset
 set -o errexit
-set -o pipefail
 
 if [ "${1:-}" = "server" ]; then
 	/usr/local/bin/virtuoso-t -f -c /usr/local/var/lib/virtuoso/db/virtuoso.ini

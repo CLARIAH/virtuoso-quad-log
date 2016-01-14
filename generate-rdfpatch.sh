@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -o nounset
 set -o errexit
-set -o pipefail
 
 LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-/usr/local/var/lib/virtuoso/db}
 
@@ -11,16 +10,14 @@ else
 	ISQL_CMD="isql -H $VIRTUOSO_ISQL_ADDRESS -S $VIRTUOSO_ISQL_PORT -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
 fi
 
-set +o errexit
-$ISQL_CMD <<-'EOF' | grep -q 'parse_trx'
+$ISQL_CMD <<-'EOF' > parse_trx_query_result.txt
 	SET CSV=ON;
 	SELECT P_NAME FROM SYS_PROCEDURES WHERE P_NAME = 'DB.DBA.parse_trx';
 	exit;
 	EOF
-GREPRESULT=${PIPESTATUS[1]}
-set -o errexit
-if [ $GREPRESULT -ne 0 ]; then
-	if [ -z "${INSERT_PROCEDURE:-}"]; then
+
+if ! grep -q 'parse_trx' parse_trx_query_result.txt; then
+	if [ -z "${INSERT_PROCEDURE:-}" ]; then
 		read -p "To read the transaction log from the server I need to install a few stored procedures on the virtuoso server. All starting with 'parse_trx'. Is that okay? [yn]" INSERT_PROCEDURE
 	fi
 	if [ "$INSERT_PROCEDURE" != "y" ]; then
