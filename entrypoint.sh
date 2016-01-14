@@ -8,6 +8,7 @@ else
 	while true; do
 		echo "Running generate..."
 		bash generate-rdfpatch.sh
+		echo "done"
 		sleep ${RUN_INTERVAL:-3600}
 	done
 fi
