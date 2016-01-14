@@ -1,0 +1,1000 @@
+<http://wordnet-rdf.princeton.edu/wn31/inventive-s#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "inventive"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/cockfighting-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "cockfighting%1:04:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/vena+perforantis-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/114429178-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/114057659-n> .
+<http://wordnet-rdf.princeton.edu/wn31/104172050-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u4E00部"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/cheekpiece-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/cheekpiece-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/100926639-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/manufacture-n> .
+<http://wordnet-rdf.princeton.edu/wn31/301806450-S> <http://wordnet-rdf.princeton.edu/ontology#translation> "idillico"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/releasing-s#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "releasing"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/light+microscope-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/light+microscope-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/105387595-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/113263382-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "opsi untuk menjual"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/pink-v#2-v> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_13361> .
+<http://wordnet-rdf.princeton.edu/wn31/114231547-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/114228432-n> .
+<http://wordnet-rdf.princeton.edu/wn31/114741436-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "gangsa"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/201931400-V> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_91689> .
+<http://wordnet-rdf.princeton.edu/wn31/101444266-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "notropis"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/Mungo+Park-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/301715524-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "penoso"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/Hooke-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/106414934-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "seni cetak"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/114315592-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/fracture-n> .
+<http://wordnet-rdf.princeton.edu/wn31/vein+of+penis-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/105429341-n> .
+<http://wordnet-rdf.princeton.edu/wn31/barbershop-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/barbershop_1_06_00> .
+<http://wordnet-rdf.princeton.edu/wn31/chromium+steel-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/chromium+steel-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/refresh-v#3-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/palm-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#gloss> "touch, lift, or hold with the hands"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/R.C.-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#pertainym> <http://wordnet-rdf.princeton.edu/wn31/romanism-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/guide-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/114393672-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "apnea tidur"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/paternal+quality-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/paternal_quality_1_07_00> .
+<http://wordnet-rdf.princeton.edu/wn31/hominy+grits-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/hominy+grits-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/102519058-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "ceratodontidae"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/109489114-N> <http://wordnet-rdf.princeton.edu/ontology#instance_hypernym> <http://wordnet-rdf.princeton.edu/wn31/109479744-n> .
+<http://wordnet-rdf.princeton.edu/wn31/solacement-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/cutter-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/chronicle-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a record or narrative description of past events"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/115082311-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/steroid-n> .
+<http://wordnet-rdf.princeton.edu/wn31/102261281-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Saratoga+spittlebug-n> .
+<http://wordnet-rdf.princeton.edu/wn31/albuginea-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_55298> .
+<http://wordnet-rdf.princeton.edu/wn31/201030757-V> <http://wordnet-rdf.princeton.edu/ontology#sample> "They named their son David"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/201283672-V> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#verb.contact> .
+<http://wordnet-rdf.princeton.edu/wn31/seriousness-n#3-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/seriousness_1_07_00> .
+<http://wordnet-rdf.princeton.edu/wn31/111114045-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/St.+Jude-n> .
+<http://wordnet-rdf.princeton.edu/wn31/monilia+disease-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/monilia+disease-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/disfranchise-v> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/104484326-N> <http://wordnet-rdf.princeton.edu/ontology#part_meronym> <http://wordnet-rdf.princeton.edu/wn31/103977780-n> .
+<http://wordnet-rdf.princeton.edu/wn31/200845147-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "incriminar"@glg .
+<http://wordnet-rdf.princeton.edu/wn31/confinement-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/109522788-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-Nibelung-noun-2> .
+<http://wordnet-rdf.princeton.edu/wn31/yellow+chamomile-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "yellow chamomile"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/field+of+regard-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/103816281-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "the world's largest medical library"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/106731952-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/petty+criticism-n> .
+<http://wordnet-rdf.princeton.edu/wn31/202717862-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u61F8\u304Bる"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/plant+virus-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/101338101-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Papaver+heterophyllum-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "Papaver heterophyllum"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/self-awareness-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/self-awareness-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/400461819-R> <http://wordnet-rdf.princeton.edu/ontology#translation> "saastaisesti"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/inhomogeneity-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/inhomogeneity-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/wonderer-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "someone filled with admiration and awe; someone who wonders at something"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/first-nighter-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "first-nighter%1:18:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/coziness-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/herb+Christopher-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "herb_christopher%1:20:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/tin+whistle-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "an inexpensive fipple flute"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/112469205-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Lathyrus-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/plumy-s#1-s> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "plumy%5:00:02:feathered:00" .
+<http://wordnet-rdf.princeton.edu/wn31/Tarkovsky-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/commonweal-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/mapper-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/mapper-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/smother-v#5-v> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/verb/smother_2_35_03> .
+<http://wordnet-rdf.princeton.edu/wn31/mosquito+bite-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/mosquito+bite-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/100297411-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u884C列"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/embodiment-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "embodiment%1:04:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/301920902-A> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#adj.all> .
+<http://wordnet-rdf.princeton.edu/wn31/109770953-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Zairese-n> .
+<http://wordnet-rdf.princeton.edu/wn31/200800738-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "menarik balik"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/100920790-N> <http://www.w3.org/2000/01/rdf-schema#label> "hydroponics"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Scorzonera+hispanica-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "Scorzonera hispanica"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/unprogressive-s#1-s> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_181998> .
+<http://wordnet-rdf.princeton.edu/wn31/400213709-r> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u601D\u3044\u639Bず"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/schizoid-a#1-a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/list+price-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "list_price%1:21:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/201036184-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "berbincang-bincang"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/114693984-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u30AB\u30B9\u30D1\u30FCゼ"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/101198806-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/202523827-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "d\u00E9porter"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/105549505-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E01\u0E23\u0E30\u0E14\u0E39\u0E01\u0E17\u0E49\u0E32\u0E22\u0E17\u0E2Dย"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/arteria+pulmonalis-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/arteria_pulmonalis_1_08_00> .
+<http://wordnet-rdf.princeton.edu/wn31/transliterate-v> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#verb> .
+<http://wordnet-rdf.princeton.edu/wn31/Dutch+capital-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "an industrial center and the nominal capital of the Netherlands; center of the diamond-cutting industry; seat of an important stock exchange; known for its canals and art museum"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/grab+bar-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/200930203-V> <http://wordnet-rdf.princeton.edu/ontology#sample> "Tetracycline is indicated in such cases"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/officially-r#2-r> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/400188003-r> .
+<http://wordnet-rdf.princeton.edu/wn31/202336915-V> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#verb> .
+<http://wordnet-rdf.princeton.edu/wn31/110271026-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "manta"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/xanthemia-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/fire+bell-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/107484465-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/tuberculoid-a> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/tuberculoid-a#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/302701659-A> <http://wordnet-rdf.princeton.edu/ontology#gloss> "containing or impregnated with or tasting of iron"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/102675461-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "harmonikka"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/reentrant-a#1-a> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_143977> .
+<http://wordnet-rdf.princeton.edu/wn31/400050724-r> <http://wordnet-rdf.princeton.edu/ontology#translation> "semakin"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/115266840-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Pra-Paskah"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/Kogia+breviceps-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/111344423-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/301850926-S> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/up-s> .
+<http://wordnet-rdf.princeton.edu/wn31/mace-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/113192547-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Ceratopteris-n> .
+<http://wordnet-rdf.princeton.edu/wn31/109860351-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "barrister"@glg .
+<http://wordnet-rdf.princeton.edu/wn31/110219666-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "huncwot"@pol .
+<http://wordnet-rdf.princeton.edu/wn31/300431289-s> <http://wordnet-rdf.princeton.edu/ontology#gloss> "as it seems at first sight"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/103632051-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E17\u0E35\u0E48\u0E40\u0E04\u0E32\u0E30\u0E1B\u0E23\u0E30\u0E15ู"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/302234002-S> <http://wordnet-rdf.princeton.edu/ontology#translation> "tangkas"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/106717842-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/106718550-n> .
+<http://wordnet-rdf.princeton.edu/wn31/101133836-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/legal+duty-n> .
+<http://wordnet-rdf.princeton.edu/wn31/walk+a+fine+line-p#1-p> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "walk_a_fine_line%6:00:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/111142429-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Lear"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/prophylaxis-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/sacrificeable-s#1-s> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/105055452-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/coincidence-n> .
+<http://wordnet-rdf.princeton.edu/wn31/301242735-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "berdiri"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/115020587-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0645\u064F\u0644\u064E\u0645\u0651\u0650ع"@ara .
+<http://wordnet-rdf.princeton.edu/wn31/brutalisation-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/103649051-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u30EC\u30FC\u30B6\u30FC\u30D7\u30EA\u30F3\u30BFー"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/precondition-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/400127522-r> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/socially-r> .
+<http://wordnet-rdf.princeton.edu/wn31/102373996-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/101889397-n> .
+<http://wordnet-rdf.princeton.edu/wn31/103766479-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Micr\u00F3tomo"@por .
+<http://wordnet-rdf.princeton.edu/wn31/motor+inn-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "motor_inn%1:06:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/110503115-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "proph\u00E8te"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/302165716-A> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/110402296-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/organ+donor-n> .
+<http://wordnet-rdf.princeton.edu/wn31/110171090-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.person> .
+<http://wordnet-rdf.princeton.edu/wn31/303061729-A> <http://wordnet-rdf.princeton.edu/ontology#gloss> "of or relating to a blastomere"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/109542327-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "maman"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/113889247-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.shape> .
+<http://wordnet-rdf.princeton.edu/wn31/Cooke-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/brigade-v#1-v> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_77239> .
+<http://wordnet-rdf.princeton.edu/wn31/bishop%27s+pine-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/201260655-V> <http://wordnet-rdf.princeton.edu/ontology#gloss> "cut into pieces"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/106844976-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_36848> .
+<http://wordnet-rdf.princeton.edu/wn31/Ataturk-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/201265500-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "pelare"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Notoryctus-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/200892111-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "garentire"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/201299048-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0623\u0631\u0652\u0641\u064E\u0642َ"@ara .
+<http://wordnet-rdf.princeton.edu/wn31/100328509-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "berakada"@eus .
+<http://wordnet-rdf.princeton.edu/wn31/nodule-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/nodular-a#1-a> .
+<http://wordnet-rdf.princeton.edu/wn31/107739498-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.food> .
+<http://wordnet-rdf.princeton.edu/wn31/caring-s#1-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/201766030-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E01\u0E23\u0E30\u0E15\u0E38\u0E49น"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/sugared-s#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "sugared"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/110471024-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "homme politique"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/oriental+poppy-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/103277294-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/103671250-n> .
+<http://wordnet-rdf.princeton.edu/wn31/neon-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "neon"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/moaner-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/110796007-n> .
+<http://wordnet-rdf.princeton.edu/wn31/pop-v#11-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/113949568-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/100765789-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "the financing of terrorist activities by participation in the drug trade"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/breakage-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "breakage"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/105375937-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.body> .
+<http://wordnet-rdf.princeton.edu/wn31/Battle+of+the+Somme-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/Battle+of+the+Somme-n#2-n> .
+<http://wordnet-rdf.princeton.edu/wn31/pictorial-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a periodical (magazine or newspaper) containing many pictures"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/400331730-R> <http://wordnet-rdf.princeton.edu/ontology#translation> "berilmu"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/201209469-V> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/201208838-v> .
+<http://wordnet-rdf.princeton.edu/wn31/112057002-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Campanulaceae"@por .
+<http://wordnet-rdf.princeton.edu/wn31/114971840-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-maple_sugar-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/112785267-N> <http://www.w3.org/2000/01/rdf-schema#label> "skunkbush"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/101266543-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "consultation"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/hireling-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/hireling-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/stuff-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/gel-v#2-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/will-o%27-the-wisp-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/110227450-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/asker-n> .
+<http://wordnet-rdf.princeton.edu/wn31/graveyard+shift-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "graveyard_shift%1:28:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/continuation-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/continue-v#2-v> .
+<http://wordnet-rdf.princeton.edu/wn31/diwan-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a Muslim council chamber or law court"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/101720307-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Dromaeosauridae"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/103207624-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_17392> .
+<http://wordnet-rdf.princeton.edu/wn31/luxury-n#3-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/unstableness-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/104782986-n> .
+<http://wordnet-rdf.princeton.edu/wn31/101448234-N> <http://www.w3.org/2000/01/rdf-schema#label> "Ictiobus niger"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/107028111-N> <http://wordnet-rdf.princeton.edu/ontology#sample> "she felt a flare of delight"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/101178825-N> <http://www.w3.org/2000/01/rdf-schema#label> "affray"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/101654804-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Pternohyla"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/201861378-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "diam"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/106930991-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/202306641-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "appartenir"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/aspergillosis-n#2-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/compendium-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "compendium%1:10:01::" .
+<http://wordnet-rdf.princeton.edu/wn31/Chrysanthemum+maximum+maximum-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/fresh-s#9-s> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/302378651-s> .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Elaeagnus-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "genus Elaeagnus"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/112441040-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-blood_lily-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/endowment-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/superordinate-v#1-v> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/108832633-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Transilv\u00E2nia"@por .
+<http://wordnet-rdf.princeton.edu/wn31/Xyris-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/111825073-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E27\u0E07\u0E28\u0E4C\u0E04\u0E32\u0E23\u0E4C\u0E40\u0E19\u0E0A\u0E31\u0E48น"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/105020388-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "zero assoluto"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/113600369-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "sistem lolos ukuran"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/105609513-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/105610590-n> .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Pogonia-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/301647922-S> <http://wordnet-rdf.princeton.edu/ontology#translation> "nuori"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/reveal-v#3-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/201028104-V> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/301149996-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "memperlihatkan tanda kesyukuran"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/Rain-giver-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/tick-v#4-v> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/Dryopteris+dilatata-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/badminton+equipment-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/112950543-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "th\u00E9ier"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/ulcer-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/ulcer-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/resplend-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/102477709-N> <http://www.w3.org/2000/01/rdf-schema#label> "Neanderthal man"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/112641871-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/112640957-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Cheyne-Stokes+respiration-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/possession-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/possession-n#7-n> .
+<http://wordnet-rdf.princeton.edu/wn31/line+triple-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Gnaphalium-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "genus Gnaphalium"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/cold+duck-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/graduated-s#2-s> <http://wordnet-rdf.princeton.edu/ontology#gloss> "taking place by degrees"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/201266847-V> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/201606339-v> .
+<http://wordnet-rdf.princeton.edu/wn31/300073656-a> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E40\u0E2A\u0E41\u0E2A\u0E23\u0E49ง"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/Nentsy-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/noncrystalline-a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/112537333-N> <http://www.w3.org/2000/01/rdf-schema#label> "Sturt pea"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/aioli+sauce-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/steel+engraving-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/300441663-s> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/gooselike-s> .
+<http://wordnet-rdf.princeton.edu/wn31/smoke-n#7-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/100836297-n> .
+<http://wordnet-rdf.princeton.edu/wn31/polyvinyl+acetate-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/Count+Ferdinand+von+Zeppelin-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "German inventor who designed and built the first rigid motorized dirigible (1838-1917)"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/111956668-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/109127772-N> <http://www.w3.org/2000/01/rdf-schema#label> "Meridian"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/114434009-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u9AA8\u306E\u6298\u308C\u308B\u3053と"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/102514361-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a bird that twitters"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/400241635-r> <http://www.w3.org/2000/01/rdf-schema#label> "for each one"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/111330674-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Oswald Spengler"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/instrument+of+torture-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/extremeness-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/twit-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "twit%2:32:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/114621593-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "absorboimisaine"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/103457897-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/104307879-n> .
+<http://wordnet-rdf.princeton.edu/wn31/chemical+science-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/109714290-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-Brazilian-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/110434610-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Pentecostal-n> .
+<http://wordnet-rdf.princeton.edu/wn31/cocktail+dress-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/103066018-n> .
+<http://wordnet-rdf.princeton.edu/wn31/capacity-n#3-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/301931399-S> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#adj.all> .
+<http://wordnet-rdf.princeton.edu/wn31/102678841-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a remedy for hearing loss or deafness"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Great+Attractor-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/103643825-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/103968233-n> .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Flindersia-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/inherited-s#1-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/112830767-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_68577> .
+<http://wordnet-rdf.princeton.edu/wn31/administrative-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#gloss> "of or relating to or responsible for administration"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Harakat+al-Jihad+al-Islami+al-Filastini-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/harakat_al-jihad_al-islami_al-filastini_1_14_00> .
+<http://wordnet-rdf.princeton.edu/wn31/mammary+gland-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/105561822-n> .
+<http://wordnet-rdf.princeton.edu/wn31/400086892-r> <http://wordnet-rdf.princeton.edu/ontology#translation> "erat-erat"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/Lens-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/reel+off-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/very-s#2-s> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/103677964-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "zapora fortyfikacyjna"@pol .
+<http://wordnet-rdf.princeton.edu/wn31/114107272-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/psychological+disorder-n> .
+<http://wordnet-rdf.princeton.edu/wn31/109853980-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "bailarina"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/101011813-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "the act of putting things in a sequential arrangement"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Rothschild-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/rothschild_1_18_00> .
+<http://wordnet-rdf.princeton.edu/wn31/red+silver+fir-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/red+silver+fir-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/aircraft-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/aircraft-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/abjection-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/animalize-v> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/104380981-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "剣"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/Hypoderma-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/102197539-n> .
+<http://wordnet-rdf.princeton.edu/wn31/105055274-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u062A\u064E\u0632\u064E\u0627\u0645\u064Fن"@ara .
+<http://wordnet-rdf.princeton.edu/wn31/201735709-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "mendendangkan"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/104259763-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a machine that removes snow by scooping it up and throwing it forcefully through a chute"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/102213935-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "type genus of the Megachilidae: leaf-cutting bees"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/teratogenesis-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/teratogenesis-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/baggage-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "baggage%1:06:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/unconfined-s#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "unconfined"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/canyon+live+oak-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/replacement-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/replacement-n#2-n> .
+<http://wordnet-rdf.princeton.edu/wn31/300310743-s> <http://wordnet-rdf.princeton.edu/ontology#sample> "kept a close watch on expenditures"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/sinistral-a> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective> .
+<http://wordnet-rdf.princeton.edu/wn31/closely+held+corporation-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/leaden-s#5-s> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "leaden%5:00:00:dull:03" .
+<http://wordnet-rdf.princeton.edu/wn31/101989179-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/family+Crangonidae-n> .
+<http://wordnet-rdf.princeton.edu/wn31/great+St+John%27s+wort-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/112388774-n> .
+<http://wordnet-rdf.princeton.edu/wn31/108396084-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-racial_segregation-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/indisposed-s> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/indisposed-s#2-s> .
+<http://wordnet-rdf.princeton.edu/wn31/110055039-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/Messidor-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "messidor%1:28:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/ascend-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#verb_frame_sentence> "The airplane is sure to %s "@eng .
+<http://wordnet-rdf.princeton.edu/wn31/megagametophyte-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/112720848-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "an important Central American mahogany tree"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/thermal+equilibrium-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/urn+fungus-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/112022666-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/Whitney-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/yobibyte-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/200658496-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "berkumpul semula"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/descending+aorta-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/112352305-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Eugenia+dicrana-n> .
+<http://wordnet-rdf.princeton.edu/wn31/202500687-V> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/202501241-v> .
+<http://wordnet-rdf.princeton.edu/wn31/201681611-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "penjar"@cat .
+<http://wordnet-rdf.princeton.edu/wn31/105577760-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/107993383-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-pair-noun-3> .
+<http://wordnet-rdf.princeton.edu/wn31/113796210-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/113796315-n> .
+<http://wordnet-rdf.princeton.edu/wn31/300552997-A> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective> .
+<http://wordnet-rdf.princeton.edu/wn31/105238922-N> <http://wordnet-rdf.princeton.edu/ontology#part_meronym> <http://wordnet-rdf.princeton.edu/wn31/105256010-n> .
+<http://wordnet-rdf.princeton.edu/wn31/101550100-N> <http://www.w3.org/2000/01/rdf-schema#label> "superfamily Tyrannidae"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/arena-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "3"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/102272481-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Thysanura"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/brahmin-n#2-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/113960317-n> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u062D\u064E\u0628\u0652س"@ara .
+<http://wordnet-rdf.princeton.edu/wn31/Coregonus+artedi-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/107943752-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u70AD\u9178\u98F2料"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/war+of+nerves-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/Phyllocladus+alpinus-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/111670881-n> .
+<http://wordnet-rdf.princeton.edu/wn31/accumulative-s#1-s> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/300048680-s> .
+<http://wordnet-rdf.princeton.edu/wn31/service+entrance-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "service_entrance%1:06:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/decalescence-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "decalescence%1:19:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/fast-r#2-r> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_99099> .
+<http://wordnet-rdf.princeton.edu/wn31/strike-v#9-v> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/100796669-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "teste"@por .
+<http://wordnet-rdf.princeton.edu/wn31/Crotalidae-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/110643436-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "息"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/301438064-S> <http://wordnet-rdf.princeton.edu/ontology#gloss> "having a snout that is longer than average"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Berlin-n#2-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/110867050-n> .
+<http://wordnet-rdf.princeton.edu/wn31/106999218-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.communication> .
+<http://wordnet-rdf.princeton.edu/wn31/103368595-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-flintlock-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/lepidopteran-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/112034554-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/111949496-n> .
+<http://wordnet-rdf.princeton.edu/wn31/rough-house-v> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/rough-house-v#1-v> .
+<http://wordnet-rdf.princeton.edu/wn31/200549075-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "animar"@cat .
+<http://wordnet-rdf.princeton.edu/wn31/publicize-v#2-v> <http://wordnet-rdf.princeton.edu/ontology#gloss> "call attention to"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/100878805-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "begirada"@eus .
+<http://wordnet-rdf.princeton.edu/wn31/Chlorura-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/Chlorura-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/lamb-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/lamb_1_05_00> .
+<http://wordnet-rdf.princeton.edu/wn31/Gavidae-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/102051486-n> .
+<http://wordnet-rdf.princeton.edu/wn31/200521437-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "mengacau"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/108200316-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/108199297-n> .
+<http://wordnet-rdf.princeton.edu/wn31/114320908-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.state> .
+<http://wordnet-rdf.princeton.edu/wn31/bottomless-s#3-s> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/bottomlessness-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/114928679-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "halokarboni"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/110160884-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "grammatico"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/200346415-v> <http://wordnet-rdf.princeton.edu/ontology#translation> "comezar"@glg .
+<http://wordnet-rdf.princeton.edu/wn31/109933282-N> <http://wordnet-rdf.princeton.edu/ontology#domain_category> <http://wordnet-rdf.princeton.edu/wn31/106094057-n> .
+<http://wordnet-rdf.princeton.edu/wn31/201042933-V> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/close+up-v> .
+<http://wordnet-rdf.princeton.edu/wn31/107630339-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "cornet"@cat .
+<http://wordnet-rdf.princeton.edu/wn31/301265721-A> <http://wordnet-rdf.princeton.edu/ontology#similar> <http://wordnet-rdf.princeton.edu/wn31/301266942-s> .
+<http://wordnet-rdf.princeton.edu/wn31/101970318-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.animal> .
+<http://wordnet-rdf.princeton.edu/wn31/socializing-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/socialize-v#1-v> .
+<http://wordnet-rdf.princeton.edu/wn31/oversexed-s#1-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/ski+binding-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/terribly-r#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "terribly"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Allegheny-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/febrile-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/kerbstone-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_79190> .
+<http://wordnet-rdf.princeton.edu/wn31/112304307-N> <http://www.w3.org/2000/01/rdf-schema#label> "American dwarf birch"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/400520230-P> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#phrase> .
+<http://wordnet-rdf.princeton.edu/wn31/100280679-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/100331810-n> .
+<http://wordnet-rdf.princeton.edu/wn31/schizoid-s#2-s> <http://wordnet-rdf.princeton.edu/ontology#gloss> "marked by withdrawal and inability to form close relationships"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/107560964-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "debilidad"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/106634188-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/106634278-n> .
+<http://wordnet-rdf.princeton.edu/wn31/treacly-s#1-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/106568683-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "cara"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/112897801-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "naamakukkaiskasvit"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/nonaddictive-a> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/nonaddictive-a#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/109176333-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/overshoot-v#1-v> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/201137645-v> .
+<http://wordnet-rdf.princeton.edu/wn31/100199979-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/100272107-n> .
+<http://wordnet-rdf.princeton.edu/wn31/302613486-A> <http://www.w3.org/2000/01/rdf-schema#label> "aculeated"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/105347131-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E2B\u0E25\u0E2D\u0E14\u0E40\u0E25\u0E37\u0E2D\u0E14\u0E41\u0E14\u0E07\u0E23\u0E48\u0E27\u0E21\u0E40\u0E2A\u0E49\u0E19\u0E42\u0E25\u0E2B\u0E34\u0E15\u0E43\u0E2B\u0E0D่"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/104333222-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/103114983-n> .
+<http://wordnet-rdf.princeton.edu/wn31/benedictine-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/burst+in+on-v> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/114461442-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/stature-n> .
+<http://wordnet-rdf.princeton.edu/wn31/aural-a#1-a> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/adj/aural_3_01_01> .
+<http://wordnet-rdf.princeton.edu/wn31/electrically-r#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/modernisation-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_130638> .
+<http://wordnet-rdf.princeton.edu/wn31/cattley+guava-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/106316019-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "viimeinen tavu"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/200521437-V> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/200521274-v> .
+<http://wordnet-rdf.princeton.edu/wn31/112423345-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Assam+rubber-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Gilmer-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/100811687-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "(law) having the power and intention to have and control property but without direct control or actual presence upon it"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/101170442-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/112526257-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/102282094-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.animal> .
+<http://wordnet-rdf.princeton.edu/wn31/in+their+right+minds-s> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/in+their+right+minds-s#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/plainsong-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_110139> .
+<http://wordnet-rdf.princeton.edu/wn31/Toulouse-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/Toulouse-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/Karl+Gustav+Jacob+Jacobi-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/111097639-n> .
+<http://wordnet-rdf.princeton.edu/wn31/104651232-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u062C\u0646\u06AF \u0637\u0644\u0628ی"@fas .
+<http://wordnet-rdf.princeton.edu/wn31/201893603-V> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/201835473-v> .
+<http://wordnet-rdf.princeton.edu/wn31/lienal+artery-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/attending-n#2-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/101235962-n> .
+<http://wordnet-rdf.princeton.edu/wn31/magnetic+disk-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/magnetic+disk-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/108822514-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u30DC\u30EB\u30C4\u30A1\u30FCノ"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/feudal-a> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/feudal-a#1-a> .
+<http://wordnet-rdf.princeton.edu/wn31/105583005-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/lesser+rhomboid+muscle-n> .
+<http://wordnet-rdf.princeton.edu/wn31/113934532-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "espai tancat"@cat .
+<http://wordnet-rdf.princeton.edu/wn31/104246324-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/orthopaedic-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "orthopaedic%3:01:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/sex+characteristic-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/110469238-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/policyholder-n> .
+<http://wordnet-rdf.princeton.edu/wn31/hedgehop-v#1-v> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/verb/hedgehop_2_38_00> .
+<http://wordnet-rdf.princeton.edu/wn31/sheet-n#6-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/sheet_1_06_03> .
+<http://wordnet-rdf.princeton.edu/wn31/achondritic-a#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/106657156-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.communication> .
+<http://wordnet-rdf.princeton.edu/wn31/300659155-S> <http://wordnet-rdf.princeton.edu/ontology#translation> "alarmante"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/302118058-S> <http://wordnet-rdf.princeton.edu/ontology#similar> <http://wordnet-rdf.princeton.edu/wn31/302116958-a> .
+<http://wordnet-rdf.princeton.edu/wn31/101948326-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.animal> .
+<http://wordnet-rdf.princeton.edu/wn31/issue-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "some situation or event that is thought about"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/101147528-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "kup"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/103127399-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/103362222-n> .
+<http://wordnet-rdf.princeton.edu/wn31/discountenance-v#2-v> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/200734860-v> .
+<http://wordnet-rdf.princeton.edu/wn31/Great+Divide-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/Great+Divide-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/300051593-s> <http://wordnet-rdf.princeton.edu/ontology#gloss> "having the requisite qualities for"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/plumlike-s#1-s> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/102743305-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "panssaroitu joukkojenkuljetusvaunu"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Hemitripterus-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "genus_hemitripterus%1:05:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/ultimate-s#2-s> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/adj/ultimate_5_00_00_last_00> .
+<http://wordnet-rdf.princeton.edu/wn31/112233327-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u30D0\u30E9\u4E9C綱"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/105071206-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "影"@zho .
+<http://wordnet-rdf.princeton.edu/wn31/302812464-A> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/201226979-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "zot\u00EBroj"@sqi .
+<http://wordnet-rdf.princeton.edu/wn31/113756119-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "moltiplicando"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/vege+out-v#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/113389225-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "riserva"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/high+tea-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "substantial early evening meal including tea"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/105850718-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.cognition> .
+<http://wordnet-rdf.princeton.edu/wn31/100764635-N> <http://wordnet-rdf.princeton.edu/ontology#domain_category> <http://wordnet-rdf.princeton.edu/wn31/100761047-n> .
+<http://wordnet-rdf.princeton.edu/wn31/201326622-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "mengorbankan"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/patch-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/114579152-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "difference in the refractive power of the two eyes"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/tyranny-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a form of government in which the ruler is an absolute dictator (not restricted by a constitution or laws or opposition etc.)"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Greek+valerian-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/twist-v#7-v> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/verb/twist_2_38_02> .
+<http://wordnet-rdf.princeton.edu/wn31/100137149-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E01\u0E32\u0E23\u0E40\u0E15ะ"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/St.+Dabeoc%27s+heath-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/decomposition-n#5-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/Iguana+iguana-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "large herbivorous tropical American arboreal lizards with a spiny crest along the back; used as human food in Central America and South America"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/301283088-A> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_102869> .
+<http://wordnet-rdf.princeton.edu/wn31/300569857-A> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_99046> .
+<http://wordnet-rdf.princeton.edu/wn31/red-striped-s> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/red-striped-s#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/quadrangle-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_145685> .
+<http://wordnet-rdf.princeton.edu/wn31/joke-n#3-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/joke_1_04_00> .
+<http://wordnet-rdf.princeton.edu/wn31/Washington+Monument-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/102995984-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/cellphone-n> .
+<http://wordnet-rdf.princeton.edu/wn31/reprobation-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "reprobation"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/guinea+pig-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/macadamize-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#gloss> "surface with macadam"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/113941307-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "hujung"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/conjugal+visitation+right-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/conjugal+visitation+right-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/pink-collar-s#1-s> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_26325> .
+<http://wordnet-rdf.princeton.edu/wn31/Euglenophyta-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/Euglenophyta-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/neighborhood-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/star-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/star-n#3-n> .
+<http://wordnet-rdf.princeton.edu/wn31/bearded+wheatgrass-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "bearded wheatgrass"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/108235753-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_44751> .
+<http://wordnet-rdf.princeton.edu/wn31/102086723-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u6D0B犬"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/Fourier+series-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "fourier_series%1:09:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/113731465-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/113731328-n> .
+<http://wordnet-rdf.princeton.edu/wn31/decompression+sickness-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/114091826-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Corallorhiza+maculata-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/attestant-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/301722394-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u30D1\u30E9\u30ECル"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/103020822-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "lonceng"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/201195306-V> <http://wordnet-rdf.princeton.edu/ontology#verb_group> <http://wordnet-rdf.princeton.edu/wn31/201195525-v> .
+<http://wordnet-rdf.princeton.edu/wn31/squeamishly-r> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/squeamishly-r#1-r> .
+<http://wordnet-rdf.princeton.edu/wn31/106793739-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u5197談"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/100529096-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u30C8\u30FC\u30C0\u30F3ス"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/Adansonia+gregorii-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/head+blight-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/snow-blinded-s#1-s> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/302167880-s> .
+<http://wordnet-rdf.princeton.edu/wn31/sheer-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/cry-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/beam+scale-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/beam+scale-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/mitre-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a liturgical headdress worn by bishops on formal occasions"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/108957936-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Toulouse"@por .
+<http://wordnet-rdf.princeton.edu/wn31/death+chamber-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/President+Grant-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/President+Grant-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/107317953-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "炬"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/spike+lavender-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/motor+memory-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "motor_memory%1:09:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/104630470-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u8CE6性"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/110410601-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/suspicion-n#2-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_63907> .
+<http://wordnet-rdf.princeton.edu/wn31/112338280-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.plant> .
+<http://wordnet-rdf.princeton.edu/wn31/biologistic-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/come+forward-v#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/101815897-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "tortora domestica"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/YB-n#4-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a unit of information equal to 1024 zebibytes or 2^80 bytes"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/suprematist-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/suprematist-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/110169387-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u7262番"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/volition-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "the capability of conscious choice and decision and intention"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Menispermum-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "climbing herbs"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/present-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#antonym> <http://wordnet-rdf.princeton.edu/wn31/future-a#1-a> .
+<http://wordnet-rdf.princeton.edu/wn31/202424366-V> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_94168> .
+<http://wordnet-rdf.princeton.edu/wn31/ham-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "ham"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/savourless-s#1-s> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/individualize-v#2-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/105299699-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "iso l\u00E4hent\u00E4j\u00E4lihas"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/200317295-v> <http://wordnet-rdf.princeton.edu/ontology#translation> "menyumirkan"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/long+bone-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/long+bone-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/aria-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_37858> .
+<http://wordnet-rdf.princeton.edu/wn31/java-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/European+fly+honeysuckle-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/disinfectant-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/Hawaii+Island-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "the largest and southernmost of the Hawaii islands; has several volcanic peaks"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/112538325-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Codariocalyx"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/104802501-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/104802662-n> .
+<http://wordnet-rdf.princeton.edu/wn31/110834380-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-Allen-noun-3> .
+<http://wordnet-rdf.princeton.edu/wn31/chlorate-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/vault-v#1-v> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Amia-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/weirdo-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/autobiographic-a#2-a> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/adj/autobiographic_3_01_00> .
+<http://wordnet-rdf.princeton.edu/wn31/102875185-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E04\u0E31\u0E19\u0E0A\u0E31\u0E01\u0E44\u0E21\u0E49\u0E41\u0E02\u0E27\u0E19\u0E44\u0E21\u0E42\u0E04\u0E23\u0E42\u0E1Fน"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/disease+of+the+neuromuscular+junction-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/disease+of+the+neuromuscular+junction-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/114511315-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "kontaminasi"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/104836781-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u601D\u3044遣"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/drive-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/driver-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/calculating+machine-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/calculating+machine-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/202429499-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "menggelek"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/ending-n#2-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_43711> .
+<http://wordnet-rdf.princeton.edu/wn31/109164256-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Texas"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/emblem-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "emblem%1:06:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/identity+matrix-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/identity+matrix-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/de-escalation-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/de-escalation-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/302581199-S> <http://wordnet-rdf.princeton.edu/ontology#sample> "the absurd excuse that the dog ate his homework"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/martial+law-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/martial+law-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/unbeknown-r#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/astringency-n#2-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/105209302-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Physidae-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/villainess-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/represent-v#14-v> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "represent%2:32:11::" .
+<http://wordnet-rdf.princeton.edu/wn31/north-central-s> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/north-central-s#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/112189082-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.plant> .
+<http://wordnet-rdf.princeton.edu/wn31/103599921-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "jeans"@nob .
+<http://wordnet-rdf.princeton.edu/wn31/107535851-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u6016れ"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/valley+oak-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "valley_oak%1:20:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/involvement-n#4-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "involvement%1:26:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/103635277-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u8A66\u9A13場"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Sinanthropus-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/alveolar-a> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/alveolar-a#1-a> .
+<http://wordnet-rdf.princeton.edu/wn31/exile-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/102282624-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/setting-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "setting%1:15:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/trice-v#2-v> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/110459618-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/110594907-n> .
+<http://wordnet-rdf.princeton.edu/wn31/111255777-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Pirandello-n> .
+<http://wordnet-rdf.princeton.edu/wn31/lyophilise-v> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/lyophilise-v#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/200077211-v> <http://wordnet-rdf.princeton.edu/ontology#translation> "tener desaz\u00F3n"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/105724691-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "acide"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/cool+medium-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/ham-n#4-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/ham_1_18_00> .
+<http://wordnet-rdf.princeton.edu/wn31/104509132-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E16\u0E32\u0E14\u0E2B\u0E21\u0E38น"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/300765711-S> <http://wordnet-rdf.princeton.edu/ontology#sample> "a through street"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/anonymous-a#1-a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/desperation-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/aculeate-a#1-a> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/adj/aculeate_3_01_00> .
+<http://wordnet-rdf.princeton.edu/wn31/pill-n#5-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "5"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/moodiness-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/moody-s#1-s> .
+<http://wordnet-rdf.princeton.edu/wn31/mortar-v#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/100429255-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "tanssi"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/400163672-r> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u6697暗"@zho .
+<http://wordnet-rdf.princeton.edu/wn31/114702567-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E41\u0E23\u0E48\u0E40\u0E2E\u0E21\u0E34\u0E21\u0E2D\u0E23\u0E4C\u0E44\u0E1F\u0E15์"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/202428975-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "subjugar"@cat .
+<http://wordnet-rdf.princeton.edu/wn31/106418400-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/105804625-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/Bertholletia+excelsa-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/Bertholletia+excelsa-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/proof-n#4-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "(printing) an impression made to check for errors"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/valency-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "(biology) a relative capacity to unite or react or interact as with antigens or a biological substrate"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/108456014-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/ball-buster-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/ball-buster-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/109415549-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "p\u00EDon"@por .
+<http://wordnet-rdf.princeton.edu/wn31/public+mover-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/113196898-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/109951887-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/coalman-n> .
+<http://wordnet-rdf.princeton.edu/wn31/wavering-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "indecision in speech or action"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/302113931-S> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/oversensitive-s> .
+<http://wordnet-rdf.princeton.edu/wn31/400197312-r> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#adv.all> .
+<http://wordnet-rdf.princeton.edu/wn31/103594700-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "cric"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/canalis+cervicis+uteri-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/105527210-n> .
+<http://wordnet-rdf.princeton.edu/wn31/nudger-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/301203638-S> <http://wordnet-rdf.princeton.edu/ontology#translation> "uniforme"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/202372031-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "meletak jawatan"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/105166002-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u512A勢"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/airbrake-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/lag-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/106169493-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_33385> .
+<http://wordnet-rdf.princeton.edu/wn31/Saint+John+the+Apostle-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/111105914-n> .
+<http://wordnet-rdf.princeton.edu/wn31/turn-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/Rosa+laevigata-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/113644335-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "seperempat kilogram"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/110435383-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "pelakon wanita"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/110140903-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/choker-n> .
+<http://wordnet-rdf.princeton.edu/wn31/108574594-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "baronia"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/110253142-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/Blattaria-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/301488809-A> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#adj.all> .
+<http://wordnet-rdf.princeton.edu/wn31/300638795-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "kosmopolitan"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/200095890-v> <http://wordnet-rdf.princeton.edu/ontology#gloss> "grow through the gums"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/self-a> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/self-a#1-a> .
+<http://wordnet-rdf.princeton.edu/wn31/102205804-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "eltxo"@eus .
+<http://wordnet-rdf.princeton.edu/wn31/300261975-s> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective_satellite> .
+<http://wordnet-rdf.princeton.edu/wn31/Andromeda+glaucophylla-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/201937064-V> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/108747116-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Wuhan"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/100948466-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/301267446-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u9762\u767D\u53EF\u7B11\u3057い"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/108039012-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a militant Islamic fundamentalist political movement that opposes peace with Israel and uses terrorism as a weapon; seeks to create an Islamic state in place of Israel; is opposed to the PLO and has become a leading perpetrator of terrorist activity in Israel; pioneered suicide bombing"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/102174521-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/102174105-n> .
+<http://wordnet-rdf.princeton.edu/wn31/rabble-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/apple+blight-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/squat-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/108224937-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "dotació"@cat .
+<http://wordnet-rdf.princeton.edu/wn31/201985450-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E21\u0E32\u0E16\u0E36\u0E07\u0E0A\u0E32\u0E22\u0E1D\u0E31\u0E48ง"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/Verbesina+helianthoides-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "perennial herb with yellow flowers; southern and south central United States"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/roast+lamb-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/102631230-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Euthynnus pelamis"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/302187588-S> <http://wordnet-rdf.princeton.edu/ontology#sample> "heartfelt condolences"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/anaclinal-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "anaclinal%3:00:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/101330762-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u591A形"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/draftsmanship-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/Baryshnikov-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/300407944-a> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u76DB\u6CA2山"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/Geococcyx+californianus-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "speedy largely terrestrial bird found from California and Mexico to Texas"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/113539046-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "penggandaan"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/busy-s#4-s> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "busy%5:00:01:active:06" .
+<http://wordnet-rdf.princeton.edu/wn31/200373318-V> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#verb.change> .
+<http://wordnet-rdf.princeton.edu/wn31/107069335-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-conga-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/101255153-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u5F15\u3063\u8D8Aし"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/104598460-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-Windsor_tie-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/107720324-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Porridge"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/colossus-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/colossal-s#1-s> .
+<http://wordnet-rdf.princeton.edu/wn31/300888020-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "cergas"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/103492616-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/102458778-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_13020> .
+<http://wordnet-rdf.princeton.edu/wn31/Glareola-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "Glareola"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/302897710-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u5927\u9678的"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/107824651-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "auszpik"@pol .
+<http://wordnet-rdf.princeton.edu/wn31/realistic-s#2-s> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/adj/realistic_5_00_00_representational_00> .
+<http://wordnet-rdf.princeton.edu/wn31/Faeroese-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/301990862-A> <http://wordnet-rdf.princeton.edu/ontology#also> <http://wordnet-rdf.princeton.edu/wn31/301230010-a> .
+<http://wordnet-rdf.princeton.edu/wn31/107926619-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Maraschino-lik\u00F6\u00F6ri"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/300909127-A> <http://wordnet-rdf.princeton.edu/ontology#translation> "sanjungan"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/104851856-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/unfeelingness-n> .
+<http://wordnet-rdf.princeton.edu/wn31/103330714-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_18077> .
+<http://wordnet-rdf.princeton.edu/wn31/Naval+Special+Warfare-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/reaction+time-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/reaction+time-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/400104920-r> <http://wordnet-rdf.princeton.edu/ontology#gloss> "in a general fashion"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/juniper+bush-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/sound+effect-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/114460852-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "kemasyhuran"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/Robert+Browning-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/Robert+Browning-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/discreetness-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "knowing how to avoid embarrassment or distress"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/jockey-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/107463317-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "baile"@por .
+<http://wordnet-rdf.princeton.edu/wn31/peaked+cap-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/bound-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/vacuous-s#2-s> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/clothes+closet-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/vigilance-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/300977350-S> <http://wordnet-rdf.princeton.edu/ontology#translation> "fesyen lama"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/spatulate-s#1-s> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/rubber+eraser-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "an eraser made of rubber (or of a synthetic material with properties similar to rubber); commonly mounted at one end of a pencil"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/suicide-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/custom-built-s#1-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/100928738-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "kerrostaminen"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/Caaba-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/200594278-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "memberi pujian"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/filth-n#4-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "filth%1:10:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/carved+in+stone-s> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective_satellite> .
+<http://wordnet-rdf.princeton.edu/wn31/201654152-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "incominciare"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/arrive-v#2-v> <http://wordnet-rdf.princeton.edu/ontology#gloss> "succeed in a big way; get to the top"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/111738289-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Cabombaceae-n> .
+<http://wordnet-rdf.princeton.edu/wn31/103808513-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/American+gallinule-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/introduction-n#4-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/introduction_1_10_02> .
+<http://wordnet-rdf.princeton.edu/wn31/bimodal-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#gloss> "of a distribution; having or occurring with two modes"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/105268903-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "hair on the face (especially on the face of a man)"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/bag-v#3-v> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/thyme-leaved+speedwell-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/201123596-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "menyerang"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/capped+macaque-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/Jerusalem+artichoke-n#3-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/jerusalem_artichoke_1_13_00> .
+<http://wordnet-rdf.princeton.edu/wn31/anaglyph-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/sexadecimal+number+system-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/pilot+chart-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/200494195-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0633\u0631\u0627\u06CC\u062A \u062F\u0627\u062Fن"@fas .
+<http://wordnet-rdf.princeton.edu/wn31/300138209-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/112810527-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/111605791-n> .
+<http://wordnet-rdf.princeton.edu/wn31/300253599-s> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective_satellite> .
+<http://wordnet-rdf.princeton.edu/wn31/sturdiness-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/sturdiness_1_26_00> .
+<http://wordnet-rdf.princeton.edu/wn31/Indianan-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/Indianan-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Funafuti-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/sands-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/sands_1_15_00> .
+<http://wordnet-rdf.princeton.edu/wn31/100870477-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/112581814-N> <http://www.w3.org/2000/01/rdf-schema#label> "Austrian winter pea"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/100343917-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/110104986-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u5263士"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/202031072-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "bildu"@eus .
+<http://wordnet-rdf.princeton.edu/wn31/101473711-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "subfilum vertebrata"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/frog-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/frog-n#2-n> .
+<http://wordnet-rdf.princeton.edu/wn31/jet-n#6-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_34275> .
+<http://wordnet-rdf.princeton.edu/wn31/100976848-N> <http://wordnet-rdf.princeton.edu/ontology#sample> "the wrestler's charge carried him past his adversary"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/stag%27s-horn+coral-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/nod-v#Form-1> <http://lemon-model.net/lemon#writtenRep> "nodded"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Advent-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "the season including the four Sundays preceding Christmas"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/300288506-a> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u72ED隘"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/autosomal+recessive+defect-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/300951152-A> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#adj.all> .
+<http://wordnet-rdf.princeton.edu/wn31/111300895-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Santa Anna"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/202227628-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "p\u00E4\u00E4st\u00E4 eroon"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/114958169-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "fermento"@glg .
+<http://wordnet-rdf.princeton.edu/wn31/111949018-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_64362> .
+<http://wordnet-rdf.princeton.edu/wn31/nucleolus+organizer-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "nucleolus organizer"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/201802111-V> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#verb.emotion> .
+<http://wordnet-rdf.princeton.edu/wn31/100317420-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u7DCA\u6025\u7A7A輸"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/token-s#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/running+time-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/running+time-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/urinary+tract-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/urinary+tract-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/101014654-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u4ED5\u5206け"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/shover-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/shover_1_18_00> .
+<http://wordnet-rdf.princeton.edu/wn31/femininity-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/femininity-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/114767560-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "aminopl\u00E1stico"@glg .
+<http://wordnet-rdf.princeton.edu/wn31/withholding-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "3"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/105572223-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/105573181-n> .
+<http://wordnet-rdf.princeton.edu/wn31/pillar-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/pillar-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/hydrochloride-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "hydrochloride"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/110099179-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/110792605-n> .
+<http://wordnet-rdf.princeton.edu/wn31/man-v#2-v> <http://wordnet-rdf.princeton.edu/ontology#gloss> "provide with workers"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/107938074-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-scrumpy-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/107180061-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/107179737-n> .
+<http://wordnet-rdf.princeton.edu/wn31/westerner-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/103509052-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "porakone"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/push+aside-v#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/state-n#7-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/103522923-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/high+fidelity+sound+system-n> .
+<http://wordnet-rdf.princeton.edu/wn31/106351417-N> <http://www.w3.org/2000/01/rdf-schema#label> "Agha"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/restrained-s#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/Energy+Secretary-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "energy_secretary%1:04:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/100682167-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-episiotomy-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/114143252-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/114141287-n> .
+<http://wordnet-rdf.princeton.edu/wn31/computer+user-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/101832054-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "bird of tropical Africa and Asia having a very large bill surmounted by a bony protuberance; related to kingfishers"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/unusefulness-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/103611785-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "vert"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/pair-v#2-v> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_46509> .
+<http://wordnet-rdf.princeton.edu/wn31/tubercular-a#3-a> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/113525700-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/113547313-n> .
+<http://wordnet-rdf.princeton.edu/wn31/105336415-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/105338207-n> .
+<http://wordnet-rdf.princeton.edu/wn31/202110460-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u062D\u064E\u0633\u0651َ"@ara .
+<http://wordnet-rdf.princeton.edu/wn31/201005786-V> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/201004785-v> .
+<http://wordnet-rdf.princeton.edu/wn31/108810147-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Isra\u00EBl"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/Dryadella-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/zaman-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "zaman%1:20:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/gnawing+mammal-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/gnawing_mammal_1_05_02> .
+<http://wordnet-rdf.princeton.edu/wn31/regulation-n#5-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/114184557-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Beckerin lihasdystrofia"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/cheroot-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/smotherer-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "smotherer%1:18:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/112337089-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/100124054-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "penembakan"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/Stefan+Zweig-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/111248681-N> <http://wordnet-rdf.princeton.edu/ontology#instance_hypernym> <http://wordnet-rdf.princeton.edu/wn31/110131898-n> .
+<http://wordnet-rdf.princeton.edu/wn31/folding+door-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/400255418-r> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/C.O.D.-r> .
+<http://wordnet-rdf.princeton.edu/wn31/109876413-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.person> .
+<http://wordnet-rdf.princeton.edu/wn31/400448011-R> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/sanctimoniously-r> .
+<http://wordnet-rdf.princeton.edu/wn31/Lermontov-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/106411638-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "alinea"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/111084829-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_60069> .
+<http://wordnet-rdf.princeton.edu/wn31/110669601-N> <http://wordnet-rdf.princeton.edu/ontology#instance_hyponym> <http://wordnet-rdf.princeton.edu/wn31/111009606-n> .
+<http://wordnet-rdf.princeton.edu/wn31/110665764-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "stalinista"@pol .
+<http://wordnet-rdf.princeton.edu/wn31/regularise-v> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/regularise-v#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/300765277-S> <http://wordnet-rdf.princeton.edu/ontology#translation> "rehti"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/106321935-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_34101> .
+<http://wordnet-rdf.princeton.edu/wn31/111322767-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/Singer-n> .
+<http://wordnet-rdf.princeton.edu/wn31/disallow-v#1-v> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_91611> .
+<http://wordnet-rdf.princeton.edu/wn31/thalassaemia-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/Kansas-n#3-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/113092313-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/202430309-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "bermula"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/concave-a#1-a> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/300537672-a> .
+<http://wordnet-rdf.princeton.edu/wn31/400016415-r> <http://wordnet-rdf.princeton.edu/ontology#translation> "gravemente"@por .
+<http://wordnet-rdf.princeton.edu/wn31/100377523-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "ruptura"@por .
+<http://wordnet-rdf.princeton.edu/wn31/smoke-n#5-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/smoke_1_06_00> .
+<http://wordnet-rdf.princeton.edu/wn31/tuition-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "tuition%1:21:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/106394566-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_34479> .
+<http://wordnet-rdf.princeton.edu/wn31/orinasal-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/orinasal-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/tourist+attraction-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a characteristic that attracts tourists"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/201776419-V> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#verb.emotion> .
+<http://wordnet-rdf.princeton.edu/wn31/202295917-V> <http://wordnet-rdf.princeton.edu/ontology#sample> "This will do you good"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Shaw-n#3-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/shaw_1_18_01> .
+<http://wordnet-rdf.princeton.edu/wn31/Jonah-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/103968233-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "entarimado"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/peaceableness-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/dauber-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/daub-v#3-v> .
+<http://wordnet-rdf.princeton.edu/wn31/103035407-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.artifact> .
+<http://wordnet-rdf.princeton.edu/wn31/address-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/address-n#6-n> .
+<http://wordnet-rdf.princeton.edu/wn31/301038689-S> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective_satellite> .
+<http://wordnet-rdf.princeton.edu/wn31/109779206-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E1C\u0E39\u0E49\u0E23\u0E48\u0E27\u0E21\u0E01\u0E48\u0E2D\u0E2D\u0E32\u0E0A\u0E0D\u0E32\u0E01\u0E23\u0E23ม"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/113017888-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.plant> .
+<http://wordnet-rdf.princeton.edu/wn31/110490364-N> <http://www.w3.org/2000/01/rdf-schema#label> "priest"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Dama+dama-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/108419399-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0647\u06CC\u0627\u062A \u0646\u0645\u0627\u06CC\u0646\u062F\u06AF\u0627ن"@fas .
+<http://wordnet-rdf.princeton.edu/wn31/tetrode-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/200265761-v> <http://wordnet-rdf.princeton.edu/ontology#domain_category> <http://wordnet-rdf.princeton.edu/wn31/106094057-n> .
+<http://wordnet-rdf.princeton.edu/wn31/influent-s> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/influent-s#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/201822202-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u5143\u6C17\u3065\u3051る"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/zit-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/Mercurialis+annua-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/110740102-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.person> .
+<http://wordnet-rdf.princeton.edu/wn31/301536573-S> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective_satellite> .
+<http://wordnet-rdf.princeton.edu/wn31/106330022-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E04\u0E38\u0E13\u0E28\u0E31\u0E1E\u0E17์"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/onanist-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/onanist-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/107566017-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/pallas%27s+sandgrouse-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/pallas%27s+sandgrouse-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/112319942-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.plant> .
+<http://wordnet-rdf.princeton.edu/wn31/113438070-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u06AF\u0648\u0627\u0647\u06CC \u0646\u0627\u0645\u0647 \u0645\u0648\u0642ت"@fas .
+<http://wordnet-rdf.princeton.edu/wn31/113929950-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/line+of+heart-n> .
+<http://wordnet-rdf.princeton.edu/wn31/confidential+information-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/Johann+Wolfgang+von+Goethe-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/masculine-s#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "masculine"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/expansive-a#1-a> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/200896259-V> <http://wordnet-rdf.princeton.edu/ontology#translation> "alasan"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/103011195-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u30B7\u30EA\u30A2\u30EB\u30D7\u30EA\u30F3タ"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/300365961-s> <http://wordnet-rdf.princeton.edu/ontology#translation> "sedih"@zsm .
+<http://wordnet-rdf.princeton.edu/wn31/100007846-n> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/109786620-n> .
+<http://wordnet-rdf.princeton.edu/wn31/109833037-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/Genet-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/106912409-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "llenguatge m\u00E0quina"@cat .
+<http://wordnet-rdf.princeton.edu/wn31/101595028-N> <http://www.w3.org/2000/01/rdf-schema#label> "tufted titmouse"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/relieve-v#4-v> <http://wordnet-rdf.princeton.edu/ontology#gloss> "lessen the intensity of or calm"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/penetrating+injury-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "injury incurred when an object (as a knife or bullet or shrapnel) penetrates into the body"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/101922355-N> <http://wordnet-rdf.princeton.edu/ontology#member_meronym> <http://wordnet-rdf.princeton.edu/wn31/101922145-n> .
+<http://wordnet-rdf.princeton.edu/wn31/categorization-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/categorization-n#3-n> .
+<http://wordnet-rdf.princeton.edu/wn31/impede-v#2-v> <http://wordnet-rdf.princeton.edu/ontology#gloss> "block passage through"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/111685823-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/111692851-n> .
+<http://wordnet-rdf.princeton.edu/wn31/boat+train-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a train taking passengers to or from a port"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/white+slime+mushroom-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/Secretary+of+State-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/101580727-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-Gracula-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Shigella-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/111340816-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/bipartizan-s> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/bipartizan-s#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/201157291-V> <http://wordnet-rdf.princeton.edu/ontology#gloss> "protect from moths"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/107767713-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "quetsche"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/slipperwort-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_176640> .
+<http://wordnet-rdf.princeton.edu/wn31/Northrop+Frye-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "Northrop Frye"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/distinctly-r#1-r> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_60847> .
+<http://wordnet-rdf.princeton.edu/wn31/genus+Fungia-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/substance-n#3-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/consonant-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/set-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/110925455-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Arthur Holly Compton"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/200056397-v> <http://wordnet-rdf.princeton.edu/ontology#translation> "deporre le uova"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/recopy-v#1-v> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/201699038-v> .
+<http://wordnet-rdf.princeton.edu/wn31/106413169-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E09\u0E32\u0E01\u0E22\u0E49\u0E2D\u0E19\u0E2D\u0E14\u0E35ต"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/deliver-v#9-v> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/202363326-v> .
+<http://wordnet-rdf.princeton.edu/wn31/108230345-N> <http://www.w3.org/2000/01/rdf-schema#label> "U. S. Army Special Forces"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/109765968-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-Wyomingite-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/110292610-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/capable-s#5-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/gooseneck-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "gooseneck%1:25:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/disk-jockey-v> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/disk-jockey-v#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/Texas+storksbill-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/104500044-N> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/104578972-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "katiska"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/Brussels+biscuit-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/200818664-V> <http://wordnet-rdf.princeton.edu/ontology#gloss> "refuse to accept or believe"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/300023315-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wordnet-rdf.princeton.edu/ontology#Synset> .
+<http://wordnet-rdf.princeton.edu/wn31/moderator-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/110728103-N> <http://www.w3.org/2000/01/rdf-schema#label> "thinker"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/112867768-N> <http://wordnet-rdf.princeton.edu/ontology#member_meronym> <http://wordnet-rdf.princeton.edu/wn31/112867629-n> .
+<http://wordnet-rdf.princeton.edu/wn31/108625514-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Parc national des North Cascades"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/111229780-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Frederick North"@cat .
+<http://wordnet-rdf.princeton.edu/wn31/postage+meter-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/103995116-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Cynoscephalae-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/108808051-n> .
+<http://wordnet-rdf.princeton.edu/wn31/stopover-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/109453163-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "Serpens"@por .
+<http://wordnet-rdf.princeton.edu/wn31/splint+bone-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/hinder-v#2-v> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/hindrance-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/colorize-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/Prunus+cerasifera-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/strip-n#3-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/102695929-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Ismaili-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "Ismaili"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/witch-hunt-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/101980007-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/genus+Menippe-n> .
+<http://wordnet-rdf.princeton.edu/wn31/108582535-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u30E9\u30B9\u30C8\u30D9\u30EBト"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/try-v#3-v> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "try%2:41:06::" .
+<http://wordnet-rdf.princeton.edu/wn31/pistachio+nut-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/pistachio+nut-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/111585836-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/112759619-n> .
+<http://wordnet-rdf.princeton.edu/wn31/106835711-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E15\u0E31\u0E27\u0E2A\u0E35\u0E48\u0E40\u0E2B\u0E25\u0E35\u0E48\u0E22ม"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/rattler-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/rattler-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/pureblooded-s#1-s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/star+anise-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "small shrubby tree of Japan and Taiwan; flowers are not fragrant"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/110395205-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u8001爺"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/banister-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "banister%1:06:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/changing-s#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/100157632-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u5F37迫"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/basketball+team-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/basketball+team-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/color+barrier-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "color_barrier%1:09:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/112447896-N> <http://www.w3.org/2000/01/rdf-schema#label> "Lilium columbianum"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/skreigh-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/102344457-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "myyrä"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/101669608-N> <http://www.w3.org/2000/01/rdf-schema#label> "genus Kinosternon"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/201346292-V> <http://wordnet-rdf.princeton.edu/ontology#gloss> "fasten or fix with a clamp"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/eloquence-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/105213274-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_28780> .
+<http://wordnet-rdf.princeton.edu/wn31/log-v> <http://lemon-model.net/lemon#otherForm> <http://wordnet-rdf.princeton.edu/wn31/log-v#Form-1> .
+<http://wordnet-rdf.princeton.edu/wn31/300004614-s> <http://wordnet-rdf.princeton.edu/ontology#translation> "saksittu"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/incapable-a#3-a> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/109479499-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "planet kebumian"@ind .
+<http://wordnet-rdf.princeton.edu/wn31/wood+pewee-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/104827053-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_26781> .
+<http://wordnet-rdf.princeton.edu/wn31/tightrope-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/104441914-n> .
+<http://wordnet-rdf.princeton.edu/wn31/maple-leaf-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/maple-leaf-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/102179568-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "wormlike larva of various elaterid beetles; feeds on roots of many crop plants"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/bombilation-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "bombilation%1:11:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/400151490-r> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/in+toto-r> .
+<http://wordnet-rdf.princeton.edu/wn31/100549363-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "int\u00E9rimaire"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/106697785-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.communication> .
+<http://wordnet-rdf.princeton.edu/wn31/108847143-N> <http://www.w3.org/2002/07/owl#sameAs> <http://www.w3.org/2006/03/wn/wn20/instances/synset-Sudbury-noun-1> .
+<http://wordnet-rdf.princeton.edu/wn31/106907583-N> <http://wordnet-rdf.princeton.edu/ontology#hyponym> <http://wordnet-rdf.princeton.edu/wn31/106909521-n> .
+<http://wordnet-rdf.princeton.edu/wn31/105483333-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "feixe"@glg .
+<http://wordnet-rdf.princeton.edu/wn31/slide-n#4-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/alder-leaved+serviceberry-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "alder-leaved serviceberry"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/urticate-v#1-v> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Sense_4802> .
+<http://wordnet-rdf.princeton.edu/wn31/114850152-N> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/cresol-n> .
+<http://wordnet-rdf.princeton.edu/wn31/104870305-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u7247\u60C5\u5F35り"@jpn .
+<http://wordnet-rdf.princeton.edu/wn31/114126770-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/114080853-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Joel+Harris-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "joel_harris%1:18:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/102623888-N> <http://www.w3.org/2000/01/rdf-schema#label> "surgeonfish"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/pal-v#1-v> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "pal%2:41:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/turning-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#derivation> <http://wordnet-rdf.princeton.edu/wn31/turn-v#2-v> .
+<http://wordnet-rdf.princeton.edu/wn31/sensorium-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#old_sense_key> "sensorium%1:08:00::" .
+<http://wordnet-rdf.princeton.edu/wn31/400038782-r> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#adv.all> .
+<http://wordnet-rdf.princeton.edu/wn31/caring-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/cloak-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/113855192-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.linkdef> .
+<http://wordnet-rdf.princeton.edu/wn31/400260109-r> <http://wordnet-rdf.princeton.edu/ontology#translation> "ulosp\u00E4in"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/110395101-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u0E1E\u0E48\u0E2D\u0E40\u0E12\u0E48า"@tha .
+<http://wordnet-rdf.princeton.edu/wn31/Senna+marilandica-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/103970276-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "naipe"@spa .
+<http://wordnet-rdf.princeton.edu/wn31/201551500-V> <http://www.w3.org/2000/01/rdf-schema#label> "efface"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/primly-r#1-r> <http://wordnet-rdf.princeton.edu/ontology#lex_id> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/114567533-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "vulnerabilità"@ita .
+<http://wordnet-rdf.princeton.edu/wn31/whipsnake-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "whipsnake"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/antimonious-a> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective> .
+<http://wordnet-rdf.princeton.edu/wn31/300029882-s> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u062C\u0645\u0639 \u0634\u0648\u0646\u062Fه"@fas .
+<http://wordnet-rdf.princeton.edu/wn31/Czechoslovakian-a> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#adjective> .
+<http://wordnet-rdf.princeton.edu/wn31/sidebar-n> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/sidebar-n#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/sandglass-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/Uskub-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/300703461-A> <http://wordnet-rdf.princeton.edu/ontology#synset_member> <http://wordnet-rdf.princeton.edu/wn31/inflected-a> .
+<http://wordnet-rdf.princeton.edu/wn31/swamphen-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/113132263-N> <http://wordnet-rdf.princeton.edu/ontology#hypernym> <http://wordnet-rdf.princeton.edu/wn31/113107668-n> .
+<http://wordnet-rdf.princeton.edu/wn31/300688642-S> <http://wordnet-rdf.princeton.edu/ontology#translation> "p\u00E9remptoire"@fra .
+<http://wordnet-rdf.princeton.edu/wn31/altogether-r> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/altogether-r#1-r> .
+<http://wordnet-rdf.princeton.edu/wn31/Darmera-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/Apollo+program-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/Apollo+program-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/white+melilot-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#sense_number> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/abator-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/abator-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/Anigozanthus+manglesii-n#1-n> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalSense> .
+<http://wordnet-rdf.princeton.edu/wn31/202495565-V> <http://wordnet-rdf.princeton.edu/ontology#gloss> "marry a woman, take a wife"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/105014082-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "\u05DE\u05B4\u05D9ן"@heb .
+<http://wordnet-rdf.princeton.edu/wn31/scanty-s> <http://lemon-model.net/lemon#canonicalForm> <http://wordnet-rdf.princeton.edu/wn31/scanty-s#CanonicalForm> .
+<http://wordnet-rdf.princeton.edu/wn31/Claude+E.+Shannon-n> <http://lemon-model.net/lemon#sense> <http://wordnet-rdf.princeton.edu/wn31/Claude+E.+Shannon-n#1-n> .
+<http://wordnet-rdf.princeton.edu/wn31/100594223-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "johtajuus"@fin .
+<http://wordnet-rdf.princeton.edu/wn31/strive-v> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#LexicalEntry> .
+<http://wordnet-rdf.princeton.edu/wn31/108273889-N> <http://wordnet-rdf.princeton.edu/ontology#translation> "parti"@sqi .
+<http://wordnet-rdf.princeton.edu/wn31/green+woodpecker-n#1-n> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/noun/green_woodpecker_1_05_00> .
+<http://wordnet-rdf.princeton.edu/wn31/109169188-N> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_49158> .
+<http://wordnet-rdf.princeton.edu/wn31/undependableness-n> <http://wordnet-rdf.princeton.edu/ontology#part_of_speech> <http://wordnet-rdf.princeton.edu/ontology#noun> .
+<http://wordnet-rdf.princeton.edu/wn31/cocktail+table-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/103067971-n> .
+<http://wordnet-rdf.princeton.edu/wn31/112596828-N> <http://www.w3.org/2000/01/rdf-schema#label> "fava bean"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/106376547-N> <http://wordnet-rdf.princeton.edu/ontology#lexical_domain> <http://wordnet-rdf.princeton.edu/ontology#noun.communication> .
+<http://wordnet-rdf.princeton.edu/wn31/thatcher-n#CanonicalForm> <http://lemon-model.net/lemon#writtenRep> "thatcher"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/buddy-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/109897417-n> .
+<http://wordnet-rdf.princeton.edu/wn31/201828678-V> <http://www.w3.org/2002/07/owl#sameAs> <http://lemon-model.net/lexica/uby/wn/WN_Synset_91186> .
+<http://wordnet-rdf.princeton.edu/wn31/100685703-N> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a method of performing prefrontal lobotomy in which the surgical knife is inserted above the eyeball and moved to cut brain fibers"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/demitasse-n#2-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "small coffee cup; for serving black coffee"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/200120604-v> <http://wordnet-rdf.princeton.edu/ontology#sample> "He got his squad on the ball"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/symbolic+logician-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "a person skilled at symbolic logic"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/Shaw-n#4-n> <http://wordnet-rdf.princeton.edu/ontology#gloss> "British playwright (born in Ireland); founder of the Fabian Society (1856-1950)"@eng .
+<http://wordnet-rdf.princeton.edu/wn31/conveyor+belt-n#CanonicalForm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Form> .
+<http://wordnet-rdf.princeton.edu/wn31/belt-v#1-v> <http://www.w3.org/2002/07/owl#sameAs> <http://www.lexvo.org/page/wordnet/30/verb/belt_2_36_00> .
+<http://wordnet-rdf.princeton.edu/wn31/sort+program-n#1-n> <http://wordnet-rdf.princeton.edu/ontology#tag_count> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://wordnet-rdf.princeton.edu/wn31/revival+meeting-n#1-n> <http://lemon-model.net/lemon#reference> <http://wordnet-rdf.princeton.edu/wn31/108402874-n> .

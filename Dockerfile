@@ -69,10 +69,18 @@ EXPOSE 8890 1111
 # End copy from https://github.com/EolDocker/virtuoso/blob/master/Dockerfile
 #############################################################################
 
+COPY wordnet-subset.nt /usr/local/var/lib/virtuoso/db/wordnet-subset.nt
+COPY virtuoso.ini /usr/local/var/lib/virtuoso/db/virtuoso.ini
+
+RUN virtuoso-t +wait +configfile /usr/local/var/lib/virtuoso/db/virtuoso.ini && \
+	ls /usr/local/var/lib/virtuoso/db/ && \
+	isql 1111 dba dba exec="DB.DBA.TTLP_MT(file_to_string_output('/usr/local/var/lib/virtuoso/db/wordnet-subset.nt'), '', 'http://example.com/clariah', 2); checkpoint;" && \
+	isql 1111 dba dba -K && \
+	ls /usr/local/var/lib/virtuoso/db/
+
 COPY oai-rs/resource-list.py /resource-list.py
 COPY entrypoint.sh /entrypoint.sh
 COPY parse_trx.sql /parse_trx.sql
-COPY virtuoso.ini /usr/local/var/lib/virtuoso/db/virtuoso.ini
 COPY generate-rdfpatch.sh /generate-rdfpatch.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
