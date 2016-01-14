@@ -23,7 +23,7 @@
 -- #define LOG_USER_TEXT     15 /* SQL string log'd by an user */
 
 
-create procedure parse_trx_files (in path varchar) {
+create procedure parse_trx_files (in path varchar, in already_logged varchar) {
   declare files, error, filename, i any;
 
   if (cfg_item_value(virtuoso_ini_path(), 'Parameters', 'CheckpointAuditTrail') = '0') {
@@ -32,10 +32,13 @@ create procedure parse_trx_files (in path varchar) {
     result ('CheckpointAuditTrail is not enabled. This will cause me to miss updates. Therefore I will not run!');
   } else {
     files := file_dirlist(path, 1);
-    gvector_sort(files, 1, 0, 0); --for a plain array the 2nd and 3d elements should be 1 and 0. non-zero for the last argument indicates ascending sort
-    -- skip the first one, it might still be changing
+    gvector_sort(files, 1, 0, 0); --for a plain array the 2nd and 3d elements should be 1 and 0. zero for the last argument indicates descending sort
+    -- skip the newest one, virtuoso is probably running so it will still be changing
     for (i := 1; i < length(files); i := i + 1) {
       if (ends_with(files[i], '.trx')) {
+        if (already_logged <> '' and ends_with(files[i], concat(already_logged, '.trx'))) {
+          goto break;
+        }
         if (not ends_with(path, '/')) {
           filename := concat(path, '/', files[i]);
         } else {
@@ -44,6 +47,7 @@ create procedure parse_trx_files (in path varchar) {
         parse_trx(filename);
       }
     }
+break:
     result ('# start: isql-junk');
   }
 }

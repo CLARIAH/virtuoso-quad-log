@@ -107,6 +107,6 @@ The quad-log will generate a bunch of files in the volume that you map to /datad
  - [ ] try multiple insertion strategies and see if we can trigger all cases in the log (LOG_INSERT, LOG_INSERT_SOFT etc.)
 
  - [ ] escaping literals (at least newlines and quotes, check the nquads spec)
- - [ ] make it stateful so we don't re-parse the same files over and over again
+ - [x] make it stateful so we don't re-parse the same files over and over again
  - [ ] being able to go over the 50k rdf-patch files using resource-list indexes
  - [ ] make the rs update process atomic

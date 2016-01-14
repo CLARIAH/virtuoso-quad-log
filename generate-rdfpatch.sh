@@ -30,8 +30,12 @@ if ! grep -q 'parse_trx' parse_trx_query_result.txt; then
 fi
 mkdir -p datadir
 cd datadir
+
+#get the latest log
+latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || ''`
+
 $ISQL_CMD > output <<-EOF
-	parse_trx_files('$LOG_FILE_LOCATION');
+	parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
 	exit;
 EOF
 csplit output "/^# start: /" '{*}'
@@ -41,6 +45,7 @@ for file in `ls xx*`; do
 				 # line with the filename, just the filename,		        remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
 		timestamp=`head -n1 $file        | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//'             | grep -o '[0-9]\{14\}$' || echo ''`
 		if [ -n "$timestamp" ]; then
+			echo "generated rdfpatch-${timestamp}" >&2
 			mv $file "rdfpatch-${timestamp}"
 		else
 			rm $file
