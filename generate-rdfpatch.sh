@@ -57,8 +57,8 @@ done
 rm output
 cd ..
 
+./resource-list.py --resource-url "${HTTP_SERVER_URL:-http://example.org/}" --resource-dir "$PWD/datadir"
+
 if [ -n "${CUR_USER:-}" ]; then
 	chown -R "$CUR_USER:$CUR_USER" datadir
 fi
-
-./resource-list.py --resource-url "${HTTP_SERVER_URL:-http://example.org/}" --resource-dir "$PWD/datadir"
