@@ -75,6 +75,8 @@ We're therefore leaning towards RDF Patch, though that specification is stale af
 To launch a self-contained sandbox that you can play around in, run the `playground.sh` script in this repo. And open the link
 that's printed in the console for further instructions.
 
+	./playground.sh
+
 To connect the logger to a production virtuoso server, you can pass it the connection details as environment variables using the `-e` flag.
 
 	docker run -i -t --rm -v $PWD/data:/datadir \
