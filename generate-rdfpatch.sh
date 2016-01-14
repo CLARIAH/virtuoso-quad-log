@@ -46,13 +46,10 @@ for file in `ls xx*`; do
 		timestamp=`head -n1 $file        | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//'             | grep -o '[0-9]\{14\}$' || echo ''`
 		if [ -n "$timestamp" ]; then
 			echo "generated rdfpatch-${timestamp}" >&2
-			mv $file "rdfpatch-${timestamp}"
-		else
-			rm $file
+			cp $file "rdfpatch-${timestamp}"
 		fi
-	else
-		rm $file
 	fi
+	rm $file
 done
 rm output
 cd ..
