@@ -1,31 +1,3 @@
-# Quickstart
-
-*(Skip to the Background section if you want to know what this code does)*
-
-To play around with this image you need an openvirtuoso server. To help you get started you can create one using this image:
-
-    docker run -d -p 8890:8890 --name virtuoso_server jauco/virtuoso-quad-log server
-
-You can then browse to http://localhost:8890 and login with user: `dba` and password: `dba`.
-You can upload data using the [quad store upload](http://localhost:8890/conductor/rdf_import.vspx)
-
-Once you have a virtuoso container running you can run the quad-log like this:
-
-	docker run -i -t --link virtuoso_server:virtuoso --name grabber jauco/virtuoso-quad-log
-
-Or with any virtuoso server like this
-
-	docker run -i -t --name grabber \
-		-e="VIRTUOSO_ISQL_ADDRESS=127.0.01" \
-		-e="VIRTUOSO_ISQL_PORT=1111" \
-		-e="VIRTUOSO_USER=dba" \
-		-e="VIRTUOSO_PASSWORD=dba" \
-		jauco/virtuoso-quad-log
-
-This initializes the container. You then rerun the container when needed:
-
-	docker start -a grabber
-
 # Background
 
 > The availability of massive quantities of digital sources (textual, audio-visual and structured data) for research is
@@ -98,6 +70,23 @@ Meaning that a specially encoded blank node in the document will always refer to
 
 We're therefore leaning towards RDF Patch, though that specification is stale after the LDP WG went for the LDpatch approach.
 
+# Quickstart
+
+To launch a self-contained sandbox that you can play around in, run the `playground.sh` script in this repo. And open the link
+that's printed in the console for further instructions.
+
+To connect the logger to a production virtuoso server, you can pass it the connection details as environment variables using the `-e` flag.
+
+	docker run -i -t --rm -v $PWD/data:/datadir \
+		-e="VIRTUOSO_ISQL_ADDRESS=127.0.01" \
+		-e="VIRTUOSO_ISQL_PORT=1111" \
+		-e="VIRTUOSO_USER=dba" \
+		-e="VIRTUOSO_PASSWORD=dba" \
+		jauco/virtuoso-quad-log
+
+The first time, the container will ask to install stored procedure onto the virtuoso server.
+
+The quad-log will generate a bunch of files in the volume that you map to /datadir that you can host using any static file server.
 
 # Things to test and do (aka issues/tickets)
 
@@ -108,11 +97,14 @@ We're therefore leaning towards RDF Patch, though that specification is stale af
  - [x] handle the fact that the last trx might still be changing (handling it by skipping the current transaction log)
  - [x] check if CheckpointAuditTrail is enabled when running this logger (cfg_item_value)
  - [x] multiple trx files (wrapper script)
- - [ ] escaping literals (at least newlines and quotes, check the nquads spec)
- - [ ] remove checkpoint statement before committing and deploying
+ - [ ] .well-known toevoegen
+ - [x] static file server aan de readme toevoegen
+ - [x] remove checkpoint statement before committing and deploying
+ - [x] virtuoso server with existing data
 
  - [ ] try multiple insertion strategies and see if we can trigger all cases in the log (LOG_INSERT, LOG_INSERT_SOFT etc.)
 
+ - [ ] escaping literals (at least newlines and quotes, check the nquads spec)
  - [ ] make it stateful so we don't re-parse the same files over and over again
  - [ ] being able to go over the 50k rdf-patch files using resource-list indexes
- - [ ] make the update process atomic
+ - [ ] make the rs update process atomic

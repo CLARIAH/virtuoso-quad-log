@@ -20,20 +20,20 @@ $ISQL_CMD <<-'EOF' | grep -q 'parse_trx'
 GREPRESULT=${PIPESTATUS[1]}
 set -o errexit
 if [ $GREPRESULT -ne 0 ]; then
-	read -p "To read the transaction log from the server I need to install a few stored procedures on the virtuoso server. All starting with 'parse_trx'. Is that okay? [yn]" insert_procedure
-	if [ "$insert_procedure" != "y" ]; then
-		echo "Without the stored procedure I can't be of much use. Sorry. You might want to run me connected to a dummy virtuoso server in a container as detailed in the README."
+	if [ -z "${INSERT_PROCEDURE:-}"]; then
+		read -p "To read the transaction log from the server I need to install a few stored procedures on the virtuoso server. All starting with 'parse_trx'. Is that okay? [yn]" INSERT_PROCEDURE
+	fi
+	if [ "$INSERT_PROCEDURE" != "y" ]; then
+		echo "Without the stored procedure I can't be of much use. Sorry. You might want to run me connected to a dummy virtuoso server in a container as detailed in the README." >&2
 		exit 1
 	else
-		echo "Inserting stored procedure:"
+		echo "Inserting stored procedure:" >&2
 		$ISQL_CMD < parse_trx.sql
-		echo "done."
 	fi
 fi
 mkdir -p datadir
 cd datadir
 $ISQL_CMD > output <<-EOF
-	checkpoint;
 	parse_trx_files('$LOG_FILE_LOCATION');
 	exit;
 EOF
@@ -54,5 +54,9 @@ for file in `ls xx*`; do
 done
 rm output
 cd ..
+
+if [ -n "${CUR_USER:-}"]; then
+	chown -R "$CUR_USER:$CUR_USER" datadir
+fi
 
 ./resource-list.py --resource-url "${HTTP_SERVER_URL:-http://example.org/}" --resource-dir "$PWD/datadir"
