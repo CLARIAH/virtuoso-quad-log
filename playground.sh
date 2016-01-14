@@ -41,7 +41,7 @@ cat > "$DATA_DIR"/index.htm <<-EOF
 	</ol>
 EOF
 
-mkdir "$DATA_DIR/.well-known"
+mkdir -p "$DATA_DIR/.well-known"
 # See the resourcesync spec for various methods to publish your resourcesync documents
 cat > "$DATA_DIR/.well-known/resourcesync" <<-EOF
 	<?xml version="1.0" encoding="UTF-8"?>
