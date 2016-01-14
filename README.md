@@ -90,6 +90,10 @@ The first time, the container will ask to install stored procedure onto the virt
 
 The quad-log will generate a bunch of files in the volume that you map to /datadir that you can host using any static file server.
 
+To advertise the logs you should provide either a robots.txt or a Source Description at the location that you submit to Work Package 2.
+See http://www.openarchives.org/rs/1.0/resourcesync for more information, or contact us!
+(The playground advertises the logs using the hidden folder .well-known)
+
 # Things to test and do (aka issues/tickets)
 
  - [x] offsets with multiple trx files (is the offset global or file specific. How to handle the offset after a checkpoint has run. What if multiple checkpoints have run in between grabs)

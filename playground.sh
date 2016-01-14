@@ -41,6 +41,21 @@ cat > "$DATA_DIR"/index.htm <<-EOF
 	</ol>
 EOF
 
+mkdir "$DATA_DIR/.well-known"
+# See the resourcesync spec for various methods to publish your resourcesync documents
+cat > "$DATA_DIR/.well-known/resourcesync" <<-EOF
+	<?xml version="1.0" encoding="UTF-8"?>
+	<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+	        xmlns:rs="http://www.openarchives.org/rs/terms/">
+	  <rs:md capability="description"/>
+	  <url>
+	      <loc>http://localhost:${LOGS_SERVER_PORT}/capability-list.xml</loc>
+	      <rs:md capability="capabilitylist"/>
+	  </url>
+	</urlset>
+EOF
+
+
 NGINX=$(docker run -v $PWD/"$DATA_DIR":/usr/share/nginx/html:ro -d -p $LOGS_SERVER_PORT:80 nginx)
 echo "Launched the web server!"
 
