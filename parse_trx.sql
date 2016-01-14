@@ -44,16 +44,16 @@ create procedure parse_trx_files (in path varchar) {
         parse_trx(filename);
       }
     }
-    result ('# start: isql-junk', ' ', ' ', ' ', ' ');
+    result ('# start: isql-junk');
   }
 }
 
 create procedure parse_trx (in f varchar) {
-  declare h, op, g, s, p, o, line, lines any;
+  declare h, op, nquad, line, lines any;
   declare pos int;
 
-  result_names (op, s, p, o, g);
-  result (concat('# start: ', f), ' ', ' ', ' ', ' ');
+  result_names (nquad);
+  result(concat('# start: ', f));
 
   h := file_open (f, 0);
   while ((lines := read_log (h, pos)) is not null) {
@@ -64,7 +64,7 @@ create procedure parse_trx (in f varchar) {
     for (i := 0; i < length (lines); i := i + 1) {
       line := lines[i];
       if (line[0] in (1, 8, 9, 13)) { -- LOG_INSERT, LOG_INSERT_SOFT, LOG_INSERT_REPL and LOG_KEY_INSERT are all additions
-        op := 'A';
+        op := '+';
         if (line[0] = 13) {
           quad := line[2]; -- with LOG_KEY_INSERT a flag is inserted in the line so the quad ends up in line[2] instead of line[1]
         }
@@ -73,7 +73,7 @@ create procedure parse_trx (in f varchar) {
         }
       }
       else if (line[0] in (3, 14)) {-- LOG_DELETE and LOG_KEY_DELETE are both deletions
-        op := 'D';
+        op := '-';
         quad := line[1];
       }
 
@@ -82,7 +82,7 @@ create procedure parse_trx (in f varchar) {
           --There are a few tables and indexes that store the quads (select * from SYS_KEYS WHERE KEY_NAME like '%QUAD%')
           --The log contains a record for each index. It seems to me that the table DB.DBA.RDF_QUAD (id=271) is the one
           --that's always updated. So we can ignore the others
-          result (op, parse_trx_format_iri(quad[2]), parse_trx_format_iri(quad[3]), parse_trx_format_object(quad[4]), parse_trx_format_iri(quad[1]));
+          result(concat(op, ' ', parse_trx_format_iri(quad[2]), ' ',parse_trx_format_iri(quad[3]), ' ', parse_trx_format_object(quad[4]), ' ', parse_trx_format_iri(quad[1]), ' .'));
         }
       }
     }
@@ -94,7 +94,7 @@ create procedure parse_trx (in f varchar) {
 --see also: 'IRI_ID Type' in http://docs.openlinksw.com/virtuoso/rdfdatarepresentation.html
 create procedure parse_trx_format_iri (in iri any) {
   if (iri > min_64bit_bnode_iri_id()) {
-    return concat('<_:', ltrim(concat(iri, ''), '#'), '>');
+    return concat('_:', ltrim(concat(iri, ''), '#'));
   } else {
     return concat('<', __ro2sq(iri), '>');
   }
@@ -113,8 +113,8 @@ create procedure parse_trx_format_object (in object any) {
     languageTag := __ro2sq(DB.DBA.RDF_LANGUAGE_OF_OBJ(object));
     if (languageTag <> '') {
       result := concat(result, '@', languageTag);
-    } else if (objectType <> '') {
-      result := concat(result, '^^', objectType);
+    } else if (objectType <> '' and objectType <> 'http://www.w3.org/2001/XMLSchema#string') {
+      result := concat(result, '^^<', objectType, '>');
     }
     return result;
   }
