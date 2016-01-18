@@ -56,7 +56,7 @@ cd ..
 
 if [ -z "${HTTP_SERVER_URL:-}" ]; then
 	if [ -n "${HTTP_SERVER_PORT_80_TCP_ADDR:-}" ]; then
-		HTTP_SERVER_URL="${HTTP_SERVER_PORT_80_TCP_ADDR}:${HTTP_SERVER_PORT_80_TCP_PORT}"
+		HTTP_SERVER_URL="http://${HTTP_SERVER_PORT_80_TCP_ADDR}:${HTTP_SERVER_PORT_80_TCP_PORT}"
 	else
 		HTTP_SERVER_URL="http://example.org/"
 	fi
