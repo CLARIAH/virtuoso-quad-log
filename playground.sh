@@ -60,13 +60,13 @@ cat > "$DATA_DIR/.well-known/resourcesync" <<-EOF
 	</urlset>
 EOF
 
-VIRTUOSO_IMAGE=$(docker run -d -p $VIRTUOSO_PORT:8890 jauco/virtuoso-quad-log server)
+VIRTUOSO_IMAGE=$(docker run -d -p $VIRTUOSO_PORT:8890 huygensing/virtuoso-quad-logger server)
 until docker logs $VIRTUOSO_IMAGE 2>&1 | grep -q 'Server online at 1111' ; do
 	sleep 1
 done
 echo "Launched the virtuoso server!"
 
-QUAD_LOGGER=$(docker run -d --link "${VIRTUOSO_IMAGE}:virtuoso" --link $NGINX:HTTP_SERVER -e "RUN_INTERVAL=60" -e "INSERT_PROCEDURE=y" -e "CUR_USER=$UID" -v $PWD/logs:/datadir jauco/virtuoso-quad-log)
+QUAD_LOGGER=$(docker run -d --link "${VIRTUOSO_IMAGE}:virtuoso" --link $NGINX:HTTP_SERVER -e "RUN_INTERVAL=60" -e "INSERT_PROCEDURE=y" -e "CUR_USER=$UID" -v $PWD/logs:/datadir huygensing/virtuoso-quad-logger)
 echo "Launched! The quad logger!"
 echo ""
 echo "Browse to http://${NGINX_IP} to get started"

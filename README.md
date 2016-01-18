@@ -84,7 +84,7 @@ To connect the logger to a production virtuoso server, you can pass it the conne
 		-e="VIRTUOSO_ISQL_PORT=1111" \
 		-e="VIRTUOSO_USER=dba" \
 		-e="VIRTUOSO_PASSWORD=dba" \
-		jauco/virtuoso-quad-log
+		huygensing/virtuoso-quad-logger
 
 The first time, the container will ask to install stored procedure onto the virtuoso server.
 
@@ -103,7 +103,7 @@ See http://www.openarchives.org/rs/1.0/resourcesync for more information, or con
  - [x] handle the fact that the last trx might still be changing (handling it by skipping the current transaction log)
  - [x] check if CheckpointAuditTrail is enabled when running this logger (cfg_item_value)
  - [x] multiple trx files (wrapper script)
- - [ ] .well-known toevoegen
+ - [x] .well-known toevoegen
  - [x] static file server aan de readme toevoegen
  - [x] remove checkpoint statement before committing and deploying
  - [x] virtuoso server with existing data
