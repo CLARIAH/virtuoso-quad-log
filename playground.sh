@@ -4,9 +4,9 @@ set -o errexit
 
 function ctrl_c() {
 	echo "Stopping containers"
-	docker stop ${VIRTUOSO_IMAGE:-} ${QUAD_LOGGER:-} ${NGINX:-}
+	docker stop ${VIRTUOSO_IMAGE:-} ${QUAD_LOGGER:-} ${NGINX:-} ${CRAWLER:-}
 	echo "Removing containers"
-	docker rm ${VIRTUOSO_IMAGE:-} ${QUAD_LOGGER:-} ${NGINX:-}
+	docker rm ${VIRTUOSO_IMAGE:-} ${QUAD_LOGGER:-} ${NGINX:-} ${CRAWLER:-}
 }
 
 trap ctrl_c EXIT
@@ -60,8 +60,6 @@ cat > "$DATA_DIR/.well-known/resourcesync" <<-EOF
 	</urlset>
 EOF
 
-
-
 VIRTUOSO_IMAGE=$(docker run -d -p $VIRTUOSO_PORT:8890 jauco/virtuoso-quad-log server)
 until docker logs $VIRTUOSO_IMAGE 2>&1 | grep -q 'Server online at 1111' ; do
 	sleep 1
@@ -74,6 +72,6 @@ echo ""
 echo "Browse to http://${NGINX_IP} to get started"
 echo "I'll now be showing the combined logs of the three containers"
 
-# docker run --link ${NGINX}:nginx -it rene/oai-rs-client
+CRAWLER=$(docker run --link ${NGINX}:nginx -d -p 8180 rene/oai-rs-client)
 
-{ docker logs --follow $VIRTUOSO_IMAGE 2>&1 | sed 's/.*/VIRTUOSO   : &/' & docker logs --follow $QUAD_LOGGER 2>&1 | sed 's/.*/QUAD LOGGER: &/' & docker logs --follow $NGINX 2>&1 | sed 's/.*/NGINX      : &/' ; }
+{ docker logs --follow $CRAWLER 2>&1 | sed 's/.*/CRAWLER   : &/' & docker logs --follow $VIRTUOSO_IMAGE 2>&1 | sed 's/.*/VIRTUOSO   : &/' & docker logs --follow $QUAD_LOGGER 2>&1 | sed 's/.*/QUAD LOGGER: &/' & docker logs --follow $NGINX 2>&1 | sed 's/.*/NGINX      : &/' ; }
