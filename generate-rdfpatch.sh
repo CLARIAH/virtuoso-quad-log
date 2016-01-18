@@ -54,7 +54,15 @@ done
 rm output
 cd ..
 
-./resource-list.py --resource-url "${HTTP_SERVER_URL:-http://example.org/}" --resource-dir "$PWD/datadir"
+if [ -z "${HTTP_SERVER_URL:-}" ]; then
+	if [ -n "${HTTP_SERVER_PORT_80_TCP_ADDR:-}" ]; then
+		HTTP_SERVER_URL="${HTTP_SERVER_PORT_80_TCP_ADDR}:${HTTP_SERVER_PORT_80_TCP_PORT}"
+	else
+		HTTP_SERVER_URL="http://example.org/"
+	fi
+fi
+
+./resource-list.py --resource-url "${HTTP_SERVER_URL}" --resource-dir "$PWD/datadir"
 
 if [ -n "${CUR_USER:-}" ]; then
 	chown -R "$CUR_USER:$CUR_USER" datadir
