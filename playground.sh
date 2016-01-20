@@ -60,18 +60,18 @@ cat > "$DATA_DIR/.well-known/resourcesync" <<-EOF
 	</urlset>
 EOF
 
-VIRTUOSO_IMAGE=$(docker run -d -p $VIRTUOSO_PORT:8890 huygensing/virtuoso-quad-logger server)
+VIRTUOSO_IMAGE=$(docker run -d -p $VIRTUOSO_PORT:8890 huygensing/virtuoso-quad-log server)
 until docker logs $VIRTUOSO_IMAGE 2>&1 | grep -q 'Server online at 1111' ; do
 	sleep 1
 done
 echo "Launched the virtuoso server!"
 
-QUAD_LOGGER=$(docker run -d --link "${VIRTUOSO_IMAGE}:virtuoso" --link $NGINX:HTTP_SERVER -e "RUN_INTERVAL=60" -e "INSERT_PROCEDURE=y" -e "CUR_USER=$UID" -v $PWD/logs:/datadir huygensing/virtuoso-quad-logger)
+QUAD_LOGGER=$(docker run -d --link "${VIRTUOSO_IMAGE}:virtuoso" --link $NGINX:HTTP_SERVER -e "RUN_INTERVAL=60" -e "INSERT_PROCEDURE=y" -e "CUR_USER=$UID" -v $PWD/logs:/datadir huygensing/virtuoso-quad-log)
 echo "Launched! The quad logger!"
 echo ""
 echo "Browse to http://${NGINX_IP} to get started"
 echo "I'll now be showing the combined logs of the three containers"
 
-CRAWLER=$(docker run --link ${NGINX}:nginx -d -p 8180 rene/oai-rs-client)
+CRAWLER=$(docker run --link ${NGINX}:nginx -d -p 8180 huygensing/oai-rs-client)
 
 { docker logs --follow $CRAWLER 2>&1 | sed 's/.*/CRAWLER   : &/' & docker logs --follow $VIRTUOSO_IMAGE 2>&1 | sed 's/.*/VIRTUOSO   : &/' & docker logs --follow $QUAD_LOGGER 2>&1 | sed 's/.*/QUAD LOGGER: &/' & docker logs --follow $NGINX 2>&1 | sed 's/.*/NGINX      : &/' ; }

@@ -84,7 +84,7 @@ To connect the logger to a production virtuoso server, you can pass it the conne
 		-e="VIRTUOSO_ISQL_PORT=1111" \
 		-e="VIRTUOSO_USER=dba" \
 		-e="VIRTUOSO_PASSWORD=dba" \
-		huygensing/virtuoso-quad-logger
+		huygensing/virtuoso-quad-log
 
 The first time, the container will ask to install stored procedure onto the virtuoso server.
 
