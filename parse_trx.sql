@@ -24,7 +24,7 @@
 
 
 create procedure parse_trx_files (in path varchar, in already_logged varchar) {
-  declare files, error, filename, i any;
+  declare files, trx_files, error, filename, i any;
 
   if (cfg_item_value(virtuoso_ini_path(), 'Parameters', 'CheckpointAuditTrail') = '0') {
     --I'm not sure how to throw an error. This works as well
@@ -32,11 +32,17 @@ create procedure parse_trx_files (in path varchar, in already_logged varchar) {
     result ('CheckpointAuditTrail is not enabled. This will cause me to miss updates. Therefore I will not run!');
   } else {
     files := file_dirlist(path, 1);
-    gvector_sort(files, 1, 0, 0); --for a plain array the 2nd and 3d elements should be 1 and 0. zero for the last argument indicates descending sort
+    trx_files := vector();
+    -- Filter out non-transaction files
+    for (i := 0; i < length(files); i := i + 1) {
+    	if (ends_with(files[i], '.trx')) {
+    		trx_files := vector_concat(trx_files, vector(files[i]));
+    	}
+    }
+    gvector_sort(trx_files, 1, 0, 0); --for a plain array the 2nd and 3d elements should be 1 and 0. zero for the last argument indicates descending sort
     -- skip the newest one, virtuoso is probably running so it will still be changing
-    for (i := 1; i < length(files); i := i + 1) {
-      if (ends_with(files[i], '.trx')) {
-        if (already_logged <> '' and ends_with(files[i], concat(already_logged, '.trx'))) {
+    for (i := 1; i < length(trx_files); i := i + 1) {
+        if (already_logged <> '' and ends_with(trx_files[i], concat(already_logged, '.trx'))) {
           goto break;
         }
         if (not ends_with(path, '/')) {
@@ -45,7 +51,6 @@ create procedure parse_trx_files (in path varchar, in already_logged varchar) {
           filename := concat(path, files[i]);
         }
         parse_trx(filename);
-      }
     }
 break:
     result ('# start: isql-junk');

@@ -34,13 +34,20 @@ cd datadir
 #get the latest log
 latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || ''`
 
-$ISQL_CMD > output <<-EOF
+# parse_trx_files to marked output file
+mark=$(date +"%Y%m%d%H%M%S")
+output="output$mark"
+
+$ISQL_CMD > "$output" <<-EOF
 	parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
 	exit;
 EOF
-csplit output "/^# start: /" '{*}'
+
+# split output to marked files; use more than standard 2 digits for split file suffix
+prefix='xyx'$mark'_'
+csplit -f "$prefix" -n 4 "$output" "/^# start: /" '{*}'
 #loop over all files
-for file in `ls xx*`; do
+for file in $prefix*; do
 	if [ `wc -l $file | grep -o '^[0-9]\+'` -gt 1 ]; then # first line is the header, so a one-line file is effectively empty
 				 # line with the filename, just the filename,		        remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
 		timestamp=`head -n1 $file        | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//'             | grep -o '[0-9]\{14\}$' || echo ''`
@@ -51,7 +58,7 @@ for file in `ls xx*`; do
 	fi
 	rm $file
 done
-rm output
+rm "$output"
 cd ..
 
 if [ -z "${HTTP_SERVER_URL:-}" ]; then
