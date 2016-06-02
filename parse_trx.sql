@@ -27,9 +27,8 @@ create procedure parse_trx_files (in path varchar, in already_logged varchar) {
   declare files, trx_files, error, filename, i any;
 
   if (cfg_item_value(virtuoso_ini_path(), 'Parameters', 'CheckpointAuditTrail') = '0') {
-    --I'm not sure how to throw an error. This works as well
-    result_names (error);
-    result ('CheckpointAuditTrail is not enabled. This will cause me to miss updates. Therefore I will not run!');
+    --This will end this procedure.
+    signal('99999', ': CheckpointAuditTrail is not enabled. This will cause me to miss updates. Therefore I will not run!');
   } else {
     files := file_dirlist(path, 1);
     trx_files := vector();
@@ -46,9 +45,9 @@ create procedure parse_trx_files (in path varchar, in already_logged varchar) {
           goto break;
         }
         if (not ends_with(path, '/')) {
-          filename := concat(path, '/', files[i]);
+          filename := concat(path, '/', trx_files[i]);
         } else {
-          filename := concat(path, files[i]);
+          filename := concat(path, trx_files[i]);
         }
         parse_trx(filename);
     }

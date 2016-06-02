@@ -38,14 +38,26 @@ latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || '
 mark=$(date +"%Y%m%d%H%M%S")
 output="output$mark"
 
-$ISQL_CMD > "$output" <<-EOF
+errorfile=isql.errors
+if [ -e "$errorfile" ]; then
+	rm "$errorfile"
+fi
+
+$ISQL_CMD 2>$errorfile > "$output" <<-EOF
 	parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
 	exit;
 EOF
 
+# capture errors from isql:
+if grep -q "\*\*\* Error [0-9]\{5\}: \[Virtuoso Driver\]\[Virtuoso Server\]" "$errorfile"; then
+	echo "Received error from isql @ $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT"
+	echo "$(cat -n $errorfile)"
+	exit 1
+fi
+
 # split output to marked files; use more than standard 2 digits for split file suffix
 prefix='xyx'$mark'_'
-csplit -f "$prefix" -n 4 "$output" "/^# start: /" '{*}'
+csplit -f "$prefix" -n 4 -s "$output" "/^# start: /" '{*}'
 #loop over all files
 for file in $prefix*; do
 	if [ `wc -l $file | grep -o '^[0-9]\+'` -gt 1 ]; then # first line is the header, so a one-line file is effectively empty
@@ -74,3 +86,5 @@ fi
 if [ -n "${CUR_USER:-}" ]; then
 	chown -R "$CUR_USER:$CUR_USER" datadir
 fi
+
+exit 0

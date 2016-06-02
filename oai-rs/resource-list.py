@@ -3,11 +3,12 @@
 from resync.resource_list import ResourceList
 from resync.capability_list import CapabilityList
 from resync.source_description import SourceDescription
+from resync.utils import compute_md5_for_file
 
 from resync.resource import Resource
 from argparse import ArgumentParser
 
-from os import listdir
+from os import listdir, stat
 from os.path import isfile, isdir, join
 
 parser = ArgumentParser()
@@ -40,7 +41,10 @@ for filename in listdir(args.resource_dir):
 		raw_ts[12:14] + "Z"
 	)
 	timestamps.append(ts)
-	rl.add(Resource(args.resource_url + filename, lastmod=ts))
+	file = join(args.resource_dir, filename)
+	length = stat(file).st_size
+	md5 = compute_md5_for_file(file)
+	rl.add(Resource(args.resource_url + filename, md5=md5, length=length, lastmod=ts))
 
 # Print to file at args.resource_dir + "/resource-list.xml"
 resource_list_file = open(args.resource_dir + "/resource-list.xml", "w")
