@@ -66,7 +66,7 @@ until docker logs $VIRTUOSO_IMAGE 2>&1 | grep -q 'Server online at 1111' ; do
 done
 echo "Launched the virtuoso server!"
 
-QUAD_LOGGER=$(docker run -d --link "${VIRTUOSO_IMAGE}:virtuoso" --link $NGINX:HTTP_SERVER -e "RUN_INTERVAL=60" -e "INSERT_PROCEDURE=y" -e "CUR_USER=$UID" -v $PWD/logs:/datadir virtuoso-quad-log)
+QUAD_LOGGER=$(docker run -d --link "${VIRTUOSO_IMAGE}:virtuoso" --link $NGINX:HTTP_SERVER -e "RUN_INTERVAL=60" -e "INSERT_PROCEDURE=y" -e "CUR_USER=$UID" -v $PWD/logs:/datadir bhenk/virtuoso-quad-log)
 echo "Launched! The quad logger!"
 echo ""
 echo "Browse to http://${NGINX_IP} to get started"
