@@ -2,6 +2,10 @@
 
 # Start a Docker container with the virtuoso quad logger.
 # 
+# The virtuosos quad logger will poll the transaction logs of the Virtuoso instance 
+# at the given host and port for changes in its Quad Store. The virtuosos quad logger
+# uses the isql interactive interface and to do so.
+# 
 
 ###############################################################################
 # Set variables to reflect current conditions
@@ -23,7 +27,8 @@ read -sp "Virtuoso password for the user '$VIRTUOSO_USER' " VIRTUOSO_PASSWORD
 VIRTUOSO_PASSWORD=${VIRTUOSO_PASSWORD:-dba}
 echo
 #
-# The time between consecutive runs of the quad logger:
+# The time between consecutive runs of the quad logger.
+# Default unit is seconds:
 RUN_INTERVAL=60
 #
 # The location for transaction logs on the Virtuoso server:
