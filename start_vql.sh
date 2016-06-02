@@ -2,10 +2,15 @@
 
 # Start a Docker container with the virtuoso quad logger.
 # 
-# The virtuosos quad logger will poll the transaction logs of the Virtuoso instance 
-# at the given host and port for changes in its Quad Store. The virtuosos quad logger
-# uses the isql interactive interface and to do so.
-# 
+# 1. The virtuoso quad logger will poll the transaction logs of the Virtuoso instance 
+# at the given host and port for changes in its Quad Store. 
+#
+# 2. The virtuoso quad logger uses the isql interactive interface to store incremental 
+# change files as rdf-patch. See https://afs.github.io/rdf-patch/
+#
+# 3. The virtuoso quad logger enables the propagation of the changes through the
+# Resource Sync Framework. See http://www.openarchives.org/rs/1.0/resourcesync
+#
 
 ###############################################################################
 # Set variables to reflect current conditions
@@ -53,4 +58,4 @@ docker run -it --rm -v $DATA_DIR:/datadir \
     -e="VIRTUOSO_PASSWORD=$VIRTUOSO_PASSWORD" \
     -e="RUN_INTERVAL=$RUN_INTERVAL" \
     -e="LOG_FILE_LOCATION=$LOG_FILE_LOCATION" \
-    virtuoso-quad-log:1.0.0
+    bhenk/virtuoso-quad-log
