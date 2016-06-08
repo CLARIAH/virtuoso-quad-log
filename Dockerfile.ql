@@ -1,6 +1,6 @@
 # build quad logger essentials
 # Usage:
-# $ docker build -t {repository}/virtuoso-quad-log:{version} -f Dockerfile.ql .
+# $ docker build -t {repository}/virtuoso-quad-log{:version} -f Dockerfile.ql .
 
 FROM python:2
 
@@ -73,11 +73,13 @@ EXPOSE 8890 1111
 # End copy from https://github.com/EolDocker/virtuoso/blob/master/Dockerfile
 #############################################################################
 
-COPY virtuoso.ini /usr/local/var/lib/virtuoso/db/virtuoso.ini
-COPY oai-rs/resource-list.py /resource-list.py
-COPY entrypoint.sh /entrypoint.sh
-COPY parse_trx.sql /parse_trx.sql
-COPY generate-rdfpatch.sh /generate-rdfpatch.sh
+COPY virtuoso.ini /usr/local/var/lib/virtuoso/db/
+COPY sql-proc/ /sql-proc/
+COPY oai-rs/resource-list.py /
+COPY entrypoint.sh /
+COPY generate-rdfpatch.sh /
+
+RUN mkdir /datadir
 
 ENTRYPOINT ["/entrypoint.sh"]
 

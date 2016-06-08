@@ -2,34 +2,97 @@
 set -o nounset
 set -o errexit
 
+# The location of transaction logs on the Virtuoso server.
 LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-/usr/local/var/lib/virtuoso/db}
 
-if [ -n "${VIRTUOSO_PORT_1111_TCP_ADDR:-}" -a -n "${VIRTUOSO_PORT_1111_TCP_PORT:-}" ]; then
-	ISQL_CMD="isql -H ${VIRTUOSO_PORT_1111_TCP_ADDR} -S ${VIRTUOSO_PORT_1111_TCP_PORT} -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
-else
-	ISQL_CMD="isql -H $VIRTUOSO_ISQL_ADDRESS -S $VIRTUOSO_ISQL_PORT -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
+# Remote isql command
+ISQL_CMD="isql -H $VIRTUOSO_ISQL_ADDRESS -S $VIRTUOSO_ISQL_PORT -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
+
+# File to report isql errors
+ISQL_ERROR_FILE=isql.errors
+if [ -e "$ISQL_ERROR_FILE" ]; then
+	rm "$ISQL_ERROR_FILE"
 fi
 
-$ISQL_CMD <<-'EOF' > parse_trx_query_result.txt
-	SET CSV=ON;
-	SELECT P_NAME FROM SYS_PROCEDURES WHERE P_NAME = 'DB.DBA.parse_trx';
-	exit;
-	EOF
-
-if ! grep -q 'parse_trx' parse_trx_query_result.txt; then
-	if [ -z "${INSERT_PROCEDURE:-}" ]; then
-		read -p "To read the transaction log from the server I need to install a few stored procedures on the virtuoso server. All starting with 'parse_trx'. Is that okay? [yn]" INSERT_PROCEDURE
-	fi
-	if [ "$INSERT_PROCEDURE" != "y" ]; then
-		echo "Without the stored procedure I can't be of much use. Sorry. You might want to run me connected to a dummy virtuoso server in a container as detailed in the README." >&2
+###############################
+# assert_no_isql_error
+# Assert no error is reported to the isql error file.
+#
+# Globals:      ISQL_ERROR_FILE, VIRTUOSO_ISQL_ADDRESS, VIRTUOSO_ISQL_PORT
+# Arguments:    None
+# Returns:      None
+# Exit status:  1 on error found.
+assert_no_isql_error()
+{
+	if grep -q "\*\*\* Error [0-9]\{5\}: \[Virtuoso Driver\]\[Virtuoso Server\]" "$ISQL_ERROR_FILE"; then
+		echo "Received error from isql @ $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT" >&2
+		echo "$(cat -n $ISQL_ERROR_FILE)" >&2
 		exit 1
-	else
-		echo "Inserting stored procedure:" >&2
-		$ISQL_CMD < parse_trx.sql
 	fi
-fi
-mkdir -p datadir
+}
+
+###############################
+# assert_procedures_stored
+# Assert that stored procedures are available on the Virtuoso server; insert them if needed.
+#
+# Globals:      INSERT_PROCEDURES, ISQL_ERROR_FILE
+# Arguments:    None 'balala'
+# Returns:      None
+# Exit status:  1 if procedures cannot be inserted.
+assert_procedures_stored()
+{
+	files=(parse_trx.sql dump_nquads.sql)
+	procedures_count=5
+
+	$ISQL_CMD <<-'EOF' > query_result 2>$ISQL_ERROR_FILE
+		SET CSV=ON;
+		SELECT P_NAME FROM SYS_PROCEDURES WHERE P_NAME LIKE 'DB.DBA.vql_*';
+		exit;
+		EOF
+	assert_no_isql_error
+
+    # cannot use   found_procedures=$(grep -c 'DB\.DBA\.vql_' query_result)   in combination with   set -o errexit
+	found_procedures=$(grep -o "DB\.DBA\.vql_*" query_result | wc -l)
+	echo "Found $found_procedures out of $procedures_count required stored procedures." >&2
+
+	if [ "$found_procedures" != "$procedures_count" ] ; then
+		if [ -z "${INSERT_PROCEDURES:-}" ]; then
+			read -p "To dump quads and read transaction logs from the server I need to install a few stored procedures \
+			on the virtuoso server. Is that okay? [yn]" INSERT_PROCEDURES
+		fi
+		if [ "$INSERT_PROCEDURES" != "y" ]; then
+			echo "Without the stored procedures I can't be of much use. Sorry. You might want to run me connected to \
+			a dummy virtuoso server in a container as detailed in the README." >&2
+			exit 1
+		else
+			echo "Inserting stored procedures..." >&2
+			for file in "${files[@]}"
+			do
+				$ISQL_CMD < "sql-proc/$file" > /dev/null 2>$ISQL_ERROR_FILE
+				assert_no_isql_error
+				echo "Inserted sql-proc/$file" >&2
+			done
+		fi
+	fi
+	rm query_result
+}
+
+assert_dump_at_checkpoint()
+{
+    echo "allee"
+}
+
+# Assert that stored procedures are available on the Virtuoso server; insert them if needed.
+assert_procedures_stored
+
+# Create the data directory, change to it.
+#mkdir -p datadir
 cd datadir
+
+
+assert_dump_at_checkpoint
+	
+
 
 #get the latest log
 latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || ''`
@@ -44,7 +107,7 @@ if [ -e "$errorfile" ]; then
 fi
 
 $ISQL_CMD 2>$errorfile > "$output" <<-EOF
-	parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
+	vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
 	exit;
 EOF
 

@@ -15,29 +15,35 @@
 ###############################################################################
 # Set variables to reflect current conditions
 #
-# The directory used for serving Resource Sync files:
+# The directory used for serving Resource Sync files.
 DATA_DIR="$PWD/data"
 #
-# The Virtuoso host name:
+# The Virtuoso host name.
 VIRTUOSO_ISQL_ADDRESS=192.168.99.100
 #
-# The Virtuoso isql port:
+# The Virtuoso isql port.
 VIRTUOSO_ISQL_PORT=1111
 #
-#The Virtuoso user:
+# The Virtuoso user.
 VIRTUOSO_USER=dba
 #
-#The Virtuoso password:
+# The Virtuoso password.
 read -sp "Virtuoso password for the user '$VIRTUOSO_USER' " VIRTUOSO_PASSWORD
 VIRTUOSO_PASSWORD=${VIRTUOSO_PASSWORD:-dba}
 echo
 #
 # The time between consecutive runs of the quad logger.
-# Default unit is seconds:
-RUN_INTERVAL=60
+# Default unit is seconds. Default value is 3600 (1 hour).
+RUN_INTERVAL=20
 #
-# The location for transaction logs on the Virtuoso server:
+# The location of transaction logs on the Virtuoso server.
+# Default value is /usr/local/var/lib/virtuoso/db.
 LOG_FILE_LOCATION=/usr/local/var/lib/virtuoso/db
+#
+# Should we insert stored procedures on the Virtuoso server automatically.
+# The procedures that will be inserted are in dump_nquads.sql and parse_trx.sql.
+# Possible values are
+INSERT_PROCEDURES=y
 ###############################################################################
 
 mkdir -p "$DATA_DIR"
@@ -58,4 +64,5 @@ docker run -it --rm -v $DATA_DIR:/datadir \
     -e="VIRTUOSO_PASSWORD=$VIRTUOSO_PASSWORD" \
     -e="RUN_INTERVAL=$RUN_INTERVAL" \
     -e="LOG_FILE_LOCATION=$LOG_FILE_LOCATION" \
+    -e="INSERT_PROCEDURES=$INSERT_PROCEDURES" \
     bhenk/virtuoso-quad-log
