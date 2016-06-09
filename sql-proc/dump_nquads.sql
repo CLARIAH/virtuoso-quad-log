@@ -56,13 +56,15 @@ CREATE PROCEDURE dump_nquads
 }
 ;
 
-CREATE PROCEDURE vql_dump_nquads() {
-    DECLARE  nquad      ANY;
+CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000) {
+    DECLARE nquad       ANY;
+    DECLARE inx INT;
 
     SET isolation = 'uncommitted';
 
+    inx := 0;
     result_names (nquad);
-    result(concat('# start: ', 'dump'));
+    result(concat('# dump started ', datestring_GMT(now())));
 
     FOR (SELECT * FROM (sparql define input:storage ""
          	SELECT ?s ?p ?o ?g { GRAPH ?g { ?s ?p ?o } .
@@ -78,8 +80,15 @@ CREATE PROCEDURE vql_dump_nquads() {
 	{
 	  GOTO next;
 	};
+	  IF (mod(inx, maxq) = 0) {
+	    result(concat('# dump ', inx));
+	  }
       result(concat('+ ', vql_parse_trx_format_iri("s"), ' ',vql_parse_trx_format_iri("p"), ' ', vql_parse_trx_format_object("o"), ' ', vql_parse_trx_format_iri("g"), ' .'));
+      inx := inx + 1;
+
       next:;
     }
+    result(concat('# dump ended ', datestring_GMT(now())));
+    EXEC ('CHECKPOINT');
 }
 ;

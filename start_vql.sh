@@ -41,12 +41,22 @@ RUN_INTERVAL=20
 LOG_FILE_LOCATION=/usr/local/var/lib/virtuoso/db
 #
 # Should we insert stored procedures on the Virtuoso server automatically.
-# The procedures that will be inserted are in dump_nquads.sql and parse_trx.sql.
-# Possible values are
+# The procedures that will be inserted all start with 'vql_'.
+# Inserted procedures can be found with
+#   SQL> SELECT P_NAME FROM SYS_PROCEDURES WHERE P_NAME LIKE 'DB.DBA.vql_*';
+# If necessary they can be removed with
+#   SQL> DELETE FROM SYS_PROCEDURES WHERE P_NAME LIKE 'DB.DBA.vql_*';
+# Possible values: y|n
 INSERT_PROCEDURES=y
+#
+# Should we dump the initial state of the quad store.
+# Possible values: y|n
+DUMP_INITIAL_STATE=y
+#
+# Maximum amount of quads per dump file.
+MAX_QUADS_IN_DUMP=100
+#
 ###############################################################################
-
-mkdir -p "$DATA_DIR"
 
 # Check if the Virtuoso server can be reached
 echo -e "\n-- Testing connection to $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT"
@@ -65,4 +75,6 @@ docker run -it --rm -v $DATA_DIR:/datadir \
     -e="RUN_INTERVAL=$RUN_INTERVAL" \
     -e="LOG_FILE_LOCATION=$LOG_FILE_LOCATION" \
     -e="INSERT_PROCEDURES=$INSERT_PROCEDURES" \
+    -e="DUMP_INITIAL_STATE=$DUMP_INITIAL_STATE" \
+    -e="MAX_QUADS_IN_DUMP=$MAX_QUADS_IN_DUMP" \
     bhenk/virtuoso-quad-log
