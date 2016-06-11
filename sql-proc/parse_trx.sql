@@ -26,10 +26,6 @@
 create procedure vql_parse_trx_files (in path varchar, in already_logged varchar) {
   declare files, trx_files, error, filename, i any;
 
-  if (cfg_item_value(virtuoso_ini_path(), 'Parameters', 'CheckpointAuditTrail') = '0') {
-    --This will end this procedure.
-    signal('99999', ': CheckpointAuditTrail is not enabled. This will cause me to miss updates. Therefore I will not run!');
-  } else {
     files := file_dirlist(path, 1);
     trx_files := vector();
     -- Filter out non-transaction files
@@ -53,7 +49,6 @@ create procedure vql_parse_trx_files (in path varchar, in already_logged varchar
     }
 break:
     result ('# start: isql-junk');
-  }
 }
 
 create procedure vql_parse_trx (in f varchar) {
@@ -90,7 +85,8 @@ create procedure vql_parse_trx (in f varchar) {
           --There are a few tables and indexes that store the quads (select * from SYS_KEYS WHERE KEY_NAME like '%QUAD%')
           --The log contains a record for each index. It seems to me that the table DB.DBA.RDF_QUAD (id=271) is the one
           --that's always updated. So we can ignore the others
-          result(concat(op, ' ', vql_parse_trx_format_iri(quad[2]), ' ',vql_parse_trx_format_iri(quad[3]), ' ', vql_parse_trx_format_object(quad[4]), ' ', vql_parse_trx_format_iri(quad[1]), ' .'));
+          --result(concat(op, ' ', vql_parse_trx_format_iri(quad[2]), ' ',vql_parse_trx_format_iri(quad[3]), ' ', vql_parse_trx_format_object(quad[4]), ' ', vql_parse_trx_format_iri(quad[1]), ' .'));
+          result(vql_create_nquad(op, quad[2], quad[3], quad[4], quad[1]));
         }
       }
     }
@@ -98,33 +94,4 @@ create procedure vql_parse_trx (in f varchar) {
 }
 ;
 
---turn the IRI in an encoded iri or a blank node
---see also: 'IRI_ID Type' in http://docs.openlinksw.com/virtuoso/rdfdatarepresentation.html
-create procedure vql_parse_trx_format_iri (in iri any) {
-  if (iri > min_64bit_bnode_iri_id()) {
-    return concat('_:', ltrim(concat(iri, ''), '#'));
-  } else {
-    return concat('<', __ro2sq(iri), '>');
-  }
-}
-;
 
---turn the object part into an encoded literal or an iri
---see also: 'Programatically resolving DB.DBA.RDF_QUAD.O to SQL' in http://docs.openlinksw.com/virtuoso/rdfdatarepresentation.html
-create procedure vql_parse_trx_format_object (in object any) {
-  declare result, objectType, languageTag any;
-  if (isiri_id(object)) {
-    return vql_parse_trx_format_iri(object);
-  } else {
-    result := concat('"', __ro2sq(object), '"');
-    objectType := __ro2sq(DB.DBA.RDF_DATATYPE_OF_OBJ(object));
-    languageTag := __ro2sq(DB.DBA.RDF_LANGUAGE_OF_OBJ(object));
-    if (languageTag <> '') {
-      result := concat(result, '@', languageTag);
-    } else if (objectType <> '' and objectType <> 'http://www.w3.org/2001/XMLSchema#string') {
-      result := concat(result, '^^<', objectType, '>');
-    }
-    return result;
-  }
-}
-;

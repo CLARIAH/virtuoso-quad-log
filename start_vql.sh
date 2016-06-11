@@ -44,17 +44,23 @@ LOG_FILE_LOCATION=/usr/local/var/lib/virtuoso/db
 # The procedures that will be inserted all start with 'vql_'.
 # Inserted procedures can be found with
 #   SQL> SELECT P_NAME FROM SYS_PROCEDURES WHERE P_NAME LIKE 'DB.DBA.vql_*';
-# If necessary they can be removed with
-#   SQL> DELETE FROM SYS_PROCEDURES WHERE P_NAME LIKE 'DB.DBA.vql_*';
+# If necessary they can be removed individually with
+#   SQL> DROP PROCEDURE {P_NAME};
 # Possible values: y|n
 INSERT_PROCEDURES=y
+#
+## Dumps #############################
 #
 # Should we dump the initial state of the quad store.
 # Possible values: y|n
 DUMP_INITIAL_STATE=y
 #
 # Maximum amount of quads per dump file.
-MAX_QUADS_IN_DUMP=100
+MAX_QUADS_IN_DUMP=500
+#
+# Should we dump the current state of the quat store and then exit.
+# Possible values: y|n
+DUMP_AND_EXIT=n
 #
 ###############################################################################
 
@@ -77,4 +83,5 @@ docker run -it --rm -v $DATA_DIR:/datadir \
     -e="INSERT_PROCEDURES=$INSERT_PROCEDURES" \
     -e="DUMP_INITIAL_STATE=$DUMP_INITIAL_STATE" \
     -e="MAX_QUADS_IN_DUMP=$MAX_QUADS_IN_DUMP" \
+    -e="DUMP_AND_EXIT=$DUMP_AND_EXIT" \
     bhenk/virtuoso-quad-log

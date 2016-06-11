@@ -2,23 +2,50 @@
 set -o nounset
 set -o errexit
 
+# Keep indented with tabs instead of spaces because of heredocs (EOF).
+
 # The location of transaction logs on the Virtuoso server.
 LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-/usr/local/var/lib/virtuoso/db}
+
+# Should we dump the initial state of the quad store.
+DUMP_INITIAL_STATE=${DUMP_INITIAL_STATE:-y}
 
 # Maximum amount of quads per dump file.
 MAX_QUADS_IN_DUMP=${MAX_QUADS_IN_DUMP:-100000}
 
+# Should we dump the current state of the quad store and then exit.
+DUMP_AND_EXIT=${DUMP_AND_EXIT:-n}
+
 # Remote isql command
 ISQL_CMD="isql -H $VIRTUOSO_ISQL_ADDRESS -S $VIRTUOSO_ISQL_PORT -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
 
+CURRENT_DIR=$PWD
+
+# Directory used for serving Resource Sync files. Should be mounted on the host.
+DATA_DIR=$CURRENT_DIR/datadir
+mkdir -p $DATA_DIR
+
 # File to report isql errors
-ISQL_ERROR_FILE=isql.errors
+ISQL_ERROR_FILE=$CURRENT_DIR/isql.errors
 if [ -e "$ISQL_ERROR_FILE" ]; then
 	rm "$ISQL_ERROR_FILE"
 fi
 
-# Directory used for serving Resource Sync files. Should be mounted on the host.
-DATA_DIR=datadir
+##########################################################
+## FUNCTIONS #############################################
+
+###############################
+# test_connection
+# Call the ISQL_CMD.
+#
+# Globals:      ISQL_CMD
+# Arguments:    None
+# Returns:      None
+test_connection() {
+    $ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE > dev/null
+		exit;
+		EOF
+}
 
 ###############################
 # assert_no_isql_error
@@ -30,7 +57,7 @@ DATA_DIR=datadir
 # Exit status:  1 on error found.
 assert_no_isql_error()
 {
-	if grep -q "\*\*\* Error [0-9]\{5\}: \[Virtuoso Driver\]\[Virtuoso Server\]" "$ISQL_ERROR_FILE"; then
+	if grep -q "\*\*\* Error [A-Z0-9]\{5\}: \[Virtuoso Driver\]\[Virtuoso Server\]" "$ISQL_ERROR_FILE"; then
 		echo "Received error from isql @ $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT" >&2
 		echo "$(cat -n $ISQL_ERROR_FILE)" >&2
 		exit 1
@@ -42,13 +69,16 @@ assert_no_isql_error()
 # Assert that stored procedures are available on the Virtuoso server; insert them if needed.
 #
 # Globals:      INSERT_PROCEDURES, ISQL_ERROR_FILE
-# Arguments:    None 'balala'
+# Environment:  Procedure files are in the directory 'sql-proc', relative to current directory.
+# Arguments:    None
 # Returns:      None
-# Exit status:  1 if procedures cannot be inserted.
+# Exit status:  1 if procedures are not stored and cannot be inserted.
 assert_procedures_stored()
 {
-	files=(parse_trx.sql dump_nquads.sql)
-	procedures_count=5
+	# files are in the directory 'sql-proc'
+	files=(utils.sql dump_nquads.sql  parse_trx.sql)
+	# the number of procedures that start with 'vql_*'
+	procedures_count=7
 
 	$ISQL_CMD <<-'EOF' > query_result 2>$ISQL_ERROR_FILE
 		SET CSV=ON;
@@ -58,9 +88,9 @@ assert_procedures_stored()
 	assert_no_isql_error
 
 	found_procedures=$(grep "^[0-9]*$" query_result)
-	echo "Found $found_procedures out of $procedures_count required stored procedures." >&2
 
 	if [ "$found_procedures" != "$procedures_count" ] ; then
+		echo "Found $found_procedures out of $procedures_count required stored procedures." >&2
 		if [ -z "${INSERT_PROCEDURES:-}" ]; then
 			read -p "To dump quads and read transaction logs from the server I need to install a few stored procedures \
 			on the virtuoso server. Is that okay? [yn]" INSERT_PROCEDURES
@@ -82,87 +112,170 @@ assert_procedures_stored()
 	rm query_result
 }
 
+###############################
+# assert_virtuoso_configuration
+# Assert that the Virtuoso server is configured as we expect.
+#
+# Globals:      None
+# Arguments:    None
+assert_virtuoso_configuration()
+{
+	$ISQL_CMD <<-'EOF' > query_result 2>$ISQL_ERROR_FILE
+		vql_assert_configuration();
+		exit;
+		EOF
+	assert_no_isql_error
+}
+
+###############################
+# assert_dump_completed_normal
+# Assert that an existing dump completed normal.
+#
+# Globals:      DATA_DIR
+# Arguments:    None
+# Returns:      None
+# Exit status:  1 if dump did not complete normally.
+assert_dump_completed_normal()
+{
+	lastfile=$(ls $DATA_DIR/rdfdump-* | sort -r | head -n 1)
+	completed=$(cat $lastfile | grep "# dump completed " )
+	if [ "$completed" = "" ] ; then
+		echo "DUMP ERROR: Dump did not complete normally." >&2
+		exit 1
+	fi
+}
+
+###############################
+# dump_nquads
+# Call vql_dump_nquads on server.
+#
+# Globals:      MAX_QUADS_IN_DUMP
+# Arguments:    None
+# Returns:      dump stream on &1, can be picked up with -
 dump_nquads()
 {
-    $ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE
+	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE
 		vql_dump_nquads($MAX_QUADS_IN_DUMP);
 		exit;
 		EOF
 }
 
-assert_dump_at_checkpoint()
+###############################
+# execute_dump
+# Dump all quads on the server to rdf-patch-formatted files.
+#
+# Globals:      DATA_DIR
+# Arguments:    None
+# Returns:      None
+execute_dump()
 {
-    echo "allee"
-    dump_dir="$DATA_DIR/dump"
-    mkdir -p $dump_dir
-    dump_nquads | grep "^#\|^\+" | csplit -f "$dump_dir/dump" -n 4 -s - "/^# dump /" {*}
+	echo "Executing dump..." >&2
+	dump_nquads | grep "^#\|^\+" | csplit -f "$DATA_DIR/rdfdump-" -n 5 -s - "/^# at checkpoint  /" {*}
 	assert_no_isql_error
+	assert_dump_completed_normal
 
-    current=$(pwd)
-    cd ${dump_dir}
-    lastfile=`ls dump* | sort -r | head -n 1`
-    enddate=$(cat $lastfile | grep "[0-9]" | sed -e s/[^0-9]//g | cut -c1-14)
-    echo "$enddate"
-    cd ${current}
+	# first file is empty
+	rm "$DATA_DIR/rdfdump-00000"
+	# The last file only contains information on the dump. Keep it as a mark.
+	# Also set the last file as latestlogsuffix marker
+	checkpoint=$(cat $lastfile | grep "# at checkpoint" | sed -e s/[^0-9]//g)
+	cp "$lastfile" "$DATA_DIR/rdfpatch-$checkpoint"
+
+	# report
+	echo "Dump report in '$lastfile'" >&2
+	echo "$(cat $lastfile)" >&2
 }
+
+###############################
+# dump_if_needed
+# Check if an initial dump has to be made and execute dump if needed.
+#
+# Globals:      DUMP_INITIAL_STATE, DATA_DIR
+# Arguments:    None
+# Returns:      None
+# Exit status:  1 if dump did not complete normally.
+#               255 if dump-and-exit was requested.
+dump_if_needed()
+{
+	if [ "$DUMP_INITIAL_STATE" = "y" ]; then
+		if [ ! -e "$DATA_DIR/rdfdump-00001" ]; then
+			execute_dump
+		else
+			assert_dump_completed_normal
+		fi
+	else
+		echo "Not checking dump status because DUMP_INITIAL_STATE is not 'y'" >&2
+	fi
+
+	if [ "$DUMP_AND_EXIT" = "y" ]; then
+	    echo "Exiting the Virtuoso quad logger because DUMP_AND_EXIT is 'y'" >&2
+	    exit 255
+	fi
+}
+
+###############################
+# sync_transaction_logs
+# Parse newly found transaction logs to rdf patch files.
+#
+# Globals:      DATA_DIR, CURRENT_DIR
+# Arguments:    None
+# Returns:      None
+sync_transaction_logs()
+{
+	#get the latest log suffix
+	cd ${DATA_DIR}
+	latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || ''`
+	cd ${CURRENT_DIR}
+	echo "Syncing transaction logs starting from $latestlogsuffix..." >&2
+
+	# parse_trx_files to marked output file
+	mark=$(date +"%Y%m%d%H%M%S")
+	output="$DATA_DIR/output$mark"
+
+	$ISQL_CMD 2>$ISQL_ERROR_FILE > "$output" <<-EOF
+		vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
+		exit;
+	EOF
+    assert_no_isql_error
+
+    # split output to marked files; use more than standard 2 digits for file suffix
+    prefix='xyx'$mark'_'
+    csplit -f "$DATA_DIR/$prefix" -n 4 -s "$output" "/^# start: /" '{*}'
+    #loop over all files
+    for file in $DATA_DIR/$prefix*; do
+        # first line is the header, so a one-line file is effectively empty
+	    if [ `wc -l $file | grep -o '^[0-9]\+'` -gt 1 ]; then
+		    # line with the filename,   just the filename, remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
+		    timestamp=`head -n1 $file | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//' | grep -o '[0-9]\{14\}$' || echo ''`
+		    if [ -n "$timestamp" ]; then
+			    echo "generated rdfpatch-${timestamp}" >&2
+			    cp $file "$DATA_DIR/rdfpatch-${timestamp}"
+		    fi
+	    fi
+	    rm $file
+    done
+    rm "$output"
+}
+
+##########################################################
+## PROGRAM FLOW ##########################################
+
+test_connection || echo "No connection to isql @ $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT" >&2
 
 # Assert that stored procedures are available on the Virtuoso server; insert them if needed.
 assert_procedures_stored
 
-# Create the data directory, change to it.
-#mkdir -p datadir
-#cd datadir
+# Assert that the Virtuoso server is configured as we expect.
+assert_virtuoso_configuration
+
+# Check if an initial dump has to be made and execute dump if needed.
+dump_if_needed
+
+# Parse newly found transaction logs to rdf patch files.
+sync_transaction_logs
 
 
-assert_dump_at_checkpoint
-	
-
-
-#get the latest log
-cd ${DATA_DIR}
-latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || ''`
-cd ..
-
-
-# parse_trx_files to marked output file
-mark=$(date +"%Y%m%d%H%M%S")
-output="$DATA_DIR/output$mark"
-
-errorfile=isql.errors
-if [ -e "$errorfile" ]; then
-	rm "$errorfile"
-fi
-
-$ISQL_CMD 2>$errorfile > "$output" <<-EOF
-	vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
-	exit;
-EOF
-
-# capture errors from isql:
-if grep -q "\*\*\* Error [0-9]\{5\}: \[Virtuoso Driver\]\[Virtuoso Server\]" "$errorfile"; then
-	echo "Received error from isql @ $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT"
-	echo "$(cat -n $errorfile)"
-	exit 1
-fi
-
-# split output to marked files; use more than standard 2 digits for split file suffix
-prefix='xyx'$mark'_'
-csplit -f "$DATA_DIR/$prefix" -n 4 -s "$output" "/^# start: /" '{*}'
-#loop over all files
-for file in $DATA_DIR/$prefix*; do
-	if [ `wc -l $file | grep -o '^[0-9]\+'` -gt 1 ]; then # first line is the header, so a one-line file is effectively empty
-				 # line with the filename, just the filename,		        remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
-		timestamp=`head -n1 $file        | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//'             | grep -o '[0-9]\{14\}$' || echo ''`
-		if [ -n "$timestamp" ]; then
-			echo "generated rdfpatch-${timestamp}" >&2
-			cp $file "$DATA_DIR/rdfpatch-${timestamp}"
-		fi
-	fi
-	rm $file
-done
-rm "$output"
-#cd ..
-
+# https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/
 if [ -z "${HTTP_SERVER_URL:-}" ]; then
 	if [ -n "${HTTP_SERVER_PORT_80_TCP_ADDR:-}" ]; then
 		HTTP_SERVER_URL="http://${HTTP_SERVER_PORT_80_TCP_ADDR}:${HTTP_SERVER_PORT_80_TCP_PORT}"
@@ -174,7 +287,7 @@ fi
 ./resource-list.py --resource-url "${HTTP_SERVER_URL}" --resource-dir "$PWD/datadir"
 
 if [ -n "${CUR_USER:-}" ]; then
-	chown -R "$CUR_USER:$CUR_USER" datadir
+	chown -R "$CUR_USER:$CUR_USER" "$DATA_DIR"
 fi
 
 exit 0
