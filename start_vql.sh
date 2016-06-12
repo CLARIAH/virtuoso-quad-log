@@ -56,23 +56,23 @@ INSERT_PROCEDURES=y
 DUMP_INITIAL_STATE=y
 #
 # Maximum amount of quads per dump file.
-MAX_QUADS_IN_DUMP=500
+MAX_QUADS_IN_DUMP_FILE=500
 #
 # Should we dump the current state of the quat store and then exit.
 # Possible values: y|n
 DUMP_AND_EXIT=n
 #
+## Resource Sync ####################
+#
+# The base URL serving resources.
+HTTP_SERVER_URL=http://foo.bar.com/rs/data
+#
 ###############################################################################
 
-# Check if the Virtuoso server can be reached
-echo -e "\n-- Testing connection to $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT"
-connected=$(nc -vz "$VIRTUOSO_ISQL_ADDRESS" "$VIRTUOSO_ISQL_PORT")
-if [ "$?" != 0 ]; then
-	exit 1
-fi
-
 echo -e "\n-- Starting virtuoso quad logger"
-docker run -it --rm -v $DATA_DIR:/datadir \
+docker run -it --rm \
+    -v $DATA_DIR:/datadir \
+    -v $PWD/logs:/logs \
 	--name vql \
     -e="VIRTUOSO_ISQL_ADDRESS=$VIRTUOSO_ISQL_ADDRESS" \
     -e="VIRTUOSO_ISQL_PORT=$VIRTUOSO_ISQL_PORT" \
@@ -82,6 +82,8 @@ docker run -it --rm -v $DATA_DIR:/datadir \
     -e="LOG_FILE_LOCATION=$LOG_FILE_LOCATION" \
     -e="INSERT_PROCEDURES=$INSERT_PROCEDURES" \
     -e="DUMP_INITIAL_STATE=$DUMP_INITIAL_STATE" \
-    -e="MAX_QUADS_IN_DUMP=$MAX_QUADS_IN_DUMP" \
+    -e="MAX_QUADS_IN_DUMP_FILE=$MAX_QUADS_IN_DUMP_FILE" \
     -e="DUMP_AND_EXIT=$DUMP_AND_EXIT" \
+    -e="HTTP_SERVER_URL=$HTTP_SERVER_URL" \
     bhenk/virtuoso-quad-log
+
