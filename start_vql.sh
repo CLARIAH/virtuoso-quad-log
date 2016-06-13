@@ -86,7 +86,6 @@ HTTP_SERVER_URL=http://foo.bar.com/rs/data
 echo -e "\n-- Starting virtuoso quad logger"
 docker run -it --rm \
     -v $DATA_DIR:/datadir \
-    -v $PWD/logs:/logs \
 	--name vql \
     -e="VIRTUOSO_ISQL_ADDRESS=$VIRTUOSO_ISQL_ADDRESS" \
     -e="VIRTUOSO_ISQL_PORT=$VIRTUOSO_ISQL_PORT" \
