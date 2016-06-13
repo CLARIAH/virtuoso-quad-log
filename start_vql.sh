@@ -1,15 +1,22 @@
 #!/bin/bash --
 
 # Start a Docker container with the virtuoso quad logger.
+#
+# 1. The virtuoso quad logger will dump the current state of the Quad Store as rdf-patch.
+# See https://afs.github.io/rdf-patch/
 # 
-# 1. The virtuoso quad logger will poll the transaction logs of the Virtuoso instance 
+# 2. The virtuoso quad logger will poll the transaction logs of the Virtuoso instance
 # at the given host and port for changes in its Quad Store. 
 #
-# 2. The virtuoso quad logger uses the isql interactive interface to store incremental 
-# change files as rdf-patch. See https://afs.github.io/rdf-patch/
+# 3. The virtuoso quad logger uses the isql interactive interface to store incremental
+# change files as rdf-patch.[1]
 #
-# 3. The virtuoso quad logger enables the propagation of the changes through the
+# 4. The virtuoso quad logger enables the propagation of the changes through the
 # Resource Sync Framework. See http://www.openarchives.org/rs/1.0/resourcesync
+#
+#
+# [1]To control the size of the files that record incremental changes it is best to set the
+# AutoCheckpointLogSize under Parameters in the virtuoso.ini file to a reasonable value.
 #
 
 ###############################################################################
@@ -51,20 +58,27 @@ INSERT_PROCEDURES=y
 #
 ## Dumps #############################
 #
-# Should we dump the initial state of the quad store.
+# Should we dump the current state of the quad store.
 # Possible values: y|n
+# In case 'y' and no dump has been executed previously:
+# - Empty or remove the directory {DATA_DIR},
+#   especially, before dump starts {DATA_DIR} should not contain old patch files ('rdfpatch-*')
+#   and should not contain old dump files ('rdfdump-*');
+# - No transactions should take place during dump.
+# If a dump has been executed and was completed successfully, this parameter has no effect.
 DUMP_INITIAL_STATE=y
 #
 # Maximum amount of quads per dump file.
-MAX_QUADS_IN_DUMP_FILE=500
+# A value of 100000 will result in dump files with a size of approximately 12.5MB.
+MAX_QUADS_IN_DUMP_FILE=100000
 #
-# Should we dump the current state of the quat store and then exit.
+# Should we dump the current state of the quad store and then exit.
 # Possible values: y|n
 DUMP_AND_EXIT=n
 #
 ## Resource Sync ####################
 #
-# The base URL serving resources.
+# The base URL for serving resources.
 HTTP_SERVER_URL=http://foo.bar.com/rs/data
 #
 ###############################################################################

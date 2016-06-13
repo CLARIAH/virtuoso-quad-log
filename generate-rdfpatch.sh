@@ -50,7 +50,7 @@ fi
 # Arguments:    None
 # Returns:      None
 test_connection() {
-    $ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE > dev/null
+	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE > dev/null
 		exit;
 		EOF
 }
@@ -86,7 +86,7 @@ assert_procedures_stored()
 	# files are in the directory 'sql-proc'
 	local files=(utils.sql dump_nquads.sql  parse_trx.sql)
 	# the number of procedures that start with 'vql_*'
-	local procedures_count=7
+	local procedures_count=8
 
 	$ISQL_CMD <<-'EOF' > query_result 2>$ISQL_ERROR_FILE
 		SET CSV=ON;
@@ -144,7 +144,7 @@ assert_virtuoso_configuration()
 assert_dump_completed_normal()
 {
 	local lastfile=$(ls $DATA_DIR/rdfdump-* | sort -r | head -n 1)
-	completed=$(cat $lastfile | grep "# dump completed " )
+	completed=$(cat $lastfile | { grep "# dump completed " || true; } )
 	if [ "$completed" = "" ] ; then
 		echo "DUMP ERROR: Dump did not complete normally." >&2
 		exit 1
@@ -207,7 +207,15 @@ dump_if_needed()
 {
 	if [ "$DUMP_INITIAL_STATE" = "y" ]; then
 		if [ ! -e "$DATA_DIR/rdfdump-00001" ]; then
-			execute_dump
+		    if ls "$DATA_DIR/rdfpatch-"* 1> /dev/null 2>&1; then
+		        echo "'rdfpatch-*' files found in '$DATA_DIR'. Remove them before dumping."
+		        exit 1
+		    elif ls "$DATA_DIR/rdfdump-"* 1> /dev/null 2>&1; then
+		        echo "'rdfdump-*' files found in '$DATA_DIR'. Remove them before dumping."
+		        exit 1
+		    else
+			    execute_dump
+			fi
 		else
 			assert_dump_completed_normal > dev/null
 		fi
@@ -215,10 +223,10 @@ dump_if_needed()
 		echo "Not checking dump status because DUMP_INITIAL_STATE is not 'y'" >&2
 	fi
 
-    # Quit, in case dump-and-exit was requested.
+	# Quit, in case dump-and-exit was requested.
 	if [ "$DUMP_AND_EXIT" = "y" ]; then
-	    echo "Exiting the Virtuoso quad logger because DUMP_AND_EXIT is 'y'" >&2
-	    exit 255
+		echo "Exiting the Virtuoso quad logger because DUMP_AND_EXIT is 'y'" >&2
+		exit 255
 	fi
 }
 
@@ -235,7 +243,7 @@ sync_transaction_logs()
 	cd ${DATA_DIR}
 	local latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || ''`
 	cd ${CURRENT_DIR}
-	echo "Syncing transaction logs starting from $latestlogsuffix..." >&2
+	echo "Syncing transaction logs starting from $latestlogsuffix" >&2
 
 	# parse_trx_files to marked output file
 	local mark=$(date +"%Y%m%d%H%M%S")
@@ -245,34 +253,34 @@ sync_transaction_logs()
 		vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
 		exit;
 	EOF
-    assert_no_isql_error
+	assert_no_isql_error
 
-    # split output to marked files; use more than standard 2 digits for file suffix
-    local prefix='xyx'$mark'_'
-    csplit -f "$DATA_DIR/$prefix" -n 4 -s "$output" "/^# start: /" '{*}'
-    #loop over all files
-    local file
-    for file in $DATA_DIR/$prefix*; do
-        # first line is the header, so a one-line file is effectively empty
-	    if [ `wc -l $file | grep -o '^[0-9]\+'` -gt 1 ]; then
-		    # line with the filename,   just the filename, remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
-		    local timestamp=`head -n1 $file | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//' | grep -o '[0-9]\{14\}$' || echo ''`
-		    if [ -n "$timestamp" ]; then
-                if [[ ! "$latestlogsuffix" < "$timestamp" ]]; then
-                    echo -e "Timestamp on parsed transaction log is smaller than or equal to recorded latest log suffix:" \
-                        "\n\t$timestamp <= $latestlogsuffix" \
-                        "\n\tServer transaction logs and recorded rdf-patch files are not in line. We quit." >&2
-                    rm "$DATA_DIR/$prefix"*
-                    rm "$output"
-                    exit 1
-                fi
-			    echo "generated rdfpatch-${timestamp}" >&2
-			    cp $file "$DATA_DIR/rdfpatch-${timestamp}"
-		    fi
-	    fi
-	    rm $file
-    done
-    rm "$output"
+	# split output to marked files; use more than standard 2 digits for file suffix
+	local prefix='xyx'$mark'_'
+	csplit -f "$DATA_DIR/$prefix" -n 4 -s "$output" "/^# start: /" '{*}'
+	#loop over all files
+	local file
+	for file in $DATA_DIR/$prefix*; do
+		# first line is the header, so a one-line file is effectively empty
+		if [ `wc -l $file | grep -o '^[0-9]\+'` -gt 1 ]; then
+			# line with the filename,   just the filename, remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
+			local timestamp=`head -n1 $file | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//' | grep -o '[0-9]\{14\}$' || echo ''`
+			if [ -n "$timestamp" ]; then
+				if [[ ! "$latestlogsuffix" < "$timestamp" ]]; then
+					echo -e "Timestamp on parsed transaction log is smaller than or equal to recorded latest log suffix:" \
+						"\n\t$timestamp <= $latestlogsuffix" \
+						"\n\tServer transaction logs and recorded rdf-patch files are not in line. We quit." >&2
+					rm "$DATA_DIR/$prefix"*
+					rm "$output"
+					exit 1
+				fi
+				echo "generated rdfpatch-${timestamp}" >&2
+				cp $file "$DATA_DIR/rdfpatch-${timestamp}"
+			fi
+		fi
+		rm $file
+	done
+	rm "$output"
 }
 
 ##########################################################
@@ -304,7 +312,7 @@ if [ -z "${HTTP_SERVER_URL:-}" ]; then
 	fi
 fi
 
-./resource-list.py --resource-url "${HTTP_SERVER_URL}" --resource-dir "$PWD/datadir"
+./resource-list.py --resource-url "${HTTP_SERVER_URL}" --resource-dir "$DATA_DIR"
 
 if [ -n "${CUR_USER:-}" ]; then
 	chown -R "$CUR_USER:$CUR_USER" "$DATA_DIR"

@@ -85,7 +85,6 @@ create procedure vql_parse_trx (in f varchar) {
           --There are a few tables and indexes that store the quads (select * from SYS_KEYS WHERE KEY_NAME like '%QUAD%')
           --The log contains a record for each index. It seems to me that the table DB.DBA.RDF_QUAD (id=271) is the one
           --that's always updated. So we can ignore the others
-          --result(concat(op, ' ', vql_parse_trx_format_iri(quad[2]), ' ',vql_parse_trx_format_iri(quad[3]), ' ', vql_parse_trx_format_object(quad[4]), ' ', vql_parse_trx_format_iri(quad[1]), ' .'));
           result(vql_create_nquad(op, quad[2], quad[3], quad[4], quad[1]));
         }
       }
