@@ -2,14 +2,14 @@
 
 CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000) {
 
-    DECLARE nquad, chckp, date2, startdate, currenttrx, rst, cpinterval ANY;
-    DECLARE inx, cpc                       INT;
+    DECLARE nquad, chckp, date2, startdate, currenttrx, rst ANY;
+    DECLARE inx, cpc      INT;
+    DECLARE cpinterval    INTEGER;
 
     SET isolation = 'serializable';
 
     -- disable automatic checkpoints during dump.
-    cpinterval := cfg_item_value(virtuoso_ini_path(), 'Parameters', 'CheckpointInterval');
-    checkpoint_interval (0);
+    cpinterval := checkpoint_interval (-1);
 
     chckp := 0;
     date2 := 1;
@@ -65,9 +65,14 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000) {
      delay(1);
     -- See if currenttrx is stil the current transaction log.
     IF (currenttrx <> cfg_item_value(virtuoso_ini_path(), 'Database', 'TransactionFile')) {
+        -- re-enable automatic checkpoints before signalling errors.
+        checkpoint_interval (cpinterval);
         signal('99999', concat(': A checkpoint has been executed since start of dump at ', startdate, '. Dump invalid.'));
     }
     EXEC ('CHECKPOINT');
+
+    -- Enable automatic checkpoints with saved interval.
+    checkpoint_interval (cpinterval);
 
     -- See if currenttrx is free of transactions...
     rst := vql_check_trx(currenttrx);
@@ -75,9 +80,6 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000) {
         result(concat('# inserts=', rst[0], ' deletes=', rst[1]));
         signal('99999', concat(': There have been ', rst[0], ' inserts and ', rst[1], ' deletes during dump. Dump invalid.'));
     }
-
-    -- Enable automatic checkpoints with saved interval.
-    checkpoint_interval (number(cpinterval));
 
     -- Mark the dump as completed.
     result(concat('# dump completed ', datestring_GMT(now())));

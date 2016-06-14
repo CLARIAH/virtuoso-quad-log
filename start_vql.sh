@@ -41,7 +41,7 @@ echo
 #
 # The time between consecutive runs of the quad logger.
 # Default unit is seconds. Default value is 3600 (1 hour).
-RUN_INTERVAL=20
+RUN_INTERVAL=3600
 #
 # The location of transaction logs on the Virtuoso server.
 # Default value is /usr/local/var/lib/virtuoso/db.
@@ -69,8 +69,8 @@ INSERT_PROCEDURES=y
 DUMP_INITIAL_STATE=y
 #
 # Maximum amount of quads per dump file.
-# A value of 100000 will result in dump files with a size of approximately 12.5MB.
-MAX_QUADS_IN_DUMP_FILE=100000
+# A value of 1000000 (1 milj. quads) will result in dump files with a size of approximately 150MB.
+MAX_QUADS_IN_DUMP_FILE=10000000
 #
 # Should we dump the current state of the quad store and then exit.
 # Possible values: y|n
