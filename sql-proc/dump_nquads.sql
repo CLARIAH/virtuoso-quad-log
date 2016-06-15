@@ -1,15 +1,31 @@
 -- See also http://virtuoso.openlinksw.com/dataspace/doc/dav/wiki/Main/VirtRDFDumpNQuad
 
-CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000) {
+-- Dump all quads as rdf-patch-formatted resultset.
+-- Parameters:
+--      maxq: at each interval of maxq results, the outputstream will be marked with comments.
+--              Comments are lines starting with hashes ('#').
+--              This is a way to control the maximum amount of quads per dump file.
+--              Default value: 100000
+--      excluded_graphs: a space-separated string of graph iris that will be excluded from the dump.
+--              Default value is -, not excluding graphs. (Default value '' (empty string) hits on errors.)
+CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCHAR := '-') {
 
-    DECLARE nquad, chckp, date2, startdate, currenttrx, rst ANY;
+    DECLARE nquad, excludes, chckp, date2, startdate, currenttrx, rst ANY;
     DECLARE inx, cpc      INT;
     DECLARE cpinterval    INTEGER;
 
     SET isolation = 'serializable';
 
+    result_names(nquad);
+
     -- disable automatic checkpoints during dump.
     cpinterval := checkpoint_interval (-1);
+
+    DECLARE EXIT HANDLER FOR SQLSTATE '*' {
+        checkpoint_interval (cpinterval);
+        result(concat('# ERROR [', __SQL_STATE, '] ',  __SQL_MESSAGE));
+        resignal;
+    };
 
     chckp := 0;
     date2 := 1;
@@ -26,48 +42,45 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000) {
         date2 := left(regexp_replace(datestring_GMT(now()), '[^0-9]', ''), 14);
         cpc := cpc + 1;
     }
-    -- Full path to current transaction file.
-    currenttrx := cfg_item_value(virtuoso_ini_path(), 'Database', 'TransactionFile');
 
     IF (chckp <> date2) {
         -- This will/should/could never happen?
-        signal('99999', ': Could not get unequivocal checkpoint. Try again some other time.');
+        signal('DMPER', ': Could not get unequivocal checkpoint. Try again some other time.');
     }
 
-    inx := 0;
-    result_names(nquad);
+    -- Full path to current transaction file.
+    currenttrx := cfg_item_value(virtuoso_ini_path(), 'Database', 'TransactionFile');
 
-    FOR (SELECT * FROM (sparql define input:storage ""
+    -- See note at foot of procedure.
+    excludes := split_and_decode(excluded_graphs, 0, '\0\0 ');
+
+    inx := 0;
+
+    FOR (SELECT * FROM (sparql
+            define input:storage ""
+            define input:param "excludes"
             SELECT ?s ?p ?o ?g { GRAPH ?g { ?s ?p ?o } .
-            FILTER (
-                ?g != <http://www.openlinksw.com/schemas/virtrdf#>
-                && ?g != <http://www.w3.org/ns/ldp#>
-                && ?g != <http://www.w3.org/2002/07/owl#>
-                && ?g != <http://localhost:8890/sparql>
-                && ?g != <http://localhost:8890/DAV/>
-            ) } ) AS sub OPTION (loop)) DO
+                FILTER ( bif:position(?g, ?:excludes) = 0 )
+            } ) AS sub OPTION (loop)) DO
     {
         IF (mod(inx, maxq) = 0) {
-            result(concat('# at checkpoint  ', chckp));
-            result(concat('# dump started   ', startdate));
-            result(concat('# quad count     ', inx));
+            result(concat('# at checkpoint   ', chckp));
+            result(concat('# dump started    ', startdate));
+            result(concat('# quad count      ', inx));
         }
         result(vql_create_nquad('+', "s", "p", "o", "g"));
         inx := inx + 1;
-
-        next:;
     }
-    result(concat('# at checkpoint  ', chckp));
-    result(concat('# dump started   ', startdate));
+    result(concat('# at checkpoint   ', chckp));
+    result(concat('# dump started    ', startdate));
 
     -- Datetime string in name of transaction logs has seconds resolution.
     -- Set the next checkpoint at least 1 second later than chckp.
-     delay(1);
+    delay(1);
+
     -- See if currenttrx is stil the current transaction log.
     IF (currenttrx <> cfg_item_value(virtuoso_ini_path(), 'Database', 'TransactionFile')) {
-        -- re-enable automatic checkpoints before signalling errors.
-        checkpoint_interval (cpinterval);
-        signal('99999', concat(': A checkpoint has been executed since start of dump at ', startdate, '. Dump invalid.'));
+        signal('DMPER', concat(': A checkpoint has been executed since start of dump at ', startdate, '. Dump invalid.'));
     }
     EXEC ('CHECKPOINT');
 
@@ -77,17 +90,28 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000) {
     -- See if currenttrx is free of transactions...
     rst := vql_check_trx(currenttrx);
     IF (rst[0] > 0 OR rst[1] > 0) {
-        result(concat('# inserts=', rst[0], ' deletes=', rst[1]));
-        signal('99999', concat(': There have been ', rst[0], ' inserts and ', rst[1], ' deletes during dump. Dump invalid.'));
+        signal('DMPER', concat(': There have been ', rst[0], ' inserts and ', rst[1], ' deletes during dump. Dump invalid.'));
     }
 
     -- Mark the dump as completed.
-    result(concat('# dump completed ', datestring_GMT(now())));
-    result(concat('# quad count     ', inx));
+    result(concat('# dump completed  ', datestring_GMT(now())));
+    result(concat('# quad count      ', inx));
+    result(concat('# excluded graphs ', excluded_graphs));
 }
 ;
+-- [Note]
+-- Syntax for setting the parameter -excludes- inside the SPARQL query:
+--      define input:param "excludes"
+-- Inside the SPARQL query we can refer to it by ?:excludes
+-- The call to a build-in-function is prefixed with bif:
+--      FILTER ( bif:position(?g, ?:excludes) = 0 )
+-- If we had our own procedure defined with
+--      CREATE PROCEDURE vql_exclude_iri(IN iri ANY, IN excludes ANY)
+-- , we could have called that one with prefix sql:
+--      FILTER ( sql:vql_exclude_iri(?g, ?:excludes) = 0 )
 
-CREATE PROCEDURE vql_check_trx (in f VARCHAR) {
+
+CREATE PROCEDURE vql_check_trx (IN f VARCHAR) {
     DECLARE h, op, inserts, deletes, line, lines ANY;
     DECLARE pos INT;
 
@@ -130,6 +154,7 @@ CREATE PROCEDURE vql_check_trx (in f VARCHAR) {
                 }
             }
         }
-  }
-  return vector(inserts, deletes);
+    }
+    return vector(inserts, deletes);
 }
+;

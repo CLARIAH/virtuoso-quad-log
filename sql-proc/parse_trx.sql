@@ -50,6 +50,7 @@ create procedure vql_parse_trx_files (in path varchar, in already_logged varchar
 break:
     result ('# start: isql-junk');
 }
+;
 
 create procedure vql_parse_trx (in f varchar) {
   declare h, op, nquad, line, lines any;

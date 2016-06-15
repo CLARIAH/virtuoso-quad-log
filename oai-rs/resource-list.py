@@ -8,7 +8,7 @@ from resync.utils import compute_md5_for_file
 from resync.resource import Resource
 from argparse import ArgumentParser
 
-from os import listdir, stat
+from os import listdir, stat, makedirs
 from os.path import isfile, isdir, join, basename
 
 from glob import glob
@@ -48,7 +48,7 @@ def compute_timestamp(raw_ts):
 rl = ResourceList()
 timestamps = []
 
-# Add dump files to the resource list. Last modified for all these files is the time dump was execued.
+# Add dump files to the resource list. Last modified for all these files is the time dump was executed.
 # Last modified is recorded in each file in a line starting with '# at checkpoint'.
 t = None
 dumpfiles = sorted(glob(args.resource_dir + "/rdfdump-*"))
@@ -107,10 +107,14 @@ rsd = SourceDescription()
 rsd.md_at = None
 rsd.add_capability_list(args.resource_url + "capability-list.xml")
 
+wellknown = args.resource_dir + "/.well-known"
+if not isdir(wellknown):
+    makedirs(wellknown)
+
 # Print to file at args.resource_dir + "/resourcesync"
-source_description_file = open(args.resource_dir + "/resourcesync", "w")
+source_description_file = open(wellknown + "/resourcesync", "w")
 source_description_file.write(rsd.as_xml())
 source_description_file.close()
 
 #print "Wrote source description to: " + args.resource_dir + "/resourcesync"
-print "Published %s resources as Resource Sync in %s" % (str(len(rl.resources)), args.resource_dir)
+print "Published %s resources under Resource Sync Framework in %s" % (str(len(rl.resources)), args.resource_dir)

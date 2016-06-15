@@ -4,6 +4,9 @@ set -o errexit
 
 # Keep indented with tabs instead of spaces because of heredocs (EOF).
 
+# The Virtuoso user.
+VIRTUOSO_USER=${VIRTUOSO_USER:-dba}
+
 # The location of transaction logs on the Virtuoso server.
 LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-/usr/local/var/lib/virtuoso/db}
 
@@ -18,14 +21,27 @@ MAX_QUADS_IN_DUMP_FILE=${MAX_QUADS_IN_DUMP_FILE:-100000}
 # Should we dump the current state of the quad store and then exit.
 DUMP_AND_EXIT=${DUMP_AND_EXIT:-n}
 
-# Isql command
+DEFAULT_EXCLUDED_GRAPHS="http://www.openlinksw.com/schemas/virtrdf# \
+http://www.w3.org/ns/ldp# \
+http://www.w3.org/2002/07/owl# \
+http://localhost:8890/sparql \
+http://localhost:8890/DAV/"
+
+EXCLUDED_GRAPHS=${EXCLUDED_GRAPHS:-$DEFAULT_EXCLUDED_GRAPHS}
+
+# Connection to the Virtuoso server. See also:
 # https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/
 # https://docs.docker.com/engine/userguide/networking/work-with-networks/#linking-containers-in-user-defined-networks
-if [ -n "${VIRTUOSO_PORT_1111_TCP_ADDR:-}" -a -n "${VIRTUOSO_PORT_1111_TCP_PORT:-}" ]; then
-	ISQL_CMD="isql -H ${VIRTUOSO_PORT_1111_TCP_ADDR} -S ${VIRTUOSO_PORT_1111_TCP_PORT} -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
+if [ -n "${VIRTUOSO_SERVER_HOST_NAME:-}" -a -n "${VIRTUOSO_SERVER_ISQL_PORT:-}" ]; then
+    # Started under a docker user defined network or within a 'traditional' network
+    ISQL_SERVER="isql -H ${VIRTUOSO_SERVER_HOST_NAME} -S ${VIRTUOSO_SERVER_ISQL_PORT}"
+elif [ -n "${VIRTUOSO_PORT_1111_TCP_ADDR:-}" -a -n "${VIRTUOSO_PORT_1111_TCP_PORT:-}" ]; then
+    # Started under legacy docker bridge with --link
+	ISQL_SERVER="isql -H ${VIRTUOSO_PORT_1111_TCP_ADDR} -S ${VIRTUOSO_PORT_1111_TCP_PORT}"
 else
-	ISQL_CMD="isql -H $VIRTUOSO_ISQL_ADDRESS -S $VIRTUOSO_ISQL_PORT -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
+    ISQL_SERVER="isql -H ${VIRTUOSO_SERVER_HOST_NAME:-192.168.99.100} -S ${VIRTUOSO_SERVER_ISQL_PORT:-1111}"
 fi
+ISQL_CMD="$ISQL_SERVER -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
 
 CURRENT_DIR=$PWD
 
@@ -59,14 +75,14 @@ test_connection() {
 # assert_no_isql_error
 # Assert no error is reported to the isql error file.
 #
-# Globals:      ISQL_ERROR_FILE, VIRTUOSO_ISQL_ADDRESS, VIRTUOSO_ISQL_PORT
+# Globals:      ISQL_ERROR_FILE, ISQL_SERVER
 # Arguments:    None
 # Returns:      None
 # Exit status:  1 on error found.
 assert_no_isql_error()
 {
 	if grep -q "\*\*\* Error [A-Z0-9]\{5\}: \[Virtuoso Driver\]\[Virtuoso Server\]" "$ISQL_ERROR_FILE"; then
-		echo "Received error from isql @ $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT" >&2
+		echo "Received error from $ISQL_SERVER" >&2
 		echo "$(cat -n $ISQL_ERROR_FILE)" >&2
 		exit 1
 	fi
@@ -162,7 +178,7 @@ assert_dump_completed_normal()
 dump_nquads()
 {
 	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE
-		vql_dump_nquads($MAX_QUADS_IN_DUMP_FILE);
+		vql_dump_nquads($MAX_QUADS_IN_DUMP_FILE, '$EXCLUDED_GRAPHS');
 		exit;
 		EOF
 }
@@ -286,7 +302,7 @@ sync_transaction_logs()
 ##########################################################
 ## PROGRAM FLOW ##########################################
 
-test_connection || echo "No connection to isql @ $VIRTUOSO_ISQL_ADDRESS:$VIRTUOSO_ISQL_PORT" >&2
+test_connection && echo "Connected to $ISQL_SERVER" || echo "No connection to $ISQL_SERVER" >&2
 
 # Assert that stored procedures are available on the Virtuoso server; insert them if needed.
 assert_procedures_stored
@@ -303,7 +319,7 @@ sync_transaction_logs
 
 # https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/
 # https://docs.docker.com/engine/userguide/networking/work-with-networks/#linking-containers-in-user-defined-networks
-# @ToDo Move Resource Sync functionality to another Docker container
+# @Could do: Move Resource Sync functionality to another Docker container
 if [ -z "${HTTP_SERVER_URL:-}" ]; then
 	if [ -n "${HTTP_SERVER_PORT_80_TCP_ADDR:-}" ]; then
 		HTTP_SERVER_URL="http://${HTTP_SERVER_PORT_80_TCP_ADDR}:${HTTP_SERVER_PORT_80_TCP_PORT}"
