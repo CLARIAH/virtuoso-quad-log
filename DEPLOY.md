@@ -47,6 +47,7 @@ $ docker run -it --rm  --name quad_logger -v $PWD/data:/datadir -e="VIRTUOSO_SER
     done. sleep 3600s
 ```
 In a short time virtuoso quad logger
+
 1. Connected to the Virtuoso ISQL interface at host *192.168.99.100* and port *1111*;
 2. Inserted 8 procedures in Virtuoso/PL;
 3. Dumped of all the quads in the Virtuoso quad store in the data directory;
