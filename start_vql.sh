@@ -34,15 +34,15 @@ CONTAINER_NAME=quad_logger
 # # See: https://docs.docker.com/engine/userguide/networking/work-with-networks/#linking-containers-in-user-defined-networks
 # # If you want to run the virtuoso quad logger within a user defined network, leave next two parameters uncommented.
 USER_DEFINED_NETWORK=isolated_nw
-USER_DEFINED_IP=172.25.3.3
+USER_DEFINED_IP=172.25.3.5
 # # If you want to run the virtuoso quad logger in a traditional network, comment out previous two parameters.
 # #
 # ####################################### virtuoso quad logger parameters #######
 # #
 # # At what host and port can the isql interface of the Virtuoso server be reached?
-# # - If the Virtuoso server and the quad logger are run under a user defined network specify the name, the alias or
+# # - If the Virtuoso server and the quad logger both are run under a user defined network specify the name, the alias or
 # #   the id of the virtuoso server as host name.
-# # - If the Virtuoso server runs as a (semi) public service specify the host name.
+# # - If the Virtuoso server runs as a (semi) public service specify the IP address or host name.
 VIRTUOSO_SERVER_HOST_NAME=virtuoso_server
 VIRTUOSO_SERVER_ISQL_PORT=1111
 # #
@@ -60,7 +60,7 @@ echo
 # #    m for minutes.
 # #    h for hours.
 # #    d for days.
-# # Default unit is seconds. Default value is 3600 (1 hour).
+# # Default value is 3600 (1 hour).
 #RUN_INTERVAL=20
 # #
 # # The location of transaction logs on the Virtuoso server.
@@ -121,21 +121,45 @@ echo
 # #
 # ###############################################################################
 
-echo -e "\n-- Starting virtuoso quad logger under network '$USER_DEFINED_NETWORK'"
-docker run -it --rm \
-    -v $DATA_DIR:/datadir \
-    --net="$USER_DEFINED_NETWORK" --ip="$USER_DEFINED_IP" \
-	--name "$CONTAINER_NAME" \
-	-e="VIRTUOSO_SERVER_HOST_NAME=$VIRTUOSO_SERVER_HOST_NAME" \
-    -e="VIRTUOSO_SERVER_ISQL_PORT=$VIRTUOSO_SERVER_ISQL_PORT" \
-    -e="VIRTUOSO_USER=$VIRTUOSO_USER" \
-    -e="VIRTUOSO_PASSWORD=$VIRTUOSO_PASSWORD" \
-    -e="RUN_INTERVAL=$RUN_INTERVAL" \
-    -e="LOG_FILE_LOCATION=$LOG_FILE_LOCATION" \
-    -e="INSERT_PROCEDURES=$INSERT_PROCEDURES" \
-    -e="DUMP_INITIAL_STATE=$DUMP_INITIAL_STATE" \
-    -e="MAX_QUADS_IN_DUMP_FILE=$MAX_QUADS_IN_DUMP_FILE" \
-    -e="EXCLUDED_GRAPHS=$EXCLUDED_GRAPHS" \
-    -e="DUMP_AND_EXIT=$DUMP_AND_EXIT" \
-    -e="HTTP_SERVER_URL=$HTTP_SERVER_URL" \
-    bhenk/virtuoso-quad-log
+if [ -z $USER_DEFINED_NETWORK -o -z $USER_DEFINED_IP ]; then
+
+    echo -e "\n-- Starting virtuoso quad logger"
+    docker run -it --rm \
+        -v $DATA_DIR:/datadir \
+        --name "$CONTAINER_NAME" \
+        -e="VIRTUOSO_SERVER_HOST_NAME=$VIRTUOSO_SERVER_HOST_NAME" \
+        -e="VIRTUOSO_SERVER_ISQL_PORT=$VIRTUOSO_SERVER_ISQL_PORT" \
+        -e="VIRTUOSO_USER=$VIRTUOSO_USER" \
+        -e="VIRTUOSO_PASSWORD=$VIRTUOSO_PASSWORD" \
+        -e="RUN_INTERVAL=$RUN_INTERVAL" \
+        -e="LOG_FILE_LOCATION=$LOG_FILE_LOCATION" \
+        -e="INSERT_PROCEDURES=$INSERT_PROCEDURES" \
+        -e="DUMP_INITIAL_STATE=$DUMP_INITIAL_STATE" \
+        -e="MAX_QUADS_IN_DUMP_FILE=$MAX_QUADS_IN_DUMP_FILE" \
+        -e="EXCLUDED_GRAPHS=$EXCLUDED_GRAPHS" \
+        -e="DUMP_AND_EXIT=$DUMP_AND_EXIT" \
+        -e="HTTP_SERVER_URL=$HTTP_SERVER_URL" \
+        bhenk/virtuoso-quad-log
+
+else
+
+    echo -e "\n-- Starting virtuoso quad logger under network '$USER_DEFINED_NETWORK'"
+    docker run -it --rm \
+        -v $DATA_DIR:/datadir \
+        --net="$USER_DEFINED_NETWORK" --ip="$USER_DEFINED_IP" \
+        --name "$CONTAINER_NAME" \
+        -e="VIRTUOSO_SERVER_HOST_NAME=$VIRTUOSO_SERVER_HOST_NAME" \
+        -e="VIRTUOSO_SERVER_ISQL_PORT=$VIRTUOSO_SERVER_ISQL_PORT" \
+        -e="VIRTUOSO_USER=$VIRTUOSO_USER" \
+        -e="VIRTUOSO_PASSWORD=$VIRTUOSO_PASSWORD" \
+        -e="RUN_INTERVAL=$RUN_INTERVAL" \
+        -e="LOG_FILE_LOCATION=$LOG_FILE_LOCATION" \
+        -e="INSERT_PROCEDURES=$INSERT_PROCEDURES" \
+        -e="DUMP_INITIAL_STATE=$DUMP_INITIAL_STATE" \
+        -e="MAX_QUADS_IN_DUMP_FILE=$MAX_QUADS_IN_DUMP_FILE" \
+        -e="EXCLUDED_GRAPHS=$EXCLUDED_GRAPHS" \
+        -e="DUMP_AND_EXIT=$DUMP_AND_EXIT" \
+        -e="HTTP_SERVER_URL=$HTTP_SERVER_URL" \
+        bhenk/virtuoso-quad-log
+
+fi
