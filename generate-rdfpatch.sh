@@ -37,7 +37,7 @@ if [ -n "${VIRTUOSO_SERVER_HOST_NAME:-}" -a -n "${VIRTUOSO_SERVER_ISQL_PORT:-}" 
     ISQL_SERVER="isql -H ${VIRTUOSO_SERVER_HOST_NAME} -S ${VIRTUOSO_SERVER_ISQL_PORT}"
 elif [ -n "${VIRTUOSO_PORT_1111_TCP_ADDR:-}" -a -n "${VIRTUOSO_PORT_1111_TCP_PORT:-}" ]; then
     # Started under legacy docker bridge with --link
-	ISQL_SERVER="isql -H ${VIRTUOSO_PORT_1111_TCP_ADDR} -S ${VIRTUOSO_PORT_1111_TCP_PORT}"
+    ISQL_SERVER="isql -H ${VIRTUOSO_PORT_1111_TCP_ADDR} -S ${VIRTUOSO_PORT_1111_TCP_PORT}"
 else
     ISQL_SERVER="isql -H ${VIRTUOSO_SERVER_HOST_NAME:-192.168.99.100} -S ${VIRTUOSO_SERVER_ISQL_PORT:-1111}"
 fi
@@ -66,7 +66,7 @@ fi
 # Arguments:    None
 # Returns:      None
 test_connection() {
-	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE > dev/null
+	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE > /dev/null
 		exit;
 		EOF
 }
@@ -172,7 +172,7 @@ assert_dump_completed_normal()
 # dump_nquads
 # Call vql_dump_nquads on server.
 #
-# Globals:      MAX_QUADS_IN_DUMP_FILE
+# Globals:      MAX_QUADS_IN_DUMP_FILE, EXCLUDED_GRAPHS
 # Arguments:    None
 # Returns:      dump stream on &1, can be picked up with -
 dump_nquads()
@@ -233,7 +233,7 @@ dump_if_needed()
 			    execute_dump
 			fi
 		else
-			assert_dump_completed_normal > dev/null
+			assert_dump_completed_normal > /dev/null
 		fi
 	else
 		echo "Not checking dump status because DUMP_INITIAL_STATE is not 'y'" >&2

@@ -59,7 +59,7 @@ In a short time virtuoso quad logger
 
 1. Connected to the Virtuoso ISQL interface at host *192.168.99.100* and port *1111*;
 2. Inserted 8 procedures in Virtuoso/PL;
-3. Dumped of all the quads in the Virtuoso quad store in the data directory;
+3. Dumped all of the quads in the Virtuoso quad store in the data directory;
 4. Parsed the transaction logs;
 5. Published all the files in the data directory under the Resource Sync Framework and
 6. Went to sleep for an hour.
@@ -69,7 +69,7 @@ synchronize all
 mutations that took place in the quad store since it's last visit, record these changes
 in the rdf-patch format in files in the data directory and publsh a new listing of the
 resources in the *resource-list.xml*. You should take a closer look at the data directory.
-You should find the following files:
+You can find the following files:
 ```
     __data
       |__ .well-known
@@ -115,7 +115,8 @@ a complete report on the dump.
 For the time here and for ever after, virtuoso-quad-logger will follow the state of your quad store
 and express this state as rdf-patches. Each `rdfpatch-XYZ` file corresponds to a `virtuosoXYZ.trx` file,
 where `XYZ` is the timestamp of the Virtuoso transaction log. Additions are marked with a `+` sign,
-deletions with a `-` sign and mutations are expressed in two rows, as a deletion & an addition.
+deletions with a `-` sign and mutations are expressed in two rows, as a deletion & an addition. In
+`rdf-patch-*` files the header states from which transaction log the nquads in the file are derived.
 ```
 # start: /usr/local/var/lib/virtuoso/db/virtuoso20190101123042.trx
 + <http://wordnet-rdf.princeton.edu/wn31/400461819-R> <http://wordnet-rdf.princeton.edu/ontology#translation> "saastaisesti"@fin <http://example.com/clariah> .
@@ -129,7 +130,7 @@ Keeping all the dump and patch files and publishing them through the Resource Sy
 will not only enable third parties to catch up with the current state of your quad store.
 It will also enable a journey through the past. Because, starting from the initial state
 at the time of dump and computing the pluses and minuses until a certain point in time will
-reconstruct the state of your quad store at that time.
+reconstruct the state of your quad store at any time.
 
 ## How to deploy
 
