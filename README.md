@@ -30,9 +30,9 @@ The interaction between the harvester and the provider and the data format in wh
 
 For the interaction we have evaluated the following approaches:
 
- * ~[OAI-PMH](https://www.openarchives.org/OAI/openarchivesprotocol.html)~ Focussed on metadata, not own data.
- * ~[Atom](https://tools.ietf.org/html/rfc4287)~ Features that we need such as marking an item as retracted are only available as extensions and finding tooling that supports the proper extensions is therefore hard. (*Supports atom* is not clear enough)
- * ~[Sitemaps](http://www.sitemaps.org/)~ Doesn't allow for retractions. Requires full re-indexing on every crawl.
+ * ~~[OAI-PMH](https://www.openarchives.org/OAI/openarchivesprotocol.html)~~ Focussed on metadata, not own data.
+ * ~~[Atom](https://tools.ietf.org/html/rfc4287)~~ Features that we need such as marking an item as retracted are only available as extensions and finding tooling that supports the proper extensions is therefore hard. (*Supports atom* is not clear enough)
+ * ~~[Sitemaps](http://www.sitemaps.org/)~~ Doesn't allow for retractions. Requires full re-indexing on every crawl.
  * [OAI-ResourceSync](https://www.openarchives.org/rs/toc) Seems to adress our usecase exactly according to the motivating examples. Is a bit large for our usecase, but our servers only need to deal with a subset and a client that fully implements the spec is already available.
 
 If you know of other sync frameworks that fit the bill better: [Let us know!](https://github.com/CLARIAH/virtuoso-quad-log/issues/new?Title=I+know+a+better+(or+at+least+different)+interaction+protocol)
@@ -72,26 +72,18 @@ We're therefore leaning towards RDF Patch, though that specification is stale af
 
 # Quickstart
 
-To launch a self-contained sandbox that you can play around in, run the `playground.sh` script in this repo. And open the link
-that's printed in the console for further instructions.
+To launch a self-contained sandbox you can use the docker-compose-example-setup.yml
 
-	./playground.sh
+	docker-compose -f docker-compose-example-setup.yml
 
-To connect the logger to a production virtuoso server, you can pass it the connection details as environment variables using the `-e` flag.
+To connect the logger to a production virtuoso server, you can edit the environment variables in the docker-compose.yml and launch using that
 
-	docker run -i -t --rm -v $PWD/data:/datadir \
-		-e="VIRTUOSO_ISQL_ADDRESS=127.0.01" \
-		-e="VIRTUOSO_ISQL_PORT=1111" \
-		-e="VIRTUOSO_USER=dba" \
-		-e="VIRTUOSO_PASSWORD=dba" \
-		huygensing/virtuoso-quad-log
+	docker-compose up
 
-The first time, the container will ask to install stored procedure onto the virtuoso server.
-
-The quad-log will generate a bunch of files in the volume that you map to /datadir that you can host using any static file server.
+This also launches a local nginx which you might, or might not, want to do.
 
 To advertise the logs you should provide either a robots.txt or a Source Description at the location that you submit to Work Package 2.
-See http://www.openarchives.org/rs/1.0/resourcesync for more information, or contact us!
+See http://www.openarchives.org/rs/1.0/resourcesync for more information, or [contact us!](https://github.com/CLARIAH/virtuoso-quad-log/issues/new?Title=How+do+I+submit+my+data)
 (The playground advertises the logs using the hidden folder .well-known)
 
 # Things to test and do (aka issues/tickets)
@@ -107,10 +99,8 @@ See http://www.openarchives.org/rs/1.0/resourcesync for more information, or con
  - [x] static file server aan de readme toevoegen
  - [x] remove checkpoint statement before committing and deploying
  - [x] virtuoso server with existing data
-
- - [ ] try multiple insertion strategies and see if we can trigger all cases in the log (LOG_INSERT, LOG_INSERT_SOFT etc.)
-
- - [ ] escaping literals (at least newlines and quotes, check the nquads spec)
  - [x] make it stateful so we don't re-parse the same files over and over again
+ - [x] make the rs update process atomic
+ - [ ] try multiple insertion strategies and see if we can trigger all cases in the log (LOG_INSERT, LOG_INSERT_SOFT etc.)
+ - [ ] escaping literals (at least newlines and quotes, check the nquads spec)
  - [ ] being able to go over the 50k rdf-patch files using resource-list indexes
- - [ ] make the rs update process atomic
