@@ -1,0 +1,42 @@
+version: '2'
+services:
+  some_virtuoso_server_with_data_preloaded:
+    image: clariah/quad-log-example-virtuoso
+    build: ./example-virtuoso-server
+    ports:
+      - "8890:8890"
+  some_http_server:
+    image: nginx
+    volumes: 
+      - rdfdumpwithresourcesync:/usr/share/nginx/html:ro
+    ports: 
+      - 8085:80
+  the_quad_logger:
+    build: ./quad_logger
+    image: clariah/virtuoso-quad-log
+    links: 
+      - some_virtuoso_server_with_data_preloaded:virtuoso-source
+    environment:
+      - RUN_INTERVAL=60
+      - INSERT_PROCEDURES=y
+      - VIRTUOSO_HOST_NAME=virtuoso-source
+    volumes:
+      - rdfdump:/datadir 
+  resourcesync-generator:
+    build: ./resourcesync-generator
+    image: clariah/resourcesync-generator
+    environment:
+      - RUN_INTERVAL=60
+      - HTTP_SERVER_URL=http://localhost:8080 #this is used to generate links in the xml files. It should be the public url
+    volumes:
+      - rdfdump:/input
+      - rdfdumpwithresourcesync:/output
+  # todo: add an example crawler
+  # an_example_crawler:
+  #   image: huygensing/oai-rs-client
+  #   link:
+  #     - some_http_server:nginx
+  #   port: 8180
+volumes:
+  rdfdump:
+  rdfdumpwithresourcesync:
