@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 
 from resync.resource_list import ResourceList
 from resync.capability_list import CapabilityList

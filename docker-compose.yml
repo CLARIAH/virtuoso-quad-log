@@ -1,0 +1,37 @@
+version: '2'
+services:
+  some_http_server:
+    image: nginx
+    volume: ./publishdir:/usr/share/nginx/html:ro
+    port: 8085:80
+  resourcesync-generator:
+    build: ./resourcesync-generator
+    image: clariah/resourcesync-generator
+    environment:
+      - RUN_INTERVAL=60
+      - HTTP_SERVER_URL=http://localhost:8080 #this is used to generate links in the xml files. It should be the public url
+    volumes:
+      - ./dumpdir:/input
+      - ./publishdir:/output
+  the_quad_logger:
+    image: clariah/virtuoso-quad-log
+    link: 
+      - some_http_server:HTTP_SERVER
+    environment:
+      - VIRTUOSO_HOST_NAME
+      - VIRTUOSO_DB_USER
+      - VIRTUOSO_DB_PASSWORD
+
+      - LOG_FILE_LOCATION=/usr/local/var/lib/virtuoso/db
+      - VIRTUOSO_ISQL_PORT=1111
+
+      - INSERT_PROCEDURES=y #this will insert stored procedures in your virtuoso server. These need to be there for the tool to work, but you might install them yourself and set this variable to n
+      - RUN_INTERVAL=60
+      - EXCLUDED_GRAPHS="http://www.openlinksw.com/schemas/virtrdf#
+        http://www.w3.org/ns/ldp#
+        http://www.w3.org/2002/07/owl#
+        http://localhost:8890/sparql
+        http://localhost:8890/DAV/"
+      - CHOWN_TO_ID #if you're dumping the files to a directory you might want to chown them from root:root to another user. If so specify the numeric userid here 
+    volume:
+      - ./dumpdir:/datadir

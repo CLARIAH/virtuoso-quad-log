@@ -10,13 +10,13 @@ VIRTUOSO_USER=${VIRTUOSO_USER:-dba}
 # The location of transaction logs on the Virtuoso server.
 LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-/usr/local/var/lib/virtuoso/db}
 
-INSERT_PROCEDURES=${INSERT_PROCEDURES:-y}
+INSERT_PROCEDURES=${INSERT_PROCEDURES:-n}
 
 # Should we dump the initial state of the quad store.
 DUMP_INITIAL_STATE=${DUMP_INITIAL_STATE:-y}
 
 # Maximum amount of quads per dump file.
-MAX_QUADS_IN_DUMP_FILE=${MAX_QUADS_IN_DUMP_FILE:-100000}
+MAX_QUADS_PER_DUMP_FILE=${MAX_QUADS_PER_DUMP_FILE:-100000}
 
 # Should we dump the current state of the quad store and then exit.
 DUMP_AND_EXIT=${DUMP_AND_EXIT:-n}
@@ -32,25 +32,18 @@ EXCLUDED_GRAPHS=${EXCLUDED_GRAPHS:-$DEFAULT_EXCLUDED_GRAPHS}
 # Connection to the Virtuoso server. See also:
 # https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/
 # https://docs.docker.com/engine/userguide/networking/work-with-networks/#linking-containers-in-user-defined-networks
-if [ -n "${VIRTUOSO_SERVER_HOST_NAME:-}" -a -n "${VIRTUOSO_SERVER_ISQL_PORT:-}" ]; then
-    # Started under a docker user defined network or within a 'traditional' network
-    ISQL_SERVER="isql -H ${VIRTUOSO_SERVER_HOST_NAME} -S ${VIRTUOSO_SERVER_ISQL_PORT}"
-elif [ -n "${VIRTUOSO_PORT_1111_TCP_ADDR:-}" -a -n "${VIRTUOSO_PORT_1111_TCP_PORT:-}" ]; then
-    # Started under legacy docker bridge with --link
-    ISQL_SERVER="isql -H ${VIRTUOSO_PORT_1111_TCP_ADDR} -S ${VIRTUOSO_PORT_1111_TCP_PORT}"
-else
-    ISQL_SERVER="isql -H ${VIRTUOSO_SERVER_HOST_NAME:-192.168.99.100} -S ${VIRTUOSO_SERVER_ISQL_PORT:-1111}"
-fi
-ISQL_CMD="$ISQL_SERVER -u ${VIRTUOSO_USER:-dba} -p ${VIRTUOSO_PASSWORD:-dba}"
+ISQL_SERVER="isql -H ${VIRTUOSO_HOST_NAME} -S ${VIRTUOSO_ISQL_PORT:-1111}"
+ISQL_CMD="$ISQL_SERVER -u ${VIRTUOSO_DB_USER:-dba} -p ${VIRTUOSO_DB_PASSWORD:-dba}"
 
 CURRENT_DIR=$PWD
 
 # Directory used for serving Resource Sync files. Should be mounted on the host.
-DATA_DIR=$(echo "$CURRENT_DIR" | sed 's/^\/$//')/datadir
-mkdir -p $DATA_DIR
+DATA_DIR="${DATA_DIR:-/datadir}"
+DUMP_DIR="$DATA_DIR/dumpingdata"
+mkdir -p "$DUMP_DIR"
 
 # File to report isql errors
-ISQL_ERROR_FILE=$(echo "$CURRENT_DIR" | sed 's/^\/$//')/isql.errors
+ISQL_ERROR_FILE="$DUMP_DIR/isql.errors"
 if [ -e "$ISQL_ERROR_FILE" ]; then
 	rm "$ISQL_ERROR_FILE"
 fi
@@ -116,9 +109,6 @@ assert_procedures_stored()
 	if [ "$found_procedures" != "$procedures_count" ] ; then
 		echo "Found $found_procedures out of $procedures_count required stored procedures." >&2
 		if [ "$INSERT_PROCEDURES" != "y" ]; then
-			read -p "To dump quads and read transaction logs from the server I need to install a few stored procedures on the virtuoso server. Is that okay? [yn] " INSERT_PROCEDURES
-		fi
-		if [ "$INSERT_PROCEDURES" != "y" ]; then
 			echo "Without the stored procedures I can't be of much use. Sorry. You might want to run me connected to a dummy virtuoso server in a container as detailed in the README." >&2
 			exit 1
 		else
@@ -153,13 +143,13 @@ assert_virtuoso_configuration()
 # assert_dump_completed_normal
 # Assert that an existing dump completed normal.
 #
-# Globals:      DATA_DIR
+# Globals:      DUMP_DIR
 # Arguments:    None
 # Returns:      Name of the last file in the dump.
 # Exit status:  1 if dump did not complete normally.
 assert_dump_completed_normal()
 {
-	local lastfile=$(ls $DATA_DIR/rdfdump-* | sort -r | head -n 1)
+	local lastfile=$(ls "$DUMP_DIR"/rdfdump-* | sort -r | head -n 1)
 	completed=$(cat $lastfile | { grep "# dump completed " || true; } )
 	if [ "$completed" = "" ] ; then
 		echo "DUMP ERROR: Dump did not complete normally." >&2
@@ -172,13 +162,13 @@ assert_dump_completed_normal()
 # dump_nquads
 # Call vql_dump_nquads on server.
 #
-# Globals:      MAX_QUADS_IN_DUMP_FILE, EXCLUDED_GRAPHS
+# Globals:      MAX_QUADS_PER_DUMP_FILE, EXCLUDED_GRAPHS
 # Arguments:    None
 # Returns:      dump stream on &1, can be picked up with -
 dump_nquads()
 {
 	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE
-		vql_dump_nquads($MAX_QUADS_IN_DUMP_FILE, '$EXCLUDED_GRAPHS');
+		vql_dump_nquads($MAX_QUADS_PER_DUMP_FILE, '$EXCLUDED_GRAPHS');
 		exit;
 		EOF
 }
@@ -187,23 +177,23 @@ dump_nquads()
 # execute_dump
 # Dump all quads on the server to rdf-patch-formatted files.
 #
-# Globals:      DATA_DIR
+# Globals:      DUMP_DIR
 # Arguments:    None
 # Returns:      None
 execute_dump()
 {
 	echo "Executing dump..." >&2
-	dump_nquads | grep "^#\|^\+" | csplit -f "$DATA_DIR/rdfdump-" -n 5 -s - "/^# at checkpoint  /" {*}
+	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfdump-" -n 5 -s - "/^# at checkpoint  /" {*}
 	assert_no_isql_error
 	local lastfile=$(assert_dump_completed_normal)
 
 	# first file is empty
-	rm "$DATA_DIR/rdfdump-00000"
+	rm "$DUMP_DIR/rdfdump-00000"
 
 	# The last file only contains information on the dump. Keep it as a mark.
 	# Also set the last file as latestlogsuffix marker
 	local checkpoint=$(cat $lastfile | grep "# at checkpoint" | sed -e s/[^0-9]//g)
-	cp "$lastfile" "$DATA_DIR/rdfpatch-$checkpoint"
+	cp "$lastfile" "$DUMP_DIR/rdfpatch-$checkpoint"
 
 	# report
 	echo "Dump reported in '$lastfile'" >&2
@@ -214,7 +204,7 @@ execute_dump()
 # dump_if_needed
 # Check if an initial dump has to be made and execute dump if needed.
 #
-# Globals:      DUMP_INITIAL_STATE, DATA_DIR
+# Globals:      DUMP_INITIAL_STATE, DUMP_DIR
 # Arguments:    None
 # Returns:      None
 # Exit status:  1 if dump did not complete normally.
@@ -222,16 +212,14 @@ execute_dump()
 dump_if_needed()
 {
 	if [ "$DUMP_INITIAL_STATE" = "y" ]; then
-		if [ ! -e "$DATA_DIR/rdfdump-00001" ]; then
-		    if ls "$DATA_DIR/rdfpatch-"* 1> /dev/null 2>&1; then
-		        echo "'rdfpatch-*' files found in '$DATA_DIR'. Remove them before dumping."
-		        exit 1
-		    elif ls "$DATA_DIR/rdfdump-"* 1> /dev/null 2>&1; then
-		        echo "'rdfdump-*' files found in '$DATA_DIR'. Remove them before dumping."
-		        exit 1
-		    else
-			    execute_dump
-			fi
+		if [ ! -e "$DUMP_DIR/rdfdump-00001" ]; then
+				if ls "$DUMP_DIR/rdfpatch-"* 1> /dev/null 2>&1; then
+						echo "'rdfpatch-*' files found in '$DUMP_DIR'. Remove them before dumping."
+						exit 1
+				else
+					execute_dump
+					CHANGES_WERE_MADE=y
+				fi
 		else
 			assert_dump_completed_normal > /dev/null
 		fi
@@ -250,20 +238,20 @@ dump_if_needed()
 # sync_transaction_logs
 # Parse newly found transaction logs to rdf patch files.
 #
-# Globals:      DATA_DIR, CURRENT_DIR
+# Globals:      DUMP_DIR, CURRENT_DIR, CHANGES_WERE_MADE
 # Arguments:    None
 # Returns:      None
 sync_transaction_logs()
 {
 	#get the latest log suffix
-	cd ${DATA_DIR}
+	cd "${DUMP_DIR}"
 	local latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || ''`
 	cd ${CURRENT_DIR}
 	echo "Syncing transaction logs starting from $latestlogsuffix" >&2
 
 	# parse_trx_files to marked output file
 	local mark=$(date +"%Y%m%d%H%M%S")
-	local output="$DATA_DIR/output$mark"
+	local output="$DUMP_DIR/output$mark"
 
 	$ISQL_CMD 2>$ISQL_ERROR_FILE > "$output" <<-EOF
 		vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
@@ -273,10 +261,10 @@ sync_transaction_logs()
 
 	# split output to marked files; use more than standard 2 digits for file suffix
 	local prefix='xyx'$mark'_'
-	csplit -f "$DATA_DIR/$prefix" -n 4 -s "$output" "/^# start: /" '{*}'
+	csplit -f "$DUMP_DIR/$prefix" -n 4 -s "$output" "/^# start: /" '{*}'
 	#loop over all files
 	local file
-	for file in $DATA_DIR/$prefix*; do
+	for file in "$DUMP_DIR/$prefix"*; do
 		# first line is the header, so a one-line file is effectively empty
 		if [ `wc -l $file | grep -o '^[0-9]\+'` -gt 1 ]; then
 			# line with the filename,   just the filename, remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
@@ -286,17 +274,41 @@ sync_transaction_logs()
 					echo -e "Timestamp on parsed transaction log is smaller than or equal to recorded latest log suffix:" \
 						"\n\t$timestamp <= $latestlogsuffix" \
 						"\n\tServer transaction logs and recorded rdf-patch files are not in line. We quit." >&2
-					rm "$DATA_DIR/$prefix"*
+					rm "$DUMP_DIR/$prefix"*
 					rm "$output"
 					exit 1
 				fi
 				echo "generated rdfpatch-${timestamp}" >&2
-				cp $file "$DATA_DIR/rdfpatch-${timestamp}"
+				cp $file "$DUMP_DIR/rdfpatch-${timestamp}"
+				CHANGES_WERE_MADE=y
 			fi
 		fi
 		rm $file
 	done
 	rm "$output"
+}
+
+###############################
+# move_files_to_output_dir
+# make sure newdata is only updated atomically and will never contain half a dump
+#
+# Globals:      DUMP_DIR, CHOWN_TO_ID
+# Arguments:    None
+# Returns:      None
+move_files_to_output_dir()
+{
+	if [ -n "${CHOWN_TO_ID:-}" ]; then
+		echo "Changin the owner of the files to $CHOWN_TO_ID" >&2
+		chown -R "$CHOWN_TO_ID:$CHOWN_TO_ID" "$DUMP_DIR"
+	fi
+
+	if [ -d "$DATA_DIR/newdata" ]; then
+		mv "$DATA_DIR/newdata" "$DATA_DIR/newdata_del" && rm -r "$DATA_DIR/newdata_del" || true # || true is for the race condition
+	fi
+	echo "copying the dump to staging area"
+	cp -R "$DUMP_DIR" "$DATA_DIR/stage"
+	echo "renaming staging area to newdata"
+	mv "$DATA_DIR/stage" "$DATA_DIR/newdata"
 }
 
 ##########################################################
@@ -316,22 +328,11 @@ dump_if_needed
 # Parse newly found transaction logs to rdf patch files.
 sync_transaction_logs
 
-
-# https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/
-# https://docs.docker.com/engine/userguide/networking/work-with-networks/#linking-containers-in-user-defined-networks
-# @Could do: Move Resource Sync functionality to another Docker container
-if [ -z "${HTTP_SERVER_URL:-}" ]; then
-	if [ -n "${HTTP_SERVER_PORT_80_TCP_ADDR:-}" ]; then
-		HTTP_SERVER_URL="http://${HTTP_SERVER_PORT_80_TCP_ADDR}:${HTTP_SERVER_PORT_80_TCP_PORT}"
-	else
-		HTTP_SERVER_URL="http://example.org/"
-	fi
-fi
-
-./resource-list.py --resource-url "${HTTP_SERVER_URL}" --resource-dir "$DATA_DIR"
-
-if [ -n "${CUR_USER:-}" ]; then
-	chown -R "$CUR_USER:$CUR_USER" "$DATA_DIR"
+if [ -n "${CHANGES_WERE_MADE:-}" ]; then
+	# make sure newdata is only updated atomically and will never contain half a dump
+	move_files_to_output_dir
+else
+	echo "No new data exported"
 fi
 
 exit 0
