@@ -93,7 +93,7 @@ assert_no_isql_error()
 assert_procedures_stored()
 {
 	# files are in the directory 'sql-proc'
-	local files=(utils.sql dump_nquads.sql  parse_trx.sql)
+	local files=(utils.sql dump_nquads.sql parse_trx.sql)
 	# the number of procedures that start with 'vql_*'
 	local procedures_count=8
 

@@ -100,7 +100,6 @@ if len(timestamps) > 0:
 capability_list_file = open(args.resource_dir + "/capability-list.xml", "w")
 capability_list_file.write(caps.as_xml())
 capability_list_file.close()
-
 #print "Wrote capability list to: " + args.resource_dir + "/capability-list.xml"
 
 rsd = SourceDescription()
@@ -115,6 +114,6 @@ if not isdir(wellknown):
 source_description_file = open(wellknown + "/resourcesync", "w")
 source_description_file.write(rsd.as_xml())
 source_description_file.close()
-
 #print "Wrote source description to: " + args.resource_dir + "/resourcesync"
+
 print "Published %s resources under Resource Sync Framework in %s" % (str(len(rl.resources)), args.resource_dir)

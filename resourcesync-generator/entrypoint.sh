@@ -5,7 +5,10 @@ RUN_INTERVAL=${RUN_INTERVAL:-10s}
 inputdir="${DATA_DIR:-/input}"
 outputdir="${DATA_DIR:-/output}"
 
+msg="Starting to "
+
 while true; do
+  echo "$msg sleep $RUN_INTERVAL."
   sleep ${RUN_INTERVAL}
   if [ -d "$inputdir/newdata" ]; then
     echo "Adding metadata..."
@@ -16,20 +19,22 @@ while true; do
         chown -R "$CHOWN_TO_ID:$CHOWN_TO_ID" "$inputdir/addingmetadata"
       fi
 
-      find "$inputdir/"
+      #find "$inputdir/"
       mv -n "$inputdir/addingmetadata/rdf"* "$outputdir" # move the rdf files over -n skips files that already exist
       mv "$inputdir/addingmetadata/resource-list.xml" "$outputdir"
 
       mv -n "$inputdir/addingmetadata/capability-list.xml" "$outputdir"
       mkdir -p "$outputdir/.well-known"
       mv -n "$inputdir/addingmetadata/.well-known/resourcesync" "$outputdir/.well-known"
+      
+      rm -Rf "$inputdir/addingmetadata"
 
-      echo "done. sleep $RUN_INTERVAL"
+      msg="done moving resources and metadata to $outputdir."
     else
-      echo "newdata was there a second ago and now its gone. Might be a race condition."
+      msg="newdata was there a second ago and now its gone. Might be a race condition."
     fi
   else
-    echo "No new data available..."
+    msg="No new data available..."
   fi
 done
 
