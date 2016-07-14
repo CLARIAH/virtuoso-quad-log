@@ -43,16 +43,17 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
         cpc := cpc + 1;
     }
 
-    IF (chckp <> date2) {
-        -- This will/should/could never happen?
-        result(concat('# ERROR CAUSE ', chckp, " <> ", date2));
-        -- signal('DMPER', ': Could not get unequivocal checkpoint. Try again some other time.');
-        signal('DMPER', concat('ERROR CAUSE ', chckp, " <> ", date2, ' : Could not get unequivocal checkpoint. Try again some other time.'));
-    }
+--    IF (chckp <> date2) {
+--        -- This will/should/could never happen?
+--        result(concat('# ERROR CAUSE ', chckp, ' <> ', date2));
+--        -- signal('DMPER', ': Could not get unequivocal checkpoint. Try again some other time.');
+--        signal('DMPER', concat('ERROR CAUSE ', chckp, ' <> ', date2, ' : Could not get unequivocal checkpoint. Try again some other time.'));
+--    }
 
     -- Full path to current transaction file.
     currenttrx := cfg_item_value(virtuoso_ini_path(), 'Database', 'TransactionFile');
-
+    chckp := right(regexp_replace(currenttrx, '[^0-9]', ''), 14);
+    
     -- See note at foot of procedure.
     excludes := split_and_decode(excluded_graphs, 0, '\0\0 ');
 
