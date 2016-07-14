@@ -46,7 +46,8 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
     IF (chckp <> date2) {
         -- This will/should/could never happen?
         result(concat('# ERROR CAUSE ', chckp, " <> ", date2));
-        signal('DMPER', ': Could not get unequivocal checkpoint. Try again some other time.');
+        -- signal('DMPER', ': Could not get unequivocal checkpoint. Try again some other time.');
+        signal('DMPER', concat('ERROR CAUSE ', chckp, " <> ", date2, ' : Could not get unequivocal checkpoint. Try again some other time.'));
     }
 
     -- Full path to current transaction file.
