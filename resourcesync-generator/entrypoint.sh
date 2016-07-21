@@ -5,7 +5,7 @@ RUN_INTERVAL=${RUN_INTERVAL:-10s}
 inputdir="${DATA_DIR:-/input}"
 outputdir="${DATA_DIR:-/output}"
 
-msg="Starting to "
+msg="Starting to"
 
 while true; do
   echo "$msg sleep $RUN_INTERVAL."
@@ -14,7 +14,7 @@ while true; do
     echo "Adding metadata..."
     mv "$inputdir/newdata" "$inputdir/addingmetadata"
     if [ $? = 0 ]; then
-      ./resource-list.py --resource-url "${HTTP_SERVER_URL}" --resource-dir "$inputdir/addingmetadata"
+      ./resource_list.py --resource-url "${HTTP_SERVER_URL}" --resource-dir "$inputdir/addingmetadata"
       if [ -n "${CHOWN_TO_ID:-}" ]; then
         chown -R "$CHOWN_TO_ID:$CHOWN_TO_ID" "$inputdir/addingmetadata"
       fi
@@ -26,7 +26,7 @@ while true; do
       mv -n "$inputdir/addingmetadata/capability-list.xml" "$outputdir"
       mkdir -p "$outputdir/.well-known"
       mv -n "$inputdir/addingmetadata/.well-known/resourcesync" "$outputdir/.well-known"
-      
+
       rm -Rf "$inputdir/addingmetadata"
 
       msg="done moving resources and metadata to $outputdir."

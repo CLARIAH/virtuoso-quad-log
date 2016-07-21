@@ -21,6 +21,7 @@ parser = ArgumentParser()
 # --resource-url: public url pointing to resource dir
 parser.add_argument('--resource-url', required=True)
 parser.add_argument('--resource-dir', required=True)
+parser.add_argument('--dump_resources', default=False)
 args = parser.parse_args()
 
 if args.resource_url[-1] != '/':
@@ -45,45 +46,57 @@ def compute_timestamp(raw_ts):
     )
     return ts
 
-rl = ResourceList()
-timestamps = []
+def create_resourcelist(resource_dir, resource_url):
+    """
+    Create a resourcelist and a list of timestamps with last modified dates of the resources in resource_dir.
+    :param resource_dir: the directory where resources reside
+    :param resource_url: public url pointing to resource dir
+    :return: a ResourceList and a list of last modified dates
+    """
+    #
+    rl = ResourceList()
+    timestamps = []
 
-# Add dump files to the resource list. Last modified for all these files is the time dump was executed.
-# Last modified is recorded in each file in a line starting with '# at checkpoint'.
-t = None
-dumpfiles = sorted(glob(args.resource_dir + "/rdfdump-*"))
-if len(dumpfiles) > 0:
-    lastfile = dumpfiles[len(dumpfiles) - 1]
-    with open(lastfile) as search:
-        for line in search:
-            if re.match("# at checkpoint.*", line):
-                t = re.findall('\d+', line)[0]
+    # Add dump files to the resource list. Last modified for all these files is the time dump was executed.
+    # Last modified is recorded in each file in a line starting with '# at checkpoint'.
+    t = None
+    dumpfiles = sorted(glob(resource_dir + "/rdfdump-*"))
+    if len(dumpfiles) > 0:
+        lastfile = dumpfiles[len(dumpfiles) - 1]
+        with open(lastfile) as search:
+            for line in search:
+                if re.match("# at checkpoint.*", line):
+                    t = re.findall('\d+', line)[0]
 
-    if t is None:
-        raise RuntimeError("Found dump files but did not find timestamp for checkpoint in '%s'" % lastfile)
+        if t is None:
+            raise RuntimeError("Found dump files but did not find timestamp for checkpoint in '%s'" % lastfile)
 
-    ts = compute_timestamp(t)
-    timestamps.append(ts)
-    for file in dumpfiles:
-        filename = basename(file)
+        ts = compute_timestamp(t)
+        timestamps.append(ts)
+        for file in dumpfiles:
+            filename = basename(file)
+            length = stat(file).st_size
+            md5 = compute_md5_for_file(file)
+            rl.add(Resource(resource_url + filename, md5=md5, length=length, lastmod=ts))
+
+    # Add rdf-patch files to resourcelist. Last modified can be computed from the filename.
+    for filename in listdir(resource_dir):
+        if filename[:len("rdfpatch-")] != "rdfpatch-":
+            continue
+        _, raw_ts = filename.split("-")
+        ts = compute_timestamp(raw_ts)
+        timestamps.append(ts)
+
+        file = join(resource_dir, filename)
         length = stat(file).st_size
         md5 = compute_md5_for_file(file)
-        rl.add(Resource(args.resource_url + filename, md5=md5, length=length, lastmod=ts))
+        rl.add(Resource(resource_url + filename, md5=md5, length=length, lastmod=ts))
 
-# Add rdf-patch files to resourcelist. Last modified can be computed from the filename.
-for filename in listdir(args.resource_dir):
-	if filename[:len("rdfpatch-")] != "rdfpatch-":
-		continue
-	_, raw_ts = filename.split("-")
-	ts = compute_timestamp(raw_ts)
-	timestamps.append(ts)
+    return rl, timestamps
 
-	file = join(args.resource_dir, filename)
-	length = stat(file).st_size
-	md5 = compute_md5_for_file(file)
-	rl.add(Resource(args.resource_url + filename, md5=md5, length=length, lastmod=ts))
 
-# Print to file at args.resource_dir + "/resource-list.xml"
+rl, timestamps = create_resourcelist(args.resource_dir, args.resource_url)
+
 resource_list_file = open(args.resource_dir + "/resource-list.xml", "w")
 resource_list_file.write(rl.as_xml())
 resource_list_file.close()
@@ -96,7 +109,7 @@ caps.add_capability(rl, args.resource_url + "resource-list.xml")
 if len(timestamps) > 0:
 	caps.md['from'] = timestamps[0]
 
-# Print to file at args.resource_dir + "/capability-list.xml"
+
 capability_list_file = open(args.resource_dir + "/capability-list.xml", "w")
 capability_list_file.write(caps.as_xml())
 capability_list_file.close()
@@ -110,7 +123,6 @@ wellknown = args.resource_dir + "/.well-known"
 if not isdir(wellknown):
     makedirs(wellknown)
 
-# Print to file at args.resource_dir + "/resourcesync"
 source_description_file = open(wellknown + "/resourcesync", "w")
 source_description_file.write(rsd.as_xml())
 source_description_file.close()

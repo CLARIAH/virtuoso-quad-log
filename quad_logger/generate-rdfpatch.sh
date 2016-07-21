@@ -15,7 +15,8 @@ INSERT_PROCEDURES=${INSERT_PROCEDURES:-n}
 # Should we dump the initial state of the quad store.
 DUMP_INITIAL_STATE=${DUMP_INITIAL_STATE:-y}
 
-# Maximum amount of quads per dump file.
+# Maximum amount of quads per dump file. (100.000 quads ~ 12,5 MB)
+#
 MAX_QUADS_PER_DUMP_FILE=${MAX_QUADS_PER_DUMP_FILE:-100000}
 
 # Should we dump the current state of the quad store and then exit.
@@ -183,12 +184,12 @@ dump_nquads()
 execute_dump()
 {
 	echo "Executing dump..." >&2
-	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfdump-" -n 5 -s - "/^# at checkpoint  /" {*}
+	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfdump-" -n 10 -s - "/^# at checkpoint  /" {*}
 	assert_no_isql_error
 	local lastfile=$(assert_dump_completed_normal)
 
 	# first file is empty
-	rm "$DUMP_DIR/rdfdump-00000"
+	rm "$DUMP_DIR/rdfdump-0000000000"
 
 	# The last file only contains information on the dump. Keep it as a mark.
 	# Also set the last file as latestlogsuffix marker
@@ -212,7 +213,7 @@ execute_dump()
 dump_if_needed()
 {
 	if [ "$DUMP_INITIAL_STATE" = "y" ]; then
-		if [ ! -e "$DUMP_DIR/rdfdump-00001" ]; then
+		if [ ! -e "$DUMP_DIR/rdfdump-0000000001" ]; then
 				if ls "$DUMP_DIR/rdfpatch-"* 1> /dev/null 2>&1; then
 						echo "'rdfpatch-*' files found in '$DUMP_DIR'. Remove them before dumping."
 						exit 1
