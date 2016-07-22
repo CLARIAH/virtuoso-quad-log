@@ -2,6 +2,9 @@
 import os, shutil, unittest
 from synchronizer import Synchronizer
 from glob import glob
+from zipfile import ZipFile
+from resync.sitemap import Sitemap
+from resync.resource_list import ResourceList
 
 
 class TestZipper(unittest.TestCase):
@@ -41,7 +44,7 @@ class TestZipper(unittest.TestCase):
         synchronizer = Synchronizer(resource_dir, resource_url, publish_dir)
         synchronizer.publish()
 
-        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_incomplete_zip + "*.zip"))
+        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_end_zip + "*.zip"))
         self.assertEqual(0, len(zip_end_files))
 
     def test_publish_dump_files(self):
@@ -53,7 +56,7 @@ class TestZipper(unittest.TestCase):
         synchronizer = Synchronizer(resource_dir, resource_url, publish_dir)
         synchronizer.publish()
 
-        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_incomplete_zip + "*.zip"))
+        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_end_zip + "*.zip"))
         self.assertEqual(1, len(zip_end_files))
         # 2 rdfdump files in zip
 
@@ -69,7 +72,7 @@ class TestZipper(unittest.TestCase):
 
         zip_completed_files = glob(os.path.join(publish_dir, synchronizer.prefix_completed_zip + "*.zip"))
         self.assertEqual(2, len(zip_completed_files))
-        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_incomplete_zip + "*.zip"))
+        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_end_zip + "*.zip"))
         self.assertEqual(0, len(zip_end_files))
 
         # add another file
@@ -79,7 +82,7 @@ class TestZipper(unittest.TestCase):
 
         zip_completed_files = glob(os.path.join(publish_dir, synchronizer.prefix_completed_zip + "*.zip"))
         self.assertEqual(2, len(zip_completed_files))
-        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_incomplete_zip + "*.zip"))
+        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_end_zip + "*.zip"))
         self.assertEqual(1, len(zip_end_files))
 
         # add another file
@@ -89,8 +92,9 @@ class TestZipper(unittest.TestCase):
 
         zip_completed_files = glob(os.path.join(publish_dir, synchronizer.prefix_completed_zip + "*.zip"))
         self.assertEqual(3, len(zip_completed_files))
-        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_incomplete_zip + "*.zip"))
+        zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_end_zip + "*.zip"))
         self.assertEqual(0, len(zip_end_files))
+
 
 
 
