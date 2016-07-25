@@ -2,9 +2,6 @@
 import os, shutil, unittest
 from synchronizer import Synchronizer
 from glob import glob
-from zipfile import ZipFile
-from resync.sitemap import Sitemap
-from resync.resource_list import ResourceList
 
 
 class TestZipper(unittest.TestCase):
@@ -26,22 +23,22 @@ class TestZipper(unittest.TestCase):
 
     def test_publish_zero_resources(self):
         resource_dir = self.copy_files([])
-        resource_url = "http://example.com/rdf/pub/"
+        publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
 
-        synchronizer = Synchronizer(resource_dir, resource_url, publish_dir)
+        synchronizer = Synchronizer(resource_dir, publish_dir, publish_url)
         synchronizer.publish()
 
         self.assertTrue(os.path.isdir(publish_dir))
 
     def test_not_publish_last_dump_file(self):
         resource_dir = self.copy_files(["rdfdump-00001"])
-        resource_url = "http://example.com/rdf/pub/"
+        publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
 
-        synchronizer = Synchronizer(resource_dir, resource_url, publish_dir)
+        synchronizer = Synchronizer(resource_dir, publish_dir, publish_url)
         synchronizer.publish()
 
         zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_end_zip + "*.zip"))
@@ -49,11 +46,11 @@ class TestZipper(unittest.TestCase):
 
     def test_publish_dump_files(self):
         resource_dir = self.copy_files(["rdfdump-00001", "rdfdump-00002", "rdfdump-00003"])
-        resource_url = "http://example.com/rdf/pub/"
+        publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
 
-        synchronizer = Synchronizer(resource_dir, resource_url, publish_dir)
+        synchronizer = Synchronizer(resource_dir, publish_dir, publish_url)
         synchronizer.publish()
 
         zip_end_files = glob(os.path.join(publish_dir, synchronizer.prefix_end_zip + "*.zip"))
@@ -63,11 +60,11 @@ class TestZipper(unittest.TestCase):
     def test_publish_incremental_zips(self):
         resource_dir = self.copy_files(["rdfdump-00001", "rdfdump-00002", "rdfdump-00003", "rdfdump-99999",
             "rdfpatch-20160113072513", "rdfpatch-20160113082513"])
-        resource_url = "http://example.com/rdf/pub/"
+        publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
 
-        synchronizer = Synchronizer(resource_dir, resource_url, publish_dir, max_files_in_zip=2)
+        synchronizer = Synchronizer(resource_dir, publish_dir, publish_url, max_files_in_zip=2)
         synchronizer.publish()
 
         zip_completed_files = glob(os.path.join(publish_dir, synchronizer.prefix_completed_zip + "*.zip"))
@@ -77,7 +74,7 @@ class TestZipper(unittest.TestCase):
 
         # add another file
         self.copy_files(["rdfpatch-20160712144328"], rmtree=False)
-        synchronizer = Synchronizer(resource_dir, resource_url, publish_dir, max_files_in_zip=2)
+        synchronizer = Synchronizer(resource_dir, publish_dir, publish_url, max_files_in_zip=2)
         synchronizer.publish()
 
         zip_completed_files = glob(os.path.join(publish_dir, synchronizer.prefix_completed_zip + "*.zip"))
@@ -87,7 +84,7 @@ class TestZipper(unittest.TestCase):
 
         # add another file
         self.copy_files(["rdfpatch-20160712145231"], rmtree=False)
-        synchronizer = Synchronizer(resource_dir, resource_url, publish_dir, max_files_in_zip=2)
+        synchronizer = Synchronizer(resource_dir, publish_dir, publish_url, max_files_in_zip=2)
         synchronizer.publish()
 
         zip_completed_files = glob(os.path.join(publish_dir, synchronizer.prefix_completed_zip + "*.zip"))

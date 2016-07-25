@@ -1,3 +1,6 @@
+#! /usr/bin/env python2
+# -*- coding: utf-8 -*-
+
 import os, re, resync.w3c_datetime as w3cdt
 from resync.dump import Dump
 from resync.resource import Resource
@@ -5,8 +8,11 @@ from resync.resource_list import ResourceList
 from resync.utils import compute_md5_for_file
 from resync.sitemap import Sitemap
 from resync.resource_dump import ResourceDump
+from resync.capability_list import CapabilityList
+from resync.source_description import SourceDescription
 from glob import glob
 
+# Alternative strategy to publish rdf patch files as resource dumps. Not implemented.
 
 class Synchronizer(object):
     """
@@ -22,20 +28,22 @@ class Synchronizer(object):
         and a document size of 50 MB. ...
     """
 
-    def __init__(self, resource_dir, publish_url, publish_dir, max_files_in_zip=50000):
+    def __init__(self, resource_dir, publish_dir, publish_url, max_files_in_zip=50000):
         """
         Initialize a new Synchronizer.
         :param resource_dir: the source directory for resources
-        :param publish_url: public url pointing to publish dir
         :param publish_dir: the directory resources should be published to
+        :param publish_url: public url pointing to publish dir
         :param max_files_in_zip: the maximum number of resource files that should be compressed in one zip file
         :return:
         """
+        if not os.path.isdir(resource_dir):
+            raise IOError(resource_dir + " is not a directory")
         self.resource_dir = resource_dir
+        self.publish_dir = publish_dir
         self.publish_url = publish_url
         if self.publish_url[-1] != '/':
             self.publish_url += '/'
-        self.publish_dir = publish_dir
         if max_files_in_zip > 50000:
             raise RuntimeError("max_files_in_zip exceeds limit of 50000 items per document of the Sitemap protocol.")
         self.max_files_in_zip = max_files_in_zip
@@ -71,9 +79,9 @@ class Synchronizer(object):
         return len(same) == len(rl_1) == len(rl_2)
 
     @staticmethod
-    def last_modified(rl):
+    def last_modified(resourcelist):
         lastmod = None
-        for resource in rl:
+        for resource in resourcelist:
             rlm = resource.lastmod
             if rlm > lastmod:
                 lastmod = rlm
@@ -127,36 +135,61 @@ class Synchronizer(object):
             os.remove(os.path.splitext(path_zip_end_old)[0] + ".xml")
 
     def publish_metadata(self, new_zips, exluded_zip):
-        resource_dump = ResourceDump()
 
-        capa_url = self.publish_url + "capability-list.xml"
+        rs_dump_url = self.publish_url + "resource-dump.xml"
+        rs_dump_path = os.path.join(self.publish_dir, "resource-dump.xml")
+        capa_list_url = self.publish_url + "capability-list.xml"
+        capa_list_path = os.path.join(self.publish_dir, "capability-list.xml")
+        src_desc_url = self.publish_url + ".well-known/resourcesync"
+        src_desc_path = os.path.join(self.publish_dir, ".well-known", "resourcesync")
+
+        rs_dump = ResourceDump()
 
         # Load existing resource-dump, if any. Else set start time.
-        rd_path = os.path.join(self.publish_dir, "resource-dump.xml")
-        if os.path.isfile(rd_path):
-            rd_file = open(rd_path, "r")
+        if os.path.isfile(rs_dump_path):
+            rs_dump_file = open(rs_dump_path, "r")
             sm = Sitemap()
-            sm.parse_xml(rd_file, resources=resource_dump)
-            rd_file.close()
+            sm.parse_xml(rs_dump_file, resources=rs_dump)
+            rs_dump_file.close()
         else:
-            resource_dump.md_at = w3cdt.datetime_to_str()
-            resource_dump.link_set(rel="up", href=capa_url)
+            rs_dump.md_at = w3cdt.datetime_to_str()
+            rs_dump.link_set(rel="up", href=capa_list_url)
 
         # Remove excluded zip, if any
         if exluded_zip:
             loc = self.publish_url + os.path.basename(exluded_zip)
-            del resource_dump.resources[loc]
+            del rs_dump.resources[loc]
 
         # Add new zips
         for resource in new_zips:
-            resource_dump.add(resource)
+            rs_dump.add(resource)
 
         # Write resource-dump.xml
-        resource_dump.md_completed = w3cdt.datetime_to_str()
-        rd_file = open(rd_path, "w")
-        rd_file.write(resource_dump.as_xml())
-        rd_file.close()
+        rs_dump.md_completed = w3cdt.datetime_to_str()
+        rs_dump_file = open(rs_dump_path, "w")
+        rs_dump_file.write(rs_dump.as_xml())
+        rs_dump_file.close()
 
+        # Write capability-list.xml
+        if not os.path.isfile(capa_list_path):
+            capa_list = CapabilityList()
+            capa_list.link_set(rel="up", href=src_desc_url)
+            capa_list.add_capability(rs_dump, rs_dump_url)
+            capa_list_file = open(capa_list_path, "w")
+            capa_list_file.write(capa_list.as_xml())
+            capa_list_file.close()
+
+        # Write resourcesync
+        wellknown = os.path.dirname(src_desc_path)
+        if not os.path.isdir(wellknown):
+            os.makedirs(wellknown)
+
+        if not os.path.isfile(src_desc_path):
+            src_desc = SourceDescription()
+            src_desc.add_capability_list(capa_list_url)
+            src_desc_file = open(src_desc_path, "w")
+            src_desc_file.write(src_desc.as_xml())
+            src_desc_file.close()
 
     def get_state_published(self):
         path_zip_end_old = None
