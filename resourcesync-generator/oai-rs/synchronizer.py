@@ -248,7 +248,7 @@ class Synchronizer(object):
         elif len(zip_end_files) == 1:
             path_zip_end_old = zip_end_files[0]
 
-        if not path_zip_end_old is None:
+        if path_zip_end_old:
             rl_file = open(os.path.splitext(path_zip_end_old)[0] + ".xml", "r")
             sm = Sitemap()
             sm.parse_xml(rl_file, resources=rl_end_old)
