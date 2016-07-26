@@ -10,10 +10,11 @@
 --              Default value is -, not excluding graphs. (Default value '' (empty string) hits on errors.)
 CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCHAR := '-') {
 
-    DECLARE nquad, excludes, chckp, date2, startdate, currenttrx, rst ANY;
-    DECLARE inx, cpc      INT;
+    DECLARE nquad, excludes, chckp, startdate, currenttrx, rst ANY;
+    DECLARE inx           INT;
     DECLARE cpinterval    INTEGER;
 
+    startdate := datestring_GMT(now());
     SET isolation = 'serializable';
 
     result_names(nquad);
@@ -27,29 +28,11 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
         resignal;
     };
 
-    chckp := 0;
-    date2 := 1;
-    cpc := 0;
-
-    -- It's a pity that   EXEC ('CHECKPOINT')   does not return a timestamp.
-    -- Pin down the checkpoint between two points in time.
-    -- If the two points are equal as expressed with seconds precision,
-    -- then the checkpoint occurred at that time.
-    WHILE (chckp <> date2 AND cpc < 3) {
-        startdate := datestring_GMT(now());
-        chckp := left(regexp_replace(startdate, '[^0-9]', ''), 14);
-        EXEC ('CHECKPOINT');
-        date2 := left(regexp_replace(datestring_GMT(now()), '[^0-9]', ''), 14);
-        cpc := cpc + 1;
-    }
-
-    IF (chckp <> date2) {
-        -- This will/should/could never happen?
-        signal('DMPER', ': Could not get unequivocal checkpoint. Try again some other time.');
-    }
-
+    -- Set a checkpoint
+    EXEC ('CHECKPOINT');
     -- Full path to current transaction file.
     currenttrx := cfg_item_value(virtuoso_ini_path(), 'Database', 'TransactionFile');
+    chckp := right(regexp_replace(currenttrx, '[^0-9]', ''), 14);
 
     -- See note at foot of procedure.
     excludes := split_and_decode(excluded_graphs, 0, '\0\0 ');

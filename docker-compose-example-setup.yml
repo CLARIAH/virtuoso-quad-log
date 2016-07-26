@@ -20,6 +20,7 @@ services:
       - RUN_INTERVAL=60
       - INSERT_PROCEDURES=y
       - VIRTUOSO_HOST_NAME=virtuoso-source
+      - MAX_QUADS_PER_DUMP_FILE=10
     volumes:
       - rdfdump:/datadir 
   resourcesync-generator:
@@ -27,7 +28,10 @@ services:
     image: clariah/resourcesync-generator
     environment:
       - RUN_INTERVAL=60
-      - HTTP_SERVER_URL=http://localhost:8080 #this is used to generate links in the xml files. It should be the public url
+      - HTTP_SERVER_URL=http://192.168.99.100:8085 #this is used to generate links in the xml files. It should be the public url
+      - MAX_FILES_IN_ZIP=10
+      - WRITE_SEPARATE_MANIFEST=True # Write separate manifest files in publish dir.
+      - MOVE_RESOURCES=False # Move resources to publish dir. Set to True if individual resources should be published along side the zip files
     volumes:
       - rdfdump:/input
       - rdfdumpwithresourcesync:/output
