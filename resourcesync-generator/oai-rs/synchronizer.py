@@ -1,18 +1,19 @@
 #! /usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-import os, re, resync.w3c_datetime as w3cdt
+import os, re, shutil, resync.w3c_datetime as w3cdt
 from resync.dump import Dump
 from resync.resource import Resource
 from resync.resource_list import ResourceList
 from resync.utils import compute_md5_for_file
 from resync.sitemap import Sitemap
 from resync.resource_dump import ResourceDump
+from resync.resource_dump_manifest import ResourceDumpManifest
 from resync.capability_list import CapabilityList
 from resync.source_description import SourceDescription
 from glob import glob
 
-# Alternative strategy to publish rdf patch files as resource dumps. Not implemented.
+# Alternative strategy to publish rdf patch files as resource dumps.
 
 class Synchronizer(object):
     """
@@ -28,27 +29,33 @@ class Synchronizer(object):
         and a document size of 50 MB. ...
     """
 
-    def __init__(self, resource_dir, publish_dir, publish_url, max_files_in_zip=50000):
+    def __init__(self, resource_dir, publish_dir, publish_url, max_files_in_zip=50000, write_separate_manifest=True,
+                 move_resources=False):
         """
         Initialize a new Synchronizer.
         :param resource_dir: the source directory for resources
         :param publish_dir: the directory resources should be published to
         :param publish_url: public url pointing to publish dir
         :param max_files_in_zip: the maximum number of resource files that should be compressed in one zip file
+        :param write_separate_manifest: will each zip file be accompanied by a separate resourcedump manifest.
+        :param move_resources: Do we move the zipped resources to publish_dir or simply delete them from resource_dir.
         :return:
         """
-        if not os.path.isdir(resource_dir):
-            raise IOError(resource_dir + " is not a directory")
         self.resource_dir = resource_dir
         self.publish_dir = publish_dir
         self.publish_url = publish_url
+        if self.publish_url is None or self.publish_url == "":
+            self.publish_url = "http://example.com/"
         if self.publish_url[-1] != '/':
             self.publish_url += '/'
         if max_files_in_zip > 50000:
-            raise RuntimeError("max_files_in_zip exceeds limit of 50000 items per document of the Sitemap protocol.")
+            raise RuntimeError("%s exceeds limit of 50000 items per document of the Sitemap protocol." % str(max_files_in_zip))
         self.max_files_in_zip = max_files_in_zip
+        self.write_separate_manifest = write_separate_manifest
+        self.move_resources = move_resources
         self.prefix_completed_zip = "part_"
         self.prefix_end_zip = "zip_end_"
+        self.prefix_manifest = "manifest_"
 
     @staticmethod
     def compute_timestamp(raw_ts):
@@ -80,6 +87,12 @@ class Synchronizer(object):
 
     @staticmethod
     def last_modified(resourcelist):
+        """
+        Find the last modified date of resources in resourcelist.
+        :param resourcelist: the resourcelist to be inspected
+        :return: last modified date of resource last modified
+                    or None if last modified date not specified or empty resourcelist
+        """
         lastmod = None
         for resource in resourcelist:
             rlm = resource.lastmod
@@ -100,8 +113,13 @@ class Synchronizer(object):
 
         :return:
         """
+        if not os.path.isdir(self.resource_dir):
+            os.makedirs(self.resource_dir)
+            print "Created %s" % self.resource_dir
+
         if not os.path.isdir(self.publish_dir):
             os.makedirs(self.publish_dir)
+            print "Created %s" % self.publish_dir
 
         path_zip_end_old, rl_end_old = self.get_state_published()
         new_zips = ResourceDump()
@@ -113,29 +131,48 @@ class Synchronizer(object):
 
             if len(resourcelist) == self.max_files_in_zip:  # complete zip
                 state_changed = True
-                zip_resource = self.create_zip(resourcelist, self.prefix_completed_zip)
+                zip_resource = self.create_zip(resourcelist, self.prefix_completed_zip, False,
+                                               self.write_separate_manifest)
                 new_zips.add(zip_resource)
-                # remove resources from resource_dir
+                # move resources from resource_dir
                 for resource in resourcelist:
-                    os.remove(os.path.join(self.resource_dir, resource.path))
+                    r_path = os.path.join(self.resource_dir, resource.path)
+                    if self.move_resources:
+                        shutil.move(r_path, self.publish_dir)
+                    else:
+                        os.remove(r_path)
             elif not self.is_same(resourcelist, rl_end_old):
                 assert exhausted
                 state_changed = True
                 if len(resourcelist) > 0:
-                    zip_resource = self.create_zip(resourcelist, self.prefix_end_zip, True)
+                    zip_resource = self.create_zip(resourcelist, self.prefix_end_zip, True,
+                                                   self.write_separate_manifest)
                     new_zips.add(zip_resource)
 
         # publish new metadata. Exclude zip_end_old
         if state_changed:
             self.publish_metadata(new_zips, path_zip_end_old)
 
-        # remove old zip end file and resource list
+        # remove old zip end file, resource list and manifest.
         if state_changed and path_zip_end_old:
             os.remove(path_zip_end_old)
             os.remove(os.path.splitext(path_zip_end_old)[0] + ".xml")
+            manifest = self.prefix_manifest + os.path.splitext(os.path.basename(path_zip_end_old))[0] + ".xml"
+            manifest_file = os.path.join(self.publish_dir, manifest)
+            if os.path.isfile(manifest_file):
+                os.remove(manifest_file)
 
-    def publish_metadata(self, new_zips, exluded_zip):
+        if not state_changed:
+            print "No changes"
 
+    def publish_metadata(self, new_zips, exluded_zip=None):
+        """
+        (Re)publish metadata with addition of new_zips. An excluded zip will be removed from previously published
+        metadata.
+        :param new_zips: a resourcelist with newly created zip resources
+        :param exluded_zip: local path to zip file that will be removed from previously published metadata.
+        :return: None
+        """
         rs_dump_url = self.publish_url + "resource-dump.xml"
         rs_dump_path = os.path.join(self.publish_dir, "resource-dump.xml")
         capa_list_url = self.publish_url + "capability-list.xml"
@@ -152,7 +189,7 @@ class Synchronizer(object):
             sm.parse_xml(rs_dump_file, resources=rs_dump)
             rs_dump_file.close()
         else:
-            rs_dump.md_at = w3cdt.datetime_to_str()
+            rs_dump.md_at = w3cdt.datetime_to_str(no_fractions=True)
             rs_dump.link_set(rel="up", href=capa_list_url)
 
         # Remove excluded zip, if any
@@ -165,10 +202,11 @@ class Synchronizer(object):
             rs_dump.add(resource)
 
         # Write resource-dump.xml
-        rs_dump.md_completed = w3cdt.datetime_to_str()
+        rs_dump.md_completed = w3cdt.datetime_to_str(no_fractions=True)
         rs_dump_file = open(rs_dump_path, "w")
         rs_dump_file.write(rs_dump.as_xml())
         rs_dump_file.close()
+        print "Published %d dumps in %s. See %s" % (len(rs_dump), rs_dump_path, rs_dump_url)
 
         # Write capability-list.xml
         if not os.path.isfile(capa_list_path):
@@ -178,6 +216,7 @@ class Synchronizer(object):
             capa_list_file = open(capa_list_path, "w")
             capa_list_file.write(capa_list.as_xml())
             capa_list_file.close()
+            print "Published capability list. See %s" % capa_list_url
 
         # Write resourcesync
         wellknown = os.path.dirname(src_desc_path)
@@ -190,8 +229,15 @@ class Synchronizer(object):
             src_desc_file = open(src_desc_path, "w")
             src_desc_file.write(src_desc.as_xml())
             src_desc_file.close()
+            print "Published resource description. See %s" % src_desc_url
 
     def get_state_published(self):
+        """
+        See if publish_dir has a zip end file. If so, return the path of the zip end file and the resourcelist
+        (with local paths) of resources published in the zip end file.
+        :return:    - the path to the zip end file or None if there is no zip end file.
+                    - the resourcelist of resources published in zip end file or an empty list if there is no zip end file.
+        """
         path_zip_end_old = None
         rl_end_old = ResourceList()
 
@@ -210,9 +256,20 @@ class Synchronizer(object):
 
         return path_zip_end_old, rl_end_old
 
-    def create_zip(self, resourcelist, prefix, write_list=False):
-
-        md_at = None  # w3cdt.datetime_to_str() # attribute gets lost in read > write cycle with resync library.
+    def create_zip(self, resourcelist, prefix, write_list=False, write_manifest=True):
+        """
+        Dump local resources in resourcelist to a zip file with the specified prefix. The index in the zip file name
+        will be 1 higher than the last zip file index with the same prefix. A manifest.xml will be included in the
+        zip.
+        --  The resync.Dump.write_zip method used in this method has the side effect of changing local paths in
+            resourcelist into paths relative in zip.
+        :param resourcelist: resources to zip
+        :param prefix: prefix of the zip file
+        :param write_list: True if resourcelist should be written to local disc. Default: False
+        :param write_manifest: True if a separate manifest file should be written to disc, False otherwise. Default: True
+        :return: the created zip as a resync.Resource.
+        """
+        md_at = None  # w3cdt.datetime_to_str(no_fractions=True) # attribute gets lost in read > write cycle with resync library.
         index = -1
         zipfiles = sorted(glob(os.path.join(self.publish_dir, prefix + "*.zip")))
         if len(zipfiles) > 0:
@@ -230,8 +287,9 @@ class Synchronizer(object):
         zip_path = os.path.join(self.publish_dir, zip_name + ".zip")
         dump = Dump()
         dump.path_prefix = self.resource_dir
-        dump.write_zip(resourcelist, zip_path)
-        md_completed = None  # w3cdt.datetime_to_str() # attribute gets lost in read > write cycle with resync library.
+        dump.write_zip(resourcelist, zip_path)  # paths in resourcelist will be stripped.
+        md_completed = None  # w3cdt.datetime_to_str(no_fractions=True) # attribute gets lost in read > write cycle with resync library.
+        print "Zipped %d resources in %s" % (len(resourcelist), zip_path)
 
         loc = self.publish_url + zip_name + ".zip"  # mandatory
         lastmod = self.last_modified(resourcelist)  # optional
@@ -242,6 +300,14 @@ class Synchronizer(object):
         zip_resource = Resource(uri=loc, lastmod=lastmod,
                                 length=md_length, md5=md5, mime_type=md_type,
                                 md_at=md_at, md_completed=md_completed)
+        if write_manifest:
+            rdm = ResourceDumpManifest(resources=resourcelist.resources)
+            rdm_file = open(os.path.join(self.publish_dir, "manifest_" + zip_name + ".xml"), "w")
+            rdm_url = self.publish_url + self.prefix_manifest + zip_name + ".xml"
+            rdm_file.write(rdm.as_xml())
+            rdm_file.close()
+            zip_resource.link_set(rel="content", href=rdm_url)
+
         return zip_resource
 
     def list_resources_chunk(self):

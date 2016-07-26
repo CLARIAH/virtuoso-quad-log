@@ -16,7 +16,6 @@ INSERT_PROCEDURES=${INSERT_PROCEDURES:-n}
 DUMP_INITIAL_STATE=${DUMP_INITIAL_STATE:-y}
 
 # Maximum amount of quads per dump file. (100.000 quads ~ 12,5 MB)
-#
 MAX_QUADS_PER_DUMP_FILE=${MAX_QUADS_PER_DUMP_FILE:-100000}
 
 # Should we dump the current state of the quad store and then exit.
@@ -31,16 +30,11 @@ http://localhost:8890/DAV/"
 EXCLUDED_GRAPHS=${EXCLUDED_GRAPHS:-$DEFAULT_EXCLUDED_GRAPHS}
 
 # Connection to the Virtuoso server. See also:
-# https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/
-# https://docs.docker.com/engine/userguide/networking/work-with-networks/#linking-containers-in-user-defined-networks
 ISQL_SERVER="isql -H ${VIRTUOSO_HOST_NAME} -S ${VIRTUOSO_ISQL_PORT:-1111}"
 ISQL_CMD="$ISQL_SERVER -u ${VIRTUOSO_DB_USER:-dba} -p ${VIRTUOSO_DB_PASSWORD:-dba}"
 
-CURRENT_DIR=$PWD
-
 # Directory used for serving Resource Sync files. Should be mounted on the host.
-DATA_DIR="${DATA_DIR:-/datadir}"
-DUMP_DIR="$DATA_DIR/dumpingdata"
+DUMP_DIR="${DATA_DIR:-/datadir}"
 mkdir -p "$DUMP_DIR"
 
 # File to report isql errors
@@ -48,6 +42,9 @@ ISQL_ERROR_FILE="$DUMP_DIR/isql.errors"
 if [ -e "$ISQL_ERROR_FILE" ]; then
 	rm "$ISQL_ERROR_FILE"
 fi
+
+# File for keeping last log suffix.
+LAST_LOG_SUFFIX="$DUMP_DIR/lastlogsuffix.txt"
 
 ##########################################################
 ## FUNCTIONS #############################################
@@ -176,25 +173,35 @@ dump_nquads()
 
 ###############################
 # execute_dump
-# Dump all quads on the server to rdf-patch-formatted files.
+# Dump all quads on the server to rdf-patch-formatted files in the directory DUMP_DIR with the name pattern
+# 'rdfdump-xxxxxxxxxx', where 'xxxxxxxxxx' is a 10 digit serial number. In order to make sure new data is only updated
+# atomically and will never contain half a dump synchronic processes should not work with the last file with this
+# name pattern. This method will create a badger file with the name 'rdfdump-9999999999' when finished,
+# thus enabling the processing of the last real rdfdump-*.
+# This method writes the timestamp of the for last transaction log to the file LAST_LOG_SUFFIX.
 #
-# Globals:      DUMP_DIR
+# Globals:      DUMP_DIR, LAST_LOG_SUFFIX
 # Arguments:    None
 # Returns:      None
 execute_dump()
 {
 	echo "Executing dump..." >&2
-	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfdump-" -n 10 -s - "/^# at checkpoint  /" {*}
+
+	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfdump-" -n 10 -sz - "/^# at checkpoint  /" {*}
 	assert_no_isql_error
 	local lastfile=$(assert_dump_completed_normal)
-
-	# first file is empty
-	rm "$DUMP_DIR/rdfdump-0000000000"
 
 	# The last file only contains information on the dump. Keep it as a mark.
 	# Also set the last file as latestlogsuffix marker
 	local checkpoint=$(cat $lastfile | grep "# at checkpoint" | sed -e s/[^0-9]//g)
 	cp "$lastfile" "$DUMP_DIR/rdfpatch-$checkpoint"
+
+	# Write checkpoint as lastlogsuffix in dedicated file.
+	printf "$checkpoint" > "$LAST_LOG_SUFFIX"
+
+	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfdump-*.
+	# Enable processing of last dump file by creating an extra file.
+	cp "$lastfile" "$DUMP_DIR/rdfdump-9999999999"
 
 	# report
 	echo "Dump reported in '$lastfile'" >&2
@@ -213,9 +220,9 @@ execute_dump()
 dump_if_needed()
 {
 	if [ "$DUMP_INITIAL_STATE" = "y" ]; then
-		if [ ! -e "$DUMP_DIR/rdfdump-0000000001" ]; then
+		if [ ! -e "$DUMP_DIR/rdfdump-9999999999" ]; then
 				if ls "$DUMP_DIR/rdfpatch-"* 1> /dev/null 2>&1; then
-						echo "'rdfpatch-*' files found in '$DUMP_DIR'. Remove them before dumping."
+						echo "'rdfpatch-*' files found in '$DUMP_DIR'. Remove them before dumping." >&2
 						exit 1
 				else
 					execute_dump
@@ -237,17 +244,29 @@ dump_if_needed()
 
 ###############################
 # sync_transaction_logs
-# Parse newly found transaction logs to rdf patch files.
+#  to rdf patch files.
+# Parse newly found transaction logs to rdf-patch-formatted files in the directory DUMP_DIR with the name pattern
+# 'rdfpatch-xxxxxxxxxxxxxx', where 'xxxxxxxxxxxxxx' is a datestamp. In order to make sure new data is only updated
+# atomically and will never contain half a patch synchronic processes should not work with the last file with this
+# name pattern. This method will create a badger file with the name 'rdfpatch-99999999999999' when finished,
+# thus enabling the processing of the last real rdfpatch-*.
+# This method writes the timestamp of the last transaction log processed to the file LAST_LOG_SUFFIX.
 #
-# Globals:      DUMP_DIR, CURRENT_DIR, CHANGES_WERE_MADE
+# Globals:      DUMP_DIR, CHANGES_WERE_MADE, LAST_LOG_SUFFIX
 # Arguments:    None
 # Returns:      None
 sync_transaction_logs()
 {
-	#get the latest log suffix
-	cd "${DUMP_DIR}"
-	local latestlogsuffix=`ls rdfpatch-* | sort -r | head -n 1 | sed 's/^rdfpatch-//' || ''`
-	cd ${CURRENT_DIR}
+    local badger_file="$DUMP_DIR/rdfpatch-99999999999999"
+    if [ -e "$badger_file" ]; then
+        # Prevent posible synchronous processing of the last rdfpatch-* file.
+        rm "$badger_file"
+    fi
+
+    local latestlogsuffix=""
+    if [ -e "$LAST_LOG_SUFFIX" ]; then
+        latestlogsuffix=$(<"$LAST_LOG_SUFFIX")
+    fi
 	echo "Syncing transaction logs starting from $latestlogsuffix" >&2
 
 	# parse_trx_files to marked output file
@@ -259,6 +278,7 @@ sync_transaction_logs()
 		exit;
 	EOF
 	assert_no_isql_error
+
 
 	# split output to marked files; use more than standard 2 digits for file suffix
 	local prefix='xyx'$mark'_'
@@ -281,35 +301,32 @@ sync_transaction_logs()
 				fi
 				echo "generated rdfpatch-${timestamp}" >&2
 				cp $file "$DUMP_DIR/rdfpatch-${timestamp}"
+				# Write timestamp as lastlogsuffix.
+	            printf "$timestamp" > "$DUMP_DIR/lastlogsuffix.txt"
 				CHANGES_WERE_MADE=y
 			fi
 		fi
 		rm $file
 	done
 	rm "$output"
+	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfpatch-*.
+	# Enable processing of last patch file by creating an extra file.
+	touch "$badger_file"
 }
 
 ###############################
-# move_files_to_output_dir
+# change_owner_if_needed
 # make sure newdata is only updated atomically and will never contain half a dump
 #
 # Globals:      DUMP_DIR, CHOWN_TO_ID
 # Arguments:    None
 # Returns:      None
-move_files_to_output_dir()
+change_owner_if_needed()
 {
 	if [ -n "${CHOWN_TO_ID:-}" ]; then
 		echo "Changin the owner of the files to $CHOWN_TO_ID" >&2
 		chown -R "$CHOWN_TO_ID:$CHOWN_TO_ID" "$DUMP_DIR"
 	fi
-
-	if [ -d "$DATA_DIR/newdata" ]; then
-		mv "$DATA_DIR/newdata" "$DATA_DIR/newdata_del" && rm -r "$DATA_DIR/newdata_del" || true # || true is for the race condition
-	fi
-	echo "copying the dump to staging area"
-	cp -R "$DUMP_DIR" "$DATA_DIR/stage"
-	echo "renaming staging area to newdata"
-	mv "$DATA_DIR/stage" "$DATA_DIR/newdata"
 }
 
 ##########################################################
@@ -330,8 +347,7 @@ dump_if_needed
 sync_transaction_logs
 
 if [ -n "${CHANGES_WERE_MADE:-}" ]; then
-	# make sure newdata is only updated atomically and will never contain half a dump
-	move_files_to_output_dir
+	change_owner_if_needed
 else
 	echo "No new data exported"
 fi
