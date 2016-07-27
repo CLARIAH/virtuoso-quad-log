@@ -15,6 +15,11 @@ from glob import glob
 
 # Alternative strategy to publish rdf patch files as resource dumps.
 
+PREFIX_COMPLETED_ZIP = "part_"
+PREFIX_END_ZIP = "zip_end_"
+PREFIX_MANIFEST = "manifest_"
+
+
 class Synchronizer(object):
     """
     Takes care of presenting resources in accordance with the Resource Sync Framework.
@@ -53,9 +58,6 @@ class Synchronizer(object):
         self.max_files_in_zip = max_files_in_zip
         self.write_separate_manifest = write_separate_manifest
         self.move_resources = move_resources
-        self.prefix_completed_zip = "part_"
-        self.prefix_end_zip = "zip_end_"
-        self.prefix_manifest = "manifest_"
 
     @staticmethod
     def compute_timestamp(raw_ts):
@@ -131,7 +133,7 @@ class Synchronizer(object):
 
             if len(resourcelist) == self.max_files_in_zip:  # complete zip
                 state_changed = True
-                zip_resource = self.create_zip(resourcelist, self.prefix_completed_zip, False,
+                zip_resource = self.create_zip(resourcelist, PREFIX_COMPLETED_ZIP, False,
                                                self.write_separate_manifest)
                 new_zips.add(zip_resource)
                 # move resources from resource_dir
@@ -145,7 +147,7 @@ class Synchronizer(object):
                 assert exhausted
                 state_changed = True
                 if len(resourcelist) > 0:
-                    zip_resource = self.create_zip(resourcelist, self.prefix_end_zip, True,
+                    zip_resource = self.create_zip(resourcelist, PREFIX_END_ZIP, True,
                                                    self.write_separate_manifest)
                     new_zips.add(zip_resource)
 
@@ -157,7 +159,7 @@ class Synchronizer(object):
         if state_changed and path_zip_end_old:
             os.remove(path_zip_end_old)
             os.remove(os.path.splitext(path_zip_end_old)[0] + ".xml")
-            manifest = self.prefix_manifest + os.path.splitext(os.path.basename(path_zip_end_old))[0] + ".xml"
+            manifest = PREFIX_MANIFEST + os.path.splitext(os.path.basename(path_zip_end_old))[0] + ".xml"
             manifest_file = os.path.join(self.publish_dir, manifest)
             if os.path.isfile(manifest_file):
                 os.remove(manifest_file)
@@ -184,10 +186,10 @@ class Synchronizer(object):
 
         # Load existing resource-dump, if any. Else set start time.
         if os.path.isfile(rs_dump_path):
-            rs_dump_file = open(rs_dump_path, "r")
-            sm = Sitemap()
-            sm.parse_xml(rs_dump_file, resources=rs_dump)
-            rs_dump_file.close()
+            with open(rs_dump_path, "r") as rs_dump_file:
+                sm = Sitemap()
+                sm.parse_xml(rs_dump_file, resources=rs_dump)
+
         else:
             rs_dump.md_at = w3cdt.datetime_to_str(no_fractions=True)
             rs_dump.link_set(rel="up", href=capa_list_url)
@@ -195,7 +197,10 @@ class Synchronizer(object):
         # Remove excluded zip, if any
         if exluded_zip:
             loc = self.publish_url + os.path.basename(exluded_zip)
-            del rs_dump.resources[loc]
+            if loc in rs_dump.resources:
+                del rs_dump.resources[loc]
+            else:
+                raise RuntimeError("Could not find %s in %s" % (loc, rs_dump_path))
 
         # Add new zips
         for resource in new_zips:
@@ -203,9 +208,9 @@ class Synchronizer(object):
 
         # Write resource-dump.xml
         rs_dump.md_completed = w3cdt.datetime_to_str(no_fractions=True)
-        rs_dump_file = open(rs_dump_path, "w")
-        rs_dump_file.write(rs_dump.as_xml())
-        rs_dump_file.close()
+        with open(rs_dump_path, "w") as rs_dump_file:
+            rs_dump_file.write(rs_dump.as_xml())
+
         print "Published %d dumps in %s. See %s" % (len(rs_dump), rs_dump_path, rs_dump_url)
 
         # Write capability-list.xml
@@ -213,9 +218,9 @@ class Synchronizer(object):
             capa_list = CapabilityList()
             capa_list.link_set(rel="up", href=src_desc_url)
             capa_list.add_capability(rs_dump, rs_dump_url)
-            capa_list_file = open(capa_list_path, "w")
-            capa_list_file.write(capa_list.as_xml())
-            capa_list_file.close()
+            with open(capa_list_path, "w") as capa_list_file:
+                capa_list_file.write(capa_list.as_xml())
+
             print "Published capability list. See %s" % capa_list_url
 
         # Write resourcesync
@@ -226,9 +231,9 @@ class Synchronizer(object):
         if not os.path.isfile(src_desc_path):
             src_desc = SourceDescription()
             src_desc.add_capability_list(capa_list_url)
-            src_desc_file = open(src_desc_path, "w")
-            src_desc_file.write(src_desc.as_xml())
-            src_desc_file.close()
+            with open(src_desc_path, "w") as src_desc_file:
+                src_desc_file.write(src_desc.as_xml())
+
             print "Published resource description. See %s" % src_desc_url
 
     def get_state_published(self):
@@ -241,10 +246,10 @@ class Synchronizer(object):
         path_zip_end_old = None
         rl_end_old = ResourceList()
 
-        zip_end_files = glob(os.path.join(self.publish_dir, self.prefix_end_zip + "*.zip"))
+        zip_end_files = glob(os.path.join(self.publish_dir, PREFIX_END_ZIP + "*.zip"))
         if len(zip_end_files) > 1:
             raise RuntimeError("Found more than one %s*.zip files. Inconsistent structure of %s."
-                               % (self.prefix_end_zip, self.publish_dir))
+                               % (PREFIX_END_ZIP, self.publish_dir))
         elif len(zip_end_files) == 1:
             path_zip_end_old = zip_end_files[0]
 
@@ -302,8 +307,8 @@ class Synchronizer(object):
                                 md_at=md_at, md_completed=md_completed)
         if write_manifest:
             rdm = ResourceDumpManifest(resources=resourcelist.resources)
-            rdm_file = open(os.path.join(self.publish_dir, "manifest_" + zip_name + ".xml"), "w")
-            rdm_url = self.publish_url + self.prefix_manifest + zip_name + ".xml"
+            rdm_file = open(os.path.join(self.publish_dir, PREFIX_MANIFEST + zip_name + ".xml"), "w")
+            rdm_url = self.publish_url + PREFIX_MANIFEST + zip_name + ".xml"
             rdm_file.write(rdm.as_xml())
             rdm_file.close()
             zip_resource.link_set(rel="content", href=rdm_url)
