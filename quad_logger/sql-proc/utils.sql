@@ -52,7 +52,7 @@ CREATE PROCEDURE vql_format_object (in object any) {
     if (isiri_id(object)) {
         return vql_format_iri(object);
     } else {
-        result := concat('"', vql_replace_control_chars(__ro2sq(object)), '"');
+        result := concat('"', vql_escape_chars(__ro2sq(object)), '"');
         -- result := concat('"', __ro2sq(object), '"');
         objectType := __ro2sq(DB.DBA.RDF_DATATYPE_OF_OBJ(object));
         languageTag := __ro2sq(DB.DBA.RDF_LANGUAGE_OF_OBJ(object));
@@ -66,7 +66,10 @@ CREATE PROCEDURE vql_format_object (in object any) {
 }
 ;
 
-CREATE PROCEDURE vql_replace_control_chars(in str_ng any) {
+-- Uit https://www.w3.org/TR/n-quads/
+-- Literals may not contain the characters ", LF, or CR. In addition '\' (U+005C) may not appear in any quoted literal
+-- except as part of an escape sequence.
+CREATE PROCEDURE vql_escape_chars(in str_ng any) {
     declare result any;
     result := regexp_replace(str_ng, '\x07', '\\\\a'); -- bell
     result := regexp_replace(result, '\x09', '\\\\t'); -- tab
@@ -74,6 +77,8 @@ CREATE PROCEDURE vql_replace_control_chars(in str_ng any) {
     result := regexp_replace(result, '\x0C', '\\\\f'); -- form feed
     result := regexp_replace(result, '\x0D', '\\\\r'); -- carriage return
     result := regexp_replace(result, '\x1B', '\\\\e'); -- escape, not valid in quad store upload anyway
+    -- not a control char but " should be escaped as well.
+    result := regexp_replace(result, '\x22', '\\\\"'); -- escape double quotes
     return result;
 }
 ;
