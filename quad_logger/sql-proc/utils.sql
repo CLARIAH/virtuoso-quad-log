@@ -53,7 +53,6 @@ CREATE PROCEDURE vql_format_object (in object any) {
         return vql_format_iri(object);
     } else {
         result := concat('"', vql_escape_chars(__ro2sq(object)), '"');
-        -- result := concat('"', __ro2sq(object), '"');
         objectType := __ro2sq(DB.DBA.RDF_DATATYPE_OF_OBJ(object));
         languageTag := __ro2sq(DB.DBA.RDF_LANGUAGE_OF_OBJ(object));
         if (languageTag <> '') {
