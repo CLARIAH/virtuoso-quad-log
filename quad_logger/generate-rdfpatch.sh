@@ -93,7 +93,7 @@ assert_procedures_stored()
 	# files are in the directory 'sql-proc'
 	local files=(utils.sql dump_nquads.sql parse_trx.sql)
 	# the number of procedures that start with 'vql_*'
-	local procedures_count=8
+	local procedures_count=9
 
 	$ISQL_CMD <<-'EOF' > query_result 2>$ISQL_ERROR_FILE
 		SET CSV=ON;
