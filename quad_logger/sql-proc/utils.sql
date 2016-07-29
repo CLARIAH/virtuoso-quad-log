@@ -74,18 +74,30 @@ CREATE PROCEDURE vql_format_object (in object any) {
 -- ECHAR 	                ::= 	'\' [tbnrf"'\]
 -- UCHAR 	                ::= 	'\u' HEX HEX HEX HEX | '\U' HEX HEX HEX HEX HEX HEX HEX HEX
 --
--- Exceptions:
--- \b   - What goes into Virtuoso as "01\b23" comes out of Virtuoso as "0123". Impossible to reconstruct the original.
+-- This code tries to escape characters in such a way that at least output of this procedure can again be
+-- input to a Virtuoso quad store.
+--
+-- Exception on ECHAR:
 -- \'   - What goes into Virtuoso as "01\'23" comes out of Virtuoso as "01'23". Impossible to reconstruct the original.
+--
+-- Exception on UCHAR
+-- u-coded strings - '\u' HEX HEX HEX HEX - come out of Virtuoso as "", where the 'space' is the (simplified) hexes.
+-- So whether the input contained u-coded characters or not we can not tell from Virtuoso output.
+--
+-- "\u0000" - null - breaks off further string, effectively creating invalid output if not escaped,
+-- but trying to replace '\x00' gives
+-- *** Error 22023: [Virtuoso Driver][Virtuoso Server]
+-- The REGEXP_REPLACE() function can not search for a pattern that can be found even in an empty string
+--
 CREATE PROCEDURE vql_escape_chars(in str_ng any) {
     declare result any;
     result := regexp_replace(str_ng, '\\\\', '\\\\\\\\'); -- escape backslash
-    result := regexp_replace(result, '\x07', '\\\\a'); -- bell
+    result := regexp_replace(result, '\x07', '\\\\a'); -- bell, not allowed according to spec but Virtuoso accepts
+    result := regexp_replace(result, '\x08', '\\\\b'); -- back space
     result := regexp_replace(result, '\x09', '\\\\t'); -- tab
     result := regexp_replace(result, '\x0A', '\\\\n'); -- line feed
     result := regexp_replace(result, '\x0C', '\\\\f'); -- form feed
     result := regexp_replace(result, '\x0D', '\\\\r'); -- carriage return
-    -- result := regexp_replace(result, '\x1B', '\\\\e'); -- escape, not valid in quad store upload anyway
     result := regexp_replace(result, '\x22', '\\\\"'); -- escape double quotes
     return result;
 }
