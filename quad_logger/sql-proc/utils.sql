@@ -68,15 +68,24 @@ CREATE PROCEDURE vql_format_object (in object any) {
 -- Uit https://www.w3.org/TR/n-quads/
 -- Literals may not contain the characters ", LF, or CR. In addition '\' (U+005C) may not appear in any quoted literal
 -- except as part of an escape sequence.
+--
+-- More precisely:
+-- STRING_LITERAL_QUOTE     ::= 	'"' ([^#x22#x5C#xA#xD] | ECHAR | UCHAR)* '"'
+-- ECHAR 	                ::= 	'\' [tbnrf"'\]
+-- UCHAR 	                ::= 	'\u' HEX HEX HEX HEX | '\U' HEX HEX HEX HEX HEX HEX HEX HEX
+--
+-- Exceptions:
+-- \b   - What goes into Virtuoso as "01\b23" comes out of Virtuoso as "0123". Impossible to reconstruct the original.
+-- \'   - What goes into Virtuoso as "01\'23" comes out of Virtuoso as "01'23". Impossible to reconstruct the original.
 CREATE PROCEDURE vql_escape_chars(in str_ng any) {
     declare result any;
-    result := regexp_replace(str_ng, '\x07', '\\\\a'); -- bell
+    result := regexp_replace(str_ng, '\\\\', '\\\\\\\\'); -- escape backslash
+    result := regexp_replace(result, '\x07', '\\\\a'); -- bell
     result := regexp_replace(result, '\x09', '\\\\t'); -- tab
     result := regexp_replace(result, '\x0A', '\\\\n'); -- line feed
     result := regexp_replace(result, '\x0C', '\\\\f'); -- form feed
     result := regexp_replace(result, '\x0D', '\\\\r'); -- carriage return
-    result := regexp_replace(result, '\x1B', '\\\\e'); -- escape, not valid in quad store upload anyway
-    -- not a control char but " should be escaped as well.
+    -- result := regexp_replace(result, '\x1B', '\\\\e'); -- escape, not valid in quad store upload anyway
     result := regexp_replace(result, '\x22', '\\\\"'); -- escape double quotes
     return result;
 }
