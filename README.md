@@ -1,7 +1,8 @@
 # Virtuoso Quad Logger
 
-This *virtuoso-quad-log* repository harbors tools for propagating changes in RDF-data
-that are kept in a [Virtuoso triple store](http://virtuoso.openlinksw.com/).
+This *virtuoso-quad-log* repository harbors tools for propagating and publishing changes in RDF-data
+that are kept in a [Virtuoso triple store](http://virtuoso.openlinksw.com/). Two tools are 
+essential in this process. These are:
 
 1. **quad_logger** generates logs of all initial, added, mutated or deleted quads in a
 [Virtuoso quad store](http://virtuoso.openlinksw.com/rdf-quad-store/) in the
