@@ -37,7 +37,7 @@ A typical outcome is ```/usr/local/var/lib/virtuoso/db/virtuoso.ini```.
 ## Critical configuration
 Open the ```virtuoso.ini``` file in your favourite editor and verify and/or correct the following 
 configuration settings. In the following the name of the configuration setting is preceded with
-the name of the section [in square brackets] within the configuration file
+the name of the section [in square brackets] within the configuration file.
 
 ### [Database] TransactionFile
 The absolute path to the transaction log file. The name of the file should start with ```virtuoso``` 
