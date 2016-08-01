@@ -9,7 +9,8 @@ that are kept in a [Virtuoso triple store](http://virtuoso.openlinksw.com/).
 2. **resourcesync-generator** enables the synchronisation of these logs over the internet by means
 of the [Resource Sync Framework](http://www.openarchives.org/rs/1.0/resourcesync).
 
-The **example-virtuoso-server** is for demonstration purposes.
+The **example-virtuoso-server** is for demonstration purposes. The tools can be deployed as
+services under [Docker-compose](https://docs.docker.com/compose/).
 
 ## Overview
 
