@@ -13,6 +13,7 @@ The **example-virtuoso-server** is for demonstration purposes.
 
 ## Overview
 
+![ScreenShot](/img/environment.pdf)
 
 ## Documentation
 Documentation of the software in this repository is split over several files.
