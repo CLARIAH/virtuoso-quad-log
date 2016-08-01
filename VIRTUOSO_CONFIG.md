@@ -1,10 +1,10 @@
 # Virtuoso Configuration
 
-Configuration of your Virtuoso instance is critical in order to enable the quad_logger to do it's work properly.
+Configuration of your Virtuoso instance is critical in order to enable the quad_logger to do its work properly.
 Virtuoso configuration is done in the ```virtuoso.ini``` file that comes with the Virtuoso distribution.
 
 ## Finding the virtuoso.ini file
-If your not sure where to find the ```viruoso.ini``` file on your system or which ```virtuoso.ini``` file is
+If you are not sure where to find the ```viruoso.ini``` file on your system or which ```virtuoso.ini``` file is
 used by your Virtuoso instance, here is how to find it.
 
 ### Connect to the Virtuoso Interactive SQL Interface
@@ -35,7 +35,7 @@ select virtuoso_ini_path();
 A typical outcome is ```/usr/local/var/lib/virtuoso/db/virtuoso.ini```.
 
 ## Critical configuration
-Open the ```virtuoso.ini``` file in your favourite editor and verify and/or correct the following 
+Open the ```virtuoso.ini``` file in your favorite editor and verify and/or correct the following 
 configuration settings. In the following the name of the configuration setting is preceded with
 the name of the section [in square brackets] within the configuration file.
 
@@ -46,7 +46,7 @@ and end with ```.trx```.
 TransactionFile	    = /usr/local/var/lib/virtuoso/db/virtuoso.trx
 ```
 In your active ```virtuoso.ini``` file this parameter may point to the current transaction log file,
-which has a date-time part in it's name:
+which has a date-time part in its name:
 ```
 TransactionFile     = /usr/local/var/lib/virtuoso/db/virtuoso20160801075807.trx
 ```
@@ -109,7 +109,7 @@ After changing the ```virtuoso.ini``` file you will have to restart the Virtuoso
 for the changes to take effect.
 
 Locate the virtuoso executables on your system. These usually will be found in one of the ```bin```
-directories. To locate the virtuoso-t executable you can use the unix ```find``` command. On a
+directories. To locate the virtuoso-t executable you can use the Unix ```find``` command. On a
 command line type
 ```
 3. # find / -name virtuoso-t
@@ -120,7 +120,7 @@ executable will usually be found in the same directory. If in doubt find it with
 4. # find / -name isql
 ```
 The path to the executables found under ```3.``` and/or ```4.``` shall in the following be
-refered to as ```VIRTUOSO_BIN```.
+referred to as ```VIRTUOSO_BIN```.
 
 ### Stopping the virtuoso server
 In a Unix-distribution you can stop the server by connecting to the ISQL interactive interface and 
@@ -134,13 +134,13 @@ The default server port is ```1111```. The server port is specified in the ```vi
 under ```[Parameters]```, ```ServerPort```.
 
 ### Starting the virtuoso server
-In a unix distribution you can start the virtuoso server by executing the following command
+In a Unix distribution you can start the virtuoso server by executing the following command
 ```
 # ${VIRTUOSO_BIN}/virtuoso-t -f -c ${VIRTUOSO_INI}
 ```
 where ```-f``` means run in the foreground and ```-c``` indicates the absolute path to your
 ```virtuoso.ini``` file. For other options see 
-http://docs.openlinksw.com/virtuoso/dbadm.html#ch-server_01 under *switches for server for UNIX platforms*.
+http://docs.openlinksw.com/virtuoso/dbadm.html#ch-server_01 under *switches for server for Unix platforms*.
 
 
 
