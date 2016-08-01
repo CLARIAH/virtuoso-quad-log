@@ -7,7 +7,7 @@ Virtuoso configuration is done in the ```virtuoso.ini``` file that comes with th
 If your not sure where to find the ```viruoso.ini``` file on your system or which ```virtuoso.ini``` file is
 used by your Virtuoso instance, here is how to find it.
 
-##### Connect to the Virtuoso Interactive SQL Interface
+### Connect to the Virtuoso Interactive SQL Interface
 Open the Virtuoso Interactive SQL interface by typing ```isql``` on a command line.
 ```
 1. # isql [host:port username password]
@@ -26,7 +26,7 @@ to the Interactive SQL (ISQL). The Administration Console can be reached by typi
 in your browser, where ```host``` and ```port``` are respectively the host name and port of your Virtuoso
 instance.
 
-##### The path to your virtuoso.ini file
+### The path to your virtuoso.ini file
 The path to your active ```virtuoso.ini``` file is found by typing the following command at the SQL-prompt or 
 in the Interactive SQL window.
 ```
@@ -38,7 +38,7 @@ A typical outcome is ```/usr/local/var/lib/virtuoso/db/virtuoso.ini```.
 Open the ```virtuoso.ini``` file in your favourite editor and verify and/or correct the following 
 configuration settings. 
 
-#### TransactionFile
+### TransactionFile
 The absolute path to the transaction log file. The name of the file should start with ```virtuoso``` 
 and end with ```.trx```.
 ```
@@ -57,7 +57,7 @@ In interactive SQL you can find the path to the current transaction file by typi
 SQL> select cfg_item_value(virtuoso_ini_path (), 'Database', 'TransactionFile');
 ```
 
-#### CheckpointInterval
+### CheckpointInterval
 The interval in minutes at which Virtuoso will automatically make a database checkpoint. This should be a
 non-negative integer, greater than 0.
 ```
@@ -72,7 +72,7 @@ In interactive SQL you can find the value of the CheckpointInterval parameter by
 SQL> select cfg_item_value(virtuoso_ini_path (), 'Parameters', 'CheckpointInterval');
 ```
 
-#### CheckpointAuditTrail
+### CheckpointAuditTrail
 The way Virtuoso handles checkpoints in regard to the audit trail. The value of this parameter should be
 ```1```. This guarantees that "*...a new log file will be generated in the old log file's directory 
 with a name ending with the date and time of the new log file's creation.*"
@@ -86,7 +86,7 @@ SQL> select cfg_item_value(virtuoso_ini_path (), 'Parameters', 'CheckpointAuditT
 The following settings of the ```virtuoso.ini``` file are not critical, but may be considered in 
 order to ease or to enhance the behavior of the quad-logger.
 
-#### AutoCheckpointLogSize
+### AutoCheckpointLogSize
 The size of transaction log in bytes after which an automatic checkpoint is initiated. Transaction log files 
 and rdfpatch files are coupled one-on-one. So the size of rdfpatch files ultimately is determined 
 by the maximum size of transaction logs. Virtuoso may delay the setting of a checkpoint while large
@@ -121,7 +121,7 @@ executable will usually be found in the same directory. If in doubt find it with
 The path to the executables found under ```3.``` and/or ```4.``` shall in the following be
 refered to as ```VIRTUOSO_BIN```.
 
-#### Stopping the virtuoso server
+### Stopping the virtuoso server
 In a Unix-distribution you can stop the server by connecting to the ISQL interactive interface and 
 specifying the option ```-K```. This will shut down the virtuoso server on connecting to it.
 ```
@@ -132,7 +132,7 @@ The server is shutting down
 The default server port is ```1111```. The server port is specified in the ```virtuoso.ini``` file
 under ```[Parameters]```, ```ServerPort```.
 
-#### Starting the virtuoso server
+### Starting the virtuoso server
 In a unix distribution you can start the virtuoso server by executing the following command
 ```
 # ${VIRTUOSO_BIN}/virtuoso-t -f -c ${VIRTUOSO_INI}
