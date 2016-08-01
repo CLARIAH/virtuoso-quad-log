@@ -13,7 +13,9 @@ The **example-virtuoso-server** is for demonstration purposes.
 
 ## Overview
 
-![ScreenShot](/img/environment.pdf)
+<img src="/img/environment.pdf" alt="overview of quad logger environment"/>
+
+![Overview](/img/environment.pdf)
 
 ## Documentation
 Documentation of the software in this repository is split over several files.
