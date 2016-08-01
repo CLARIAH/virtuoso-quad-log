@@ -36,9 +36,10 @@ A typical outcome is ```/usr/local/var/lib/virtuoso/db/virtuoso.ini```.
 
 ## Critical configuration
 Open the ```virtuoso.ini``` file in your favourite editor and verify and/or correct the following 
-configuration settings. 
+configuration settings. In the following the name of the configuration setting is preceded with
+the name of the section [in square brackets] within the configuration file
 
-### TransactionFile
+### [Database] TransactionFile
 The absolute path to the transaction log file. The name of the file should start with ```virtuoso``` 
 and end with ```.trx```.
 ```
@@ -57,7 +58,7 @@ In interactive SQL you can find the path to the current transaction file by typi
 SQL> select cfg_item_value(virtuoso_ini_path (), 'Database', 'TransactionFile');
 ```
 
-### CheckpointInterval
+### [Parameters] CheckpointInterval
 The interval in minutes at which Virtuoso will automatically make a database checkpoint. This should be a
 non-negative integer, greater than 0.
 ```
@@ -72,7 +73,7 @@ In interactive SQL you can find the value of the CheckpointInterval parameter by
 SQL> select cfg_item_value(virtuoso_ini_path (), 'Parameters', 'CheckpointInterval');
 ```
 
-### CheckpointAuditTrail
+### [Parameters] CheckpointAuditTrail
 The way Virtuoso handles checkpoints in regard to the audit trail. The value of this parameter should be
 ```1```. This guarantees that "*...a new log file will be generated in the old log file's directory 
 with a name ending with the date and time of the new log file's creation.*"
@@ -86,7 +87,7 @@ SQL> select cfg_item_value(virtuoso_ini_path (), 'Parameters', 'CheckpointAuditT
 The following settings of the ```virtuoso.ini``` file are not critical, but may be considered in 
 order to ease or to enhance the behavior of the quad-logger.
 
-### AutoCheckpointLogSize
+### [Parameters] AutoCheckpointLogSize
 The size of transaction log in bytes after which an automatic checkpoint is initiated. Transaction log files 
 and rdfpatch files are coupled one-on-one. So the size of rdfpatch files ultimately is determined 
 by the maximum size of transaction logs. Virtuoso may delay the setting of a checkpoint while large
