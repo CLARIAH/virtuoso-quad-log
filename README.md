@@ -13,9 +13,16 @@ The **example-virtuoso-server** is for demonstration purposes.
 
 ## Overview
 
-<img src="/img/environment.png" alt="overview of quad logger environment"/>
-
 ![Overview](/img/environment.png)
+
+- The above image shows the quad_logger and the resourcesync_generator in their environment.
+The Virtuoso server is instructed to log its transactions in log files. The quad_logger interacts
+with the Virtuoso server by means of the Interactive SQL interface. It reads the 
+transaction logs and transforms them to rdf-patch formatted files. The resourcesync-generator
+bundles the rdf-patch files in zip-files and publishes them in accordance with the
+Resource Sync Framework. Both quad_logger and resourcesync-generator can be deployed as
+Docker containers. Here they are deployed as docker-compose services. Also 
+the Http server (and the Virtuoso server) can be deployed as docker-compose service.
 
 ## Documentation
 Documentation of the software in this repository is split over several files.
