@@ -27,9 +27,11 @@ the Http server (and the Virtuoso server) can be deployed as docker-compose serv
 ## Documentation
 Documentation of the software in this repository is split over several files.
 - **README.md** (this file) contains a general introduction.
-- **MOTIVATION.md** documents the background of this repository and motivates choices made.
-- **DEPLOY.md** contains detailed instructions on the usage of the tools in this repository.
-- **VIRTUOSO_CONFIG.md** communicates critical issues in your Virtuoso configuration.
+- **[MOTIVATION.md](/MOTIVATION.md)** documents the background of this repository and 
+motivates choices made.
+- **[DEPLOY.md](/DEPLOY.md)** contains detailed instructions on the usage of the tools in this repository.
+- **[VIRTUOSO_CONFIG.md](/VIRTUOSO_CONFIG.md)** communicates critical issues in your 
+Virtuoso configuration.
 
 ## Quickstart
 
