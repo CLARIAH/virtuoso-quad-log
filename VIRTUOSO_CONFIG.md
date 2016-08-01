@@ -23,8 +23,8 @@ executable. Repeat the command after ```1.```, this time with the absolute path 
 
 Alternatively you can use the HTML based Administration Console known as **Conductor** to open an interface
 to the Interactive SQL (ISQL). The Administration Console can be reached by typing ```{host:port}/conductor```
-in your browser, where ```host``` and ```port``` are respectively the host name and port of your Virtuoso
-instance.
+in your browser, where ```host``` and ```port``` are respectively the HTTP server host name 
+and port of your Virtuoso instance.
 
 ### The path to your virtuoso.ini file
 The path to your active ```virtuoso.ini``` file is found by typing the following command at the SQL-prompt or 
