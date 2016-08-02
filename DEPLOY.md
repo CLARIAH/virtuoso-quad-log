@@ -121,9 +121,93 @@ resourcesync generator and packaged into zip files. The resourcesync generator a
 cleans up the dump directory once in a while. It removes the files that where packeged in 
 'complete zips', that is zip files that have reached the maximum amount of files.
 
-## Environment variables of quad-logger
+## Environment variables for quad-logger
 The following environment variables can be set on the **quad-logger**. Environment variables
 can be set in the ```docker-compose.yml``` files under the **environment:** heading.
+
+**RUN_INTERVAL** - The time between consecutive runs of the quad logger. Value can be 
+NUMBER[SUFFIX], where SUFFIX is
+
+- s for seconds (the default)
+- m for minutes.
+- h for hours.
+- d for days.
+
+Default value is ```3600``` (1 hour).
+
+**VIRTUOSO_HOST_NAME** - (Required) The IP address or host name of the Virtuoso server. If the Virtuoso
+server is also deployed as a service under docker-compose this can be the name or alias of 
+that server.
+
+**VIRTUOSO_ISQL_PORT** - The port of the Virtuoso server where the Interactive SQL interface can be
+reached. Default value is ```1111```.
+
+**VIRTUOSO_DB_USER** - The username of the Virtuoso user. Default value is ```dba```.
+
+**VIRTUOSO_DB_PASSWORD** - The password of the Virtuoso user. Default value is ```dba```.
+
+**LOG_FILE_LOCATION** - The location of transaction logs on the Virtuoso server.
+Default value is ```/usr/local/var/lib/virtuoso/db```.
+
+**DATA_DIR** - The directory for (temporary) storage of the rdf-patch files. Default
+value is ```/datadir```.
+
+**INSERT_PROCEDURES** - Should stored procedures be automatically inserted on the 
+Virtuoso server. The procedures that will be inserted all start with 'vql_'.
+Inserted procedures can be found with
+```
+SQL> SELECT P_NAME FROM SYS_PROCEDURES WHERE P_NAME LIKE 'DB.DBA.vql_*';
+```
+If necessary they can be removed individually with
+```
+SQL> DROP PROCEDURE {P_NAME};
+```
+Possible values: ```y|n```. Default value is ```n```.
+
+**DUMP_INITIAL_STATE** - Dump the current state of the quad store (execute the dump routine).
+No transactions should take place during execution of the dump. 
+On average the dump routine will take 1 hour per 100 million quads execution time.
+If a dump has been executed previously and 
+was completed successfully, this parameter has no effect.
+Possible values: ```y|n```. Default value is ```y```.
+
+**DUMP_AND_EXIT** - Dump the current state of the quad store and then exit.
+Possible values: ```y|n```. Default value is ```n```.
+
+**MAX_QUADS_PER_DUMP_FILE** - The maximum number of quads that should go into one 
+dump file. On average 100000 quads will give file sizes of approximately 12.5 MB.
+Default value is ```100000```.
+
+**EXCLUDED_GRAPHS** - Space-separated list of graph iris that are excluded from the dump.
+As per default the following graphs are excluded from the dump:
+
+- http://www.openlinksw.com/schemas/virtrdf#
+- http://www.w3.org/ns/ldp#
+- http://www.w3.org/2002/07/owl#
+- http://localhost:8890/sparql
+- http://localhost:8890/DAV/
+
+## Environment variables for resourcesync-generator
+The following environment variables can be set on the **resourcesync-generatorr**. 
+Environment variables
+can be set in the ```docker-compose.yml``` files under the **environment:** heading.
+
+**RUN_INTERVAL** - The time between consecutive runs of the generator. Value can be 
+NUMBER[SUFFIX], where SUFFIX is
+
+- s for seconds (the default)
+- m for minutes.
+- h for hours.
+- d for days.
+
+Default value is ```3600``` (1 hour).
+
+**RESOURCE_DIR** - The directory where rdf-patch files can be found. This should be the
+same directory as the dump directory of the quad-logger 
+(See [DATA_DIR](#)). 
+
+**MAX_FILES_IN_ZIP** - The maximum number of files that should go into one zip file.
+Default value is ```100```.
 
 
 
