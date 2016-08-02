@@ -1,4 +1,6 @@
-# Deployment of the virtuoso quad logger
+# How to deploy
+
+The **quad_logger** and the
 
 ## Where does it fit in
 

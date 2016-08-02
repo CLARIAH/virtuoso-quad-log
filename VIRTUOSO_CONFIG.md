@@ -1,6 +1,6 @@
 # Virtuoso Configuration
 
-Configuration of your Virtuoso instance is critical in order to enable the quad_logger to do its work properly.
+Configuration of your Virtuoso instance is critical in order to enable the quad-logger to do its work properly.
 Virtuoso configuration is done in the ```virtuoso.ini``` file that comes with the Virtuoso distribution.
 
 ## Finding the virtuoso.ini file
@@ -65,7 +65,7 @@ non-negative integer, greater than 0.
 CheckpointInterval  = 60
 ```
 After making a database checkpoint Virtuoso will start a new transaction log file. This will enable the
-quad_logger to read the previous transaction log file and to parse mutations to a corresponding
+quad-logger to read the previous transaction log file and to parse mutations to a corresponding
 ```rdfpatch-{timestamp}``` file, where *timestamp* is the same for both patch and transaction log file.
 
 In interactive SQL you can find the value of the CheckpointInterval parameter by typing

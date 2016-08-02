@@ -107,7 +107,7 @@ intranet</y:NodeLabel>
           <y:Geometry height="52.317138671875" width="100.0" x="458.84532165527344" y="280.3414306640625"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="n" textColor="#000000" visible="true" width="76.580078125" x="11.7099609375" y="-22.1328125">quad_logger</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="n" textColor="#000000" visible="true" width="77.5234375" x="11.23828125" y="-22.1328125">quad-logger</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="4"/>
