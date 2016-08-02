@@ -78,7 +78,7 @@ the_quad_logger_1       | Inserting stored procedures...
 the_quad_logger_1       | Executing dump...
 ```
 The first time the quad logger connects to the interactive interface of Virtuoso it will
-inserted several stored procedures. These procedures all start with ```vql_*```. It than 
+insert several stored procedures. These procedures all start with ```vql_*```. It than 
 starts to execute a dump. This will cause Virtuoso to set checkpoints, once at the start
 of the dump, once the dump has finished. After finishing the dump quad logger reports 
 what it has done.
@@ -123,7 +123,7 @@ cleans up the dump directory once in a while. It removes the files that where pa
 
 ## Environment variables of quad-logger
 The following environment variables can be set on the **quad-logger**. Environment variables
-can be set in the ```docker-compose.yml``` files under **environment:** heading.
+can be set in the ```docker-compose.yml``` files under the **environment:** heading.
 
 
 
