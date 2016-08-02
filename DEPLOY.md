@@ -28,7 +28,9 @@ This will build the docker images needed in the next step. Still in the docker t
 ```
 docker-compose -f docker-compose-example-setup.yml up
 ```
+
 This will start 4 docker containers under the compose framework:
+
 1. **some_virtuoso_server_with_data_preloaded** is an example Virtuoso server with over 900
 quads pre loaded in the Virtuoso quad store.
 2. **the_quad_logger** connects to the example Virtuoso server and creates files
