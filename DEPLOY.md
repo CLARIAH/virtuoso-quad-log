@@ -149,8 +149,8 @@ reached. Default value is ```1111```.
 **LOG_FILE_LOCATION** - The location of transaction logs on the Virtuoso server.
 Default value is ```/usr/local/var/lib/virtuoso/db```.
 
-**DATA_DIR** - The directory for (temporary) storage of the rdf-patch files. Default
-value is ```/datadir```.
+<a id="DATA_DIR"></a>**DATA_DIR** - The directory for (temporary) storage of the rdf-patch files. 
+Default value is ```/datadir```.
 
 **INSERT_PROCEDURES** - Should stored procedures be automatically inserted on the 
 Virtuoso server. The procedures that will be inserted all start with 'vql_'.
@@ -204,7 +204,7 @@ Default value is ```3600``` (1 hour).
 
 **RESOURCE_DIR** - The directory where rdf-patch files can be found. This should be the
 same directory as the dump directory of the quad-logger 
-(See [DATA_DIR](#)). 
+(See [DATA_DIR](#DATA_DIR)). 
 
 **MAX_FILES_IN_ZIP** - The maximum number of files that should go into one zip file.
 Default value is ```100```.
