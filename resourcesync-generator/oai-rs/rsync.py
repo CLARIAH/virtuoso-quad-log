@@ -24,12 +24,12 @@ parser.add_argument('--resource_dir', required=True)
 parser.add_argument('--publish_dir', required=True)
 parser.add_argument('--publish_url', required=True)
 parser.add_argument('--max_files_in_zip', type=int, default=50000)
-parser.add_argument('--write_separate_manifest', type=bool, default=True)
-parser.add_argument('--move_resources', type=bool, default=False)
+parser.add_argument('--write_separate_manifest', default="y")
+parser.add_argument('--move_resources', default="n")
 args = parser.parse_args()
 
 syncer = Synchronizer(args.resource_dir, args.publish_dir, args.publish_url,
-                            args.max_files_in_zip, args.write_separate_manifest, args.move_resources)
+                    args.max_files_in_zip, args.write_separate_manifest == "y", args.move_resources == "y")
 try:
     syncer.publish()
 

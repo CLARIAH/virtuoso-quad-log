@@ -4,9 +4,6 @@ set -o errexit
 
 # Keep indented with tabs instead of spaces because of heredocs (EOF).
 
-# The Virtuoso user.
-VIRTUOSO_USER=${VIRTUOSO_USER:-dba}
-
 # The location of transaction logs on the Virtuoso server.
 LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-/usr/local/var/lib/virtuoso/db}
 
