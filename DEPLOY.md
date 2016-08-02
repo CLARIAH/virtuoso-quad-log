@@ -204,7 +204,16 @@ Default value is ```3600``` (1 hour).
 
 **RESOURCE_DIR** - The directory where rdf-patch files can be found. This should be the
 same directory as the dump directory of the quad-logger 
-(See [DATA_DIR](#DATA_DIR)). 
+(See [DATA_DIR](#DATA_DIR)). Under docker-compose the quad-logger DATA_DIR and the
+resourcesync-generator RESOURCE_DIR should point to the same docker volume.
+Default value is ```/input```.
+
+**PUBLISH_DIR** - The directory where resource dump files and metadata are published.
+This directory should be accessible and served by the Http server.
+Default value is ```/output```.
+
+<a>**HTTP_SERVER_URL**</a> - (Required) The public URL pointing to directory being served by the Http server.
+(See PUBLISH_DIR). This URL is used to generate links in the resource sync xml files.
 
 **MAX_FILES_IN_ZIP** - The maximum number of files that should go into one zip file.
 Default value is ```100```.
