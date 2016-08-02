@@ -36,8 +36,7 @@ quads pre loaded in the Virtuoso quad store.
 2. **the_quad_logger** connects to the example Virtuoso server and creates files
 in the [RDF-patch](https://afs.github.io/rdf-patch/) format. Initially it will dump
 all quads found in the Virtuoso quad store. Later on it will keep track of all changes that take 
-place in the quad store. The quad logger writes these files to a docker volume named 
-```rdfdump```.
+place in the quad store. The quad logger writes these files to a docker volume named  ```rdfdump```.
 3. **resourcesync_generator** reads the docker volume ```rdfdump```, packages the files
 it finds there in zips and publishes the metadata as resource dumps under the
 [Resource Sync Framework](http://www.openarchives.org/rs/1.0/resourcesync) in a
