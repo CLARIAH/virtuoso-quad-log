@@ -7,7 +7,7 @@ essential in this process. These are:
 1. **quad_logger** generates logs of all initial, added, mutated or deleted quads in a
 [Virtuoso quad store](http://virtuoso.openlinksw.com/rdf-quad-store/) in the
 [RDF-patch](https://afs.github.io/rdf-patch/) format.
-2. **resourcesync-generator** enables the synchronisation of these logs over the internet by means
+2. **resourcesync-generator** enables the synchronization of these logs over the internet by means
 of the [Resource Sync Framework](http://www.openarchives.org/rs/1.0/resourcesync).
 
 The **example-virtuoso-server** is for demonstration purposes. The tools can be deployed as
@@ -17,7 +17,7 @@ services under [Docker-compose](https://docs.docker.com/compose/).
 
 ![Overview](/img/environment.png)
 
-- The above image shows the quad_logger and the resourcesync_generator in their environment.
+- The above image shows the quad_logger and the resourcesync-generator in their environment.
 The Virtuoso server is instructed to log its transactions in log files. The quad_logger interacts
 with the Virtuoso server by means of the Interactive SQL interface. It reads the 
 transaction logs and transforms them to rdf-patch formatted files. The resourcesync-generator
