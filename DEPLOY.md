@@ -227,7 +227,7 @@ Possible values: `y|n`. Default value is `y`.
 
 **MOVE_RESOURCES** - Move the zipped resources from RESOURCE_DIR to PUBLISH_DIR or simply 
 delete them from RESOURCE_DIR. Only rdf-patch files that are packaged into
-`part_xxxxx.zip` files are effected. Rdf-patch files that are provisionally packaged in the
+`part_xxxxx.zip` files are affected. Rdf-patch files that are provisionally packaged in the
 `zip_end_xxxxx.zip` file will remain in RESOURCE_DIR.
 Possible values: `y|n`. Default value is `n`.
 
