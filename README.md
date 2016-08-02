@@ -1,7 +1,7 @@
 # Virtuoso Quad Logger
 
 This *virtuoso-quad-log* repository harbors tools for propagating and publishing changes in RDF-data
-that are kept in a [Virtuoso triple store](http://virtuoso.openlinksw.com/). Two tools are 
+that are kept in a [Virtuoso triple store](http://virtuoso.openlinksw.com/). Two components are 
 essential in this process. These are:
 
 1. **quad_logger** generates logs of all initial, added, mutated or deleted quads in a
@@ -17,14 +17,14 @@ services under [Docker-compose](https://docs.docker.com/compose/).
 
 ![Overview](/img/environment.png)
 
-- The above image shows the quad_logger and the resourcesync-generator in their environment.
+<i><small>The above image shows the quad_logger and the resourcesync-generator in their environment.
 The Virtuoso server is instructed to log its transactions in log files. The quad_logger interacts
 with the Virtuoso server by means of the Interactive SQL interface. It reads the 
 transaction logs and transforms them to rdf-patch formatted files. The resourcesync-generator
 bundles the rdf-patch files in zip-files and publishes them in accordance with the
 Resource Sync Framework. Both quad_logger and resourcesync-generator can be deployed as
 Docker containers. Here they are deployed as docker-compose services. Also 
-the Http server (and the Virtuoso server) can be deployed as docker-compose service.
+the Http server (and the Virtuoso server) can be deployed as docker-compose service.</small></i>
 
 ## Documentation
 Documentation of the software in this repository is split over several files.
