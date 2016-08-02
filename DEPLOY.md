@@ -4,6 +4,7 @@ The two main components **quad-logger** and the **resourcesync-generator** can b
 as Docker containers or as services 
 under [Docker-compose](https://docs.docker.com/compose/). There are two ```docker-compose.yml``` files that should
 get you started quickly. 
+
 1. The ```docker-compose-example-setup.yml``` includes an example Virtuoso server and an
 nginx http server, so it incorporates a complete environment  for the two main components.
 You can use this experimental setup as a playground to watch the components at work.
