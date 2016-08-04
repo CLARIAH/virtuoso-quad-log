@@ -20,7 +20,7 @@ on the environment variables which give you control over the exact behavior of t
 Once you have [Docker-compose installed](https://docs.docker.com/compose/install/) on your system
 you can spark up the playground. Open a docker terminal and
 navigate to the root directory where
-you downloaded or cloned the virtuoso-quad-log repository. At te command line type:
+you downloaded or cloned the virtuoso-quad-log repository. At the command line type:
 ```
 docker-compose -f docker-compose-example-setup.yml build
 ```
@@ -32,7 +32,7 @@ docker-compose -f docker-compose-example-setup.yml up
 This will start 4 docker containers under the compose framework:
 
 1. **some_virtuoso_server_with_data_preloaded** is an example Virtuoso server with over 900
-quads pre loaded in the Virtuoso quad store.
+quads preloaded in the Virtuoso quad store.
 2. **the_quad_logger** connects to the example Virtuoso server and creates files
 in the [RDF-patch](https://afs.github.io/rdf-patch/) format. Initially it will dump
 all quads found in the Virtuoso quad store. Later on it will keep track of all changes that take 
@@ -80,7 +80,7 @@ the_quad_logger_1       | Executing dump...
 The first time the quad logger connects to the interactive interface of Virtuoso it will
 insert several stored procedures. These procedures all start with `vql_*`. It than 
 starts to execute a dump. This will cause Virtuoso to set checkpoints, once at the start
-of the dump, once the dump has finished. After finishing the dump quad logger reports 
+of the dump, once at the end of the dump. After finishing the dump the quad logger reports 
 what it has done.
 ```
 the_quad_logger_1       | Dump reported in '/datadir/rdfdump-0000000097'
@@ -99,7 +99,7 @@ and packaging 10 such files in a zip is not a practical scenario.
 After a while the resourcesync generator wakes up and finds the files produced by
 the quad logger in it's directory `input` which is mapped to the 
 docker volume `rdfdump`. It will start to compress the files into zip files and publish
-the metadata in it's directory `output` which was mapped to the
+tresources and metadata in it's directory `output` which was mapped to the
 docker volume `rdfdumpwithresourcesync`.
 ```
 resourcesync_generator_1    | Zipped 10 resources in /output/part_00000.zip
@@ -188,7 +188,7 @@ As per default the following graphs are excluded from the dump:
 - http://localhost:8890/DAV/
 
 ## Environment variables for resourcesync-generator
-The following environment variables can be set on the **resourcesync-generatorr**. 
+The following environment variables can be set on the **resourcesync-generator**. 
 Environment variables
 can be set in the `docker-compose.yml` files under the **environment:** heading.
 
@@ -222,7 +222,7 @@ Default value is `100`.
 This file is the same as the one included in each zip file under the name `manifest.xml`.
 The separate manifest files wil have names like `manifest_xxx_xxx.xml`, where
 `xxx_xxx` is the same as the basename of the zip file it accompanies without 
-the extension `zip`.
+the extension `zip`. For instance 'manifest_part_00004.xml' accompanies 'part_00004.zip'.
 Possible values: `y|n`. Default value is `y`.
 
 **MOVE_RESOURCES** - Move the zipped resources from RESOURCE_DIR to PUBLISH_DIR or simply 
@@ -230,6 +230,63 @@ delete them from RESOURCE_DIR. Only rdf-patch files that are packaged into
 `part_xxxxx.zip` files are affected. Rdf-patch files that are provisionally packaged in the
 `zip_end_xxxxx.zip` file will remain in RESOURCE_DIR.
 Possible values: `y|n`. Default value is `n`.
+
+## Connect to a production Virtuoso server
+
+To connect the logger to a production virtuoso server, you can edit the environment variables in 
+the `docker-compose.yml`. If you do not want the nginx as HTTP-server, comment out that service
+near the top of the file. Build the images with
+
+	docker-compose build
+
+After a successful build you can launch the services with
+
+	docker-compose up
+	
+You should now be able to see files created in `dumpdir` and `publishdir`. 
+
+In order to enable third parties to synchronize with the state of your Virtuoso instance,
+the directory `publishdir` should be served on a public URL.
+	
+## Error messages
+
+Below is a list of error messages you might see in the logs after launching.
+
+
+### No connection
+**message:**
+```
+No connection to isql -H {address} -S {port}
+```
+**origin:** _the_quad_logger_
+
+**cause:** _the_quad_logger_ cannot connect to the Virtuose server. This could be a temporary issue.
+
+**remedy:**
+If the error persists over several runs of _the_quad_logger_ make sure that address
+ (VIRTUOSO_HOST_NAME) and port (VIRTUOSO_ISQL_PORT)
+as set in the environment variables of _the_quad_logger_ are correct.
+ 
+Your firewall may be blocking the ISQL port of your Virtuoso server. (The default port number
+for Virtuoso ISQL is 1111.) Make sure address and port can be reached
+from _the_quad_logger_. You might test the connection with the command `nc`.
+```
+nc -vz {address} {port}
+```
+
+### Undefined procedure
+**message:**
+```
+*** Error 42001: [Virtuoso Driver][Virtuoso Server]SR185: Undefined procedure DB.DBA.read_log.
+```
+**origin:** _the_quad_logger_
+
+**cause:** Your Virtuoso instance is missing the built-in function `read_log()`. This function
+is missing from older versions of Virtuoso and is essential for correct functioning of
+ _the_quad_logger_.
+
+**remedy:**
+Upgrade to a newer version of Virtuoso.
 
 
 

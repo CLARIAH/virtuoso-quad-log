@@ -16,6 +16,10 @@ CREATE PROCEDURE vql_assert_configuration() {
     -- AutoCheckpointLogSize is another configuration parameter that could be inspected.
     -- Transaction log files and rdfpatch files are coupled one-on-one.
     -- So the size of rdfpatch files ultimately is determined by the maximum size of transaction logs.
+
+    -- Test if transaction log can be read. Older versions of Virtuoso do not seem to have
+    -- built-in function read_log()
+    vql_check_trx(cfg_item_value(virtuoso_ini_path(), 'Database', 'TransactionFile'));
 }
 ;
 

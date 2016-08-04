@@ -76,11 +76,21 @@ assert_no_isql_error()
 	fi
 }
 
+
+write_md5_stored_procedures()
+{
+	$ISQL_CMD <<-'EOF' 2>$ISQL_ERROR_FILE | grep "^DB\.DBA\." > md5_stored_procedures
+		SELECT P_NAME, md5(concat(P_TEXT, P_MORE)) FROM SYS_PROCEDURES WHERE P_NAME LIKE 'DB.DBA.vql_*';
+		exit;
+		EOF
+	assert_no_isql_error
+}
+
 ###############################
 # assert_procedures_stored
 # Assert that stored procedures are available on the Virtuoso server; insert them if needed.
 #
-# Globals:      INSERT_PROCEDURES, ISQL_ERROR_FILE
+# Globals:      INSERT_PROCEDURES, ISQL_CMD, ISQL_ERROR_FILE
 # Environment:  Procedure files are in the directory 'sql-proc', relative to current directory.
 # Arguments:    None
 # Returns:      None
@@ -101,7 +111,7 @@ assert_procedures_stored()
 
 	local found_procedures=$(grep "^[0-9]*$" query_result)
 
-	if [ "$found_procedures" != "$procedures_count" ] ; then
+	if [ "$found_procedures" != "$procedures_count" ] || [ ! -e md5_stored_procedures ]; then
 		echo "Found $found_procedures out of $procedures_count required stored procedures." >&2
 		if [ "$INSERT_PROCEDURES" != "y" ]; then
 			echo "Without the stored procedures I can't be of much use. Sorry. You might want to run me connected to a dummy virtuoso server in a container as detailed in the README." >&2
@@ -114,6 +124,7 @@ assert_procedures_stored()
 				assert_no_isql_error
 				echo "Inserted sql-proc/$file" >&2
 			done
+            write_md5_stored_procedures
 		fi
 	fi
 	rm query_result

@@ -11,17 +11,15 @@ services:
     image: clariah/resourcesync-generator
     environment:
       - RUN_INTERVAL=60
-      - HTTP_SERVER_URL=http://localhost:8080 #this is used to generate links in the xml files. It should be the public url
+      - HTTP_SERVER_URL=http://localhost:8080 # Required. this is used to generate links in the xml files. It should be the public url
     volumes:
       - ./dumpdir:/input
       - ./publishdir:/output
   the_quad_logger:
     build: ./quad-logger
     image: clariah/virtuoso-quad-log
-    links: 
-      - some_http_server:HTTP_SERVER
     environment:
-      - VIRTUOSO_HOST_NAME
+      - VIRTUOSO_HOST_NAME # Requiered.
       - VIRTUOSO_DB_USER
       - VIRTUOSO_DB_PASSWORD
       - CHOWN_TO_ID #if you're dumping the files to a directory you might want to chown them from root:root to another user. If so specify the numeric userid here 

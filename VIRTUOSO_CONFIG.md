@@ -13,7 +13,9 @@ Open the Virtuoso Interactive SQL interface by typing ```isql``` on a command li
 1. # isql [host:port username password]
 ```
 The parameters host, port, username and password are only necessary if you are logging in from a 
-remote terminal. If the path to the ```isql``` executable is not set you may have to locate it first.
+remote terminal. 
+
+If the path to the ```isql``` executable is not set you may have to locate it first.
 At a command line type
 ```
 2. # find / -name isql
@@ -33,6 +35,9 @@ in the Interactive SQL window.
 select virtuoso_ini_path();
 ```
 A typical outcome is ```/usr/local/var/lib/virtuoso/db/virtuoso.ini```.
+
+If the outcome is a relative path like `virtuoso.ini`, then this path is relative to the start script
+of your Virtuoso server.
 
 ## Critical configuration
 Open the ```virtuoso.ini``` file in your favorite editor and verify and/or correct the following 
@@ -77,8 +82,11 @@ SQL> select cfg_item_value(virtuoso_ini_path (), 'Parameters', 'CheckpointInterv
 The way Virtuoso handles checkpoints in regard to the audit trail. The value of this parameter should be
 ```1```. This guarantees that "*...a new log file will be generated in the old log file's directory 
 with a name ending with the date and time of the new log file's creation.*"
+```
+CheckpointAuditTrail  = 1
+```
 
-In interactive SQL you can find the value of the CheckpointInterval parameter by typing
+In interactive SQL you can find the value of the CheckpointAuditTrail parameter by typing
 ```
 SQL> select cfg_item_value(virtuoso_ini_path (), 'Parameters', 'CheckpointAuditTrail');
 ```
@@ -93,6 +101,10 @@ and rdfpatch files are coupled one-on-one. So the size of rdfpatch files ultimat
 by the maximum size of transaction logs. Virtuoso may delay the setting of a checkpoint while large
 transactions take place. This may result in huge transaction log files and consequently large
 rdfpatch files. Setting this parameter to a reasonable value will prevent such unwanted behavior.
+```
+; For a maximum transaction log file size of 10MB.
+AutoCheckpointLogSize  = 10485760
+```
 
 In interactive SQL you can find the value of the AutoCheckpointLogSize parameter by typing
 ```

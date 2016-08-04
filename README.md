@@ -57,7 +57,7 @@ To launch a self-contained sandbox you can use the docker-compose-example-setup.
 	docker-compose -f docker-compose-example-setup.yml up
 
 To connect the logger to a production virtuoso server, you can edit the environment variables in 
-the docker-compose.yml and launch using that
+the docker-compose.yml and launch using
 
 	docker-compose build
 	docker-compose up
