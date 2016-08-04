@@ -124,7 +124,7 @@ assert_procedures_stored()
 				assert_no_isql_error
 				echo "Inserted sql-proc/$file" >&2
 			done
-            write_md5_stored_procedures
+			write_md5_stored_procedures
 		fi
 	fi
 	rm query_result
@@ -265,16 +265,16 @@ dump_if_needed()
 # Returns:      None
 sync_transaction_logs()
 {
-    local badger_file="$DUMP_DIR/rdfpatch-99999999999999"
-    if [ -e "$badger_file" ]; then
-        # Prevent posible synchronous processing of the last rdfpatch-* file.
-        rm "$badger_file"
-    fi
+	local badger_file="$DUMP_DIR/rdfpatch-99999999999999"
+	if [ -e "$badger_file" ]; then
+		# Prevent posible synchronous processing of the last rdfpatch-* file.
+		rm "$badger_file"
+	fi
 
-    local latestlogsuffix=""
-    if [ -e "$LAST_LOG_SUFFIX" ]; then
-        latestlogsuffix=$(<"$LAST_LOG_SUFFIX")
-    fi
+	local latestlogsuffix=""
+	if [ -e "$LAST_LOG_SUFFIX" ]; then
+		latestlogsuffix=$(<"$LAST_LOG_SUFFIX")
+	fi
 	echo "Syncing transaction logs starting from $latestlogsuffix" >&2
 
 	# parse_trx_files to marked output file
@@ -310,7 +310,7 @@ sync_transaction_logs()
 				echo "generated rdfpatch-${timestamp}" >&2
 				cp $file "$DUMP_DIR/rdfpatch-${timestamp}"
 				# Write timestamp as lastlogsuffix.
-	            printf "$timestamp" > "$DUMP_DIR/lastlogsuffix.txt"
+				printf "$timestamp" > "$DUMP_DIR/lastlogsuffix.txt"
 				CHANGES_WERE_MADE=y
 			fi
 		fi
