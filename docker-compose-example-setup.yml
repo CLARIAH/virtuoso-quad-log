@@ -8,7 +8,7 @@ services:
   some_http_server:
     image: nginx
     volumes: 
-      - rdfdumpwithresourcesync:/usr/share/nginx/html:ro
+      - rdfpublish:/usr/share/nginx/html:ro
     ports: 
       - 8085:80
   the_quad_logger:
@@ -34,7 +34,7 @@ services:
       - MOVE_RESOURCES=n # Move resources to publish dir. Set to True if individual resources should be published along side the zip files
     volumes:
       - rdfdump:/input
-      - rdfdumpwithresourcesync:/output
+      - rdfpublish:/output
   # todo: add an example crawler
   # an_example_crawler:
   #   image: huygensing/oai-rs-client
@@ -43,4 +43,4 @@ services:
   #   port: 8180
 volumes:
   rdfdump:
-  rdfdumpwithresourcesync:
+  rdfpublish:

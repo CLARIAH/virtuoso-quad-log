@@ -134,7 +134,7 @@ executable will usually be found in the same directory. If in doubt find it with
 The path to the executables found under ```3.``` and/or ```4.``` shall in the following be
 referred to as ```VIRTUOSO_BIN```.
 
-### Stopping the virtuoso server
+### Stopping the Virtuoso server
 In a Unix-distribution you can stop the server by connecting to the ISQL interactive interface and 
 specifying the option ```-K```. This will shut down the virtuoso server on connecting to it.
 ```
@@ -145,7 +145,7 @@ The server is shutting down
 The default server port is ```1111```. The server port is specified in the ```virtuoso.ini``` file
 under ```[Parameters]```, ```ServerPort```.
 
-### Starting the virtuoso server
+### Starting the Virtuoso server
 In a Unix distribution you can start the virtuoso server by executing the following command
 ```
 # ${VIRTUOSO_BIN}/virtuoso-t -f -c ${VIRTUOSO_INI}

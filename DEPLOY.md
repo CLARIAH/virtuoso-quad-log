@@ -40,9 +40,9 @@ place in the quad store. The quad logger writes these files to a docker volume n
 3. **resourcesync_generator** reads the docker volume `rdfdump`, packages the files
 it finds there in zips and publishes the metadata as resource dumps under the
 [Resource Sync Framework](http://www.openarchives.org/rs/1.0/resourcesync) in a
-docker volume named `rdfdumpwithresourcesync`.
+docker volume named `rdfpublish`.
 4. **some_http_server** is a plain [nginx](https://hub.docker.com/_/nginx/) http server
-that serves the contents of the docker volume `rdfdumpwithresourcesync`.
+that serves the contents of the docker volume `rdfpublish`.
 
 If everything went well you should now be able to point your browser to
 [http://192.168.99.100:8890/conductor/](http://192.168.99.100:8890/conductor/) 
@@ -99,8 +99,8 @@ and packaging 10 such files in a zip is not a practical scenario.
 After a while the resourcesync generator wakes up and finds the files produced by
 the quad logger in it's directory `input` which is mapped to the 
 docker volume `rdfdump`. It will start to compress the files into zip files and publish
-tresources and metadata in it's directory `output` which was mapped to the
-docker volume `rdfdumpwithresourcesync`.
+resources and metadata in it's directory `output` which was mapped to the
+docker volume `rdfpublish`.
 ```
 resourcesync_generator_1    | Zipped 10 resources in /output/part_00000.zip
 ...
