@@ -31,7 +31,7 @@ services:
       - HTTP_SERVER_URL=http://192.168.99.100:8085 #this is used to generate links in the xml files. It should be the public url
       - MAX_FILES_IN_ZIP=10
       - WRITE_SEPARATE_MANIFEST=y # Write separate manifest files in publish dir.
-      - MOVE_RESOURCES=n # Move resources to publish dir. Set to True if individual resources should be published along side the zip files
+      - MOVE_RESOURCES=n # Move resources to publish dir. Set to 'y' if individual resources should be published along side the zip files
     volumes:
       - rdfdump:/input
       - rdfpublish:/output

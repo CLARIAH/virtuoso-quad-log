@@ -19,6 +19,8 @@ PREFIX_COMPLETED_ZIP = "part_"
 PREFIX_END_ZIP = "zip_end_"
 PREFIX_MANIFEST = "manifest_"
 
+FILE_HANDSHAKE = "started_at.txt"
+
 
 class Synchronizer(object):
     """
@@ -58,6 +60,17 @@ class Synchronizer(object):
         self.max_files_in_zip = max_files_in_zip
         self.write_separate_manifest = write_separate_manifest
         self.move_resources = move_resources
+        self.handshake = None
+
+    @staticmethod
+    def is_our_file(a_file):
+        return a_file.startswith((PREFIX_COMPLETED_ZIP,
+                                  PREFIX_END_ZIP,
+                                  PREFIX_MANIFEST,
+                                  FILE_HANDSHAKE,
+                                  "resource-dump",
+                                  "capability-list",
+                                  ".well-known"))
 
     @staticmethod
     def compute_timestamp(raw_ts):
@@ -105,13 +118,7 @@ class Synchronizer(object):
 
     def publish(self):
         """
-        Publish resources found in resource_dir in accordance with the Resource Sync Framework.
-        Resources will be packaged in ZIP file format. The amount of resources that will be packaged in one zip file
-        is bound to max_files_in_zip. Successive packages will be created if more than max_files_in_zip resources
-        have to be published. Packages that reach the limit of max_files_in_zip are marked as complete. Any remainder
-        of resources are packaged in a zip file marked as zip end.
-
-        WARNING: This method removes resources that are published in packages marked as complete from resource_dir.
+        Try and publish or remove zip end if something went wrong.
 
         :return:
         """
@@ -122,6 +129,66 @@ class Synchronizer(object):
         if not os.path.isdir(self.publish_dir):
             os.makedirs(self.publish_dir)
             print "Created %s" % self.publish_dir
+
+        self.handshake = self.verify_handshake()
+        if self.handshake is None:
+            return
+
+        print "Synchronizing state as of %s" % self.handshake
+
+        try:
+            self.do_publish()
+        except:
+            # Something went wrong. Best we can do is clean up end of zip chain.
+            zip_end_files = glob(os.path.join(self.publish_dir, PREFIX_END_ZIP + "*.zip"))
+            for ze_file in zip_end_files:
+                os.remove(ze_file)
+                print "error recovery: removed %s" % ze_file
+
+            zip_end_xmls = glob(os.path.join(self.publish_dir, PREFIX_END_ZIP + "*.xml"))
+            for ze_xml in zip_end_xmls:
+                os.remove(ze_xml)
+                print "error recovery: removed %s" % ze_xml
+
+            zip_end_manis = glob(
+                os.path.join(self.publish_dir, PREFIX_MANIFEST + PREFIX_END_ZIP + "*.xml"))
+            for ze_mani in zip_end_manis:
+                os.remove(ze_mani)
+                print "error recovery: removed %s" % ze_mani
+
+            # remove zip-end entries from resource-dump.xml
+            rs_dump_path = os.path.join(self.publish_dir, "resource-dump.xml")
+            rs_dump = ResourceDump()
+            if os.path.isfile(rs_dump_path):
+                with open(rs_dump_path, "r") as rs_dump_file:
+                    sm = Sitemap()
+                    sm.parse_xml(rs_dump_file, resources=rs_dump)
+
+            prefix = self.publish_url + PREFIX_END_ZIP
+
+            for uri in rs_dump.resources.keys():
+                if uri.startswith(prefix):
+                    del rs_dump.resources[uri]
+                    print "error recovery: removed %s from %s" % (uri, rs_dump_path)
+
+            with open(rs_dump_path, "w") as rs_dump_file:
+                rs_dump_file.write(rs_dump.as_xml())
+
+            print "error recovery: walk through error recovery completed. Now raising ..."
+            raise
+
+    def do_publish(self):
+        """
+        Publish resources found in resource_dir in accordance with the Resource Sync Framework.
+        Resources will be packaged in ZIP file format. The amount of resources that will be packaged in one zip file
+        is bound to max_files_in_zip. Successive packages will be created if more than max_files_in_zip resources
+        have to be published. Packages that reach the limit of max_files_in_zip are marked as complete. Any remainder
+        of resources are packaged in a zip file marked as zip end.
+
+        WARNING: This method removes resources that are published in packages marked as complete from resource_dir.
+
+        :return:
+        """
 
         path_zip_end_old, rl_end_old = self.get_state_published()
         new_zips = ResourceDump()
@@ -167,6 +234,63 @@ class Synchronizer(object):
         if not state_changed:
             print "No changes"
 
+    def verify_handshake(self):
+        """
+        Resources in resource_dir and publish_dir should stem from the same start date.
+        This method compares start date of resource_dir with start_date of publish_dir.
+        If they are not the same adeqate action will be taken.
+        :return:
+        """
+        resource_handshake = None
+        publish_handshake = None
+
+        path_resource_handshake = os.path.join(self.resource_dir, FILE_HANDSHAKE)
+        if os.path.isfile(path_resource_handshake):
+            with open(path_resource_handshake, "r") as r_file:
+                resource_handshake = r_file.read()
+
+        path_publish_handshake = os.path.join(self.publish_dir, FILE_HANDSHAKE)
+        if os.path.isfile(path_publish_handshake):
+            with open(path_publish_handshake, "r") as r_file:
+                publish_handshake = r_file.read()
+
+        if resource_handshake is None:
+            print "Error: No resource_handshake found. Not interfering with status quo of published resources."
+            return None
+
+        if publish_handshake is None:
+            # This can only be at the very start of synchronizing with a fresh empty publish_dir
+            if self.walk_publish_dir() > 0:
+                print "Error: No publish_handshake found and %s not empty. " \
+                      "Not interfering with status quo of published resources." % self.publish_dir
+                return None
+
+        if resource_handshake != publish_handshake:
+            print "Resource_handshake is %s, publish_handshake is % s. Shrubbing %s" \
+                  % (resource_handshake, publish_handshake, self.publish_dir)
+            self.walk_publish_dir(remove_our_files=True)
+            publish_handshake = None
+
+        if resource_handshake and publish_handshake is None:
+            with open(path_publish_handshake, "w") as w_file:
+                w_file.write(resource_handshake)
+            print "Signed new handshake: %s" % resource_handshake
+
+        return resource_handshake
+
+    def walk_publish_dir(self, remove_our_files=False):
+        our_things = 0
+        for a_file in os.listdir(self.publish_dir):
+            if self.is_our_file(a_file):
+                our_things += 1
+                if remove_our_files:
+                    file_path = os.path.join(self.publish_dir, a_file)
+                    if os.path.isfile(file_path):
+                        os.remove(file_path)
+                    elif os.path.isdir(file_path):
+                        shutil.rmtree(file_path)
+        return our_things
+
     def publish_metadata(self, new_zips, exluded_zip=None):
         """
         (Re)publish metadata with addition of new_zips. An excluded zip will be removed from previously published
@@ -191,7 +315,7 @@ class Synchronizer(object):
                 sm.parse_xml(rs_dump_file, resources=rs_dump)
 
         else:
-            rs_dump.md_at = w3cdt.datetime_to_str(no_fractions=True)
+            rs_dump.md_at = self.compute_timestamp(self.handshake)
             rs_dump.link_set(rel="up", href=capa_list_url)
 
         # Remove excluded zip, if any

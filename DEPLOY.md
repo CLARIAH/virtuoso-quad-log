@@ -288,6 +288,62 @@ is missing from older versions of Virtuoso and is essential for correct function
 **remedy:**
 Upgrade to a newer version of Virtuoso.
 
+### Old dump or patch files
+
+**message:**
+```
+Error: 'rdfpatch-*' files found in '/datadir'. Remove 'rdfpatch-*' and 'rdfdump-*' files before dumping.
+Error: 'rdfdump-*' files found in '/datadir'. Remove 'rdfpatch-*' and 'rdfdump-*' files before dumping.
+```
+**origin:** _the_quad_logger_
+
+**cause:** _the_quad_logger_ wants to do a fresh dump (`DUMP_INITIAL_STATE=y` and
+the file `rdfdump-9999999999` is missing or invalid) but there are old 
+`rdfpatch-*` and/or `rdfdump-*` files in the directory or volume `rdfdump`.
+
+**remedy:**
+Remove `rdfpatch-*` and `rdfdump-*` files from the dump directory.
+
+### No handshake
+
+**message:**
+```
+Error: No resource_handshake found. Not interfering with status quo of published resources.
+```
+
+**origin:** _resourcesync_generator_
+
+**cause:** The handshake file `started_at.txt` is missing from `dump_dir`. The
+_resourcesync_generator_ cannot verify synchronized action with _the_quad_logger_
+and is maintaining status quo.
+
+**remedy:**
+If this happens when _the_quad_logger_ has not started completely, this only
+ indicates that _the_quad_logger_ has not set a handshake file yet. If
+the phenomenon persists, this indicates a serious failure. In this case:
+completely empty `dump_dir`. This will cause _the_quad_logger_ to start a new
+dump and subsequent patches. _resourcesync_generator_ will follow by emptying 
+the `publish_dir` and start synchronizing afresh.
+
+**message:**
+```
+Error: No publish_handshake found and /output not empty. Not interfering with status quo of published resources.
+```
+
+**origin:** _resourcesync_generator_
+
+**cause:** The handshake file `started_at.txt` is missing from `publish_dir`
+and the directory `publish_dir` is not empty. The
+_resourcesync_generator_ cannot verify synchronized action with _the_quad_logger_
+and is maintaining status quo.
+
+**remedy:**
+Same as above but this time you also have to completely empty `publish_dir` as well.
+Best to stop the two services _the_quad_logger_ and _resourcesync_generator_,
+empty both `dump_dir` and `publish_dir` and start both services again.
+
+
+
 
 
 

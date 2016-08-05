@@ -43,6 +43,12 @@ fi
 # File for keeping last log suffix.
 LAST_LOG_SUFFIX="$DUMP_DIR/lastlogsuffix.txt"
 
+# File signalling stored procedures are up to date.
+MD5_STORED_PROCEDURES=md5_stored_procedures
+
+# File constituting handshake between this service and chained services.
+STARTED_AT_FILE="$DUMP_DIR/started_at.txt"
+
 ##########################################################
 ## FUNCTIONS #############################################
 
@@ -76,10 +82,17 @@ assert_no_isql_error()
 	fi
 }
 
-
+###############################
+# write_md5_stored_procedures
+# Write the md5 hash of stored procedures to the file md5_stored_procedures. The file md5_stored_procedures
+# signals that latest version of stored procedures have been inserted.
+#
+# Globals:      ISQL_CMD, ISQL_ERROR_FILE, MD5_STORED_PROCEDURES
+# Arguments:    None
+# Returns:      None
 write_md5_stored_procedures()
 {
-	$ISQL_CMD <<-'EOF' 2>$ISQL_ERROR_FILE | grep "^DB\.DBA\." > md5_stored_procedures
+	$ISQL_CMD <<-'EOF' 2>$ISQL_ERROR_FILE | grep "^DB\.DBA\." > "$MD5_STORED_PROCEDURES"
 		SELECT P_NAME, md5(concat(P_TEXT, P_MORE)) FROM SYS_PROCEDURES WHERE P_NAME LIKE 'DB.DBA.vql_*';
 		exit;
 		EOF
@@ -90,7 +103,7 @@ write_md5_stored_procedures()
 # assert_procedures_stored
 # Assert that stored procedures are available on the Virtuoso server; insert them if needed.
 #
-# Globals:      INSERT_PROCEDURES, ISQL_CMD, ISQL_ERROR_FILE
+# Globals:      INSERT_PROCEDURES, ISQL_CMD, ISQL_ERROR_FILE, MD5_STORED_PROCEDURES
 # Environment:  Procedure files are in the directory 'sql-proc', relative to current directory.
 # Arguments:    None
 # Returns:      None
@@ -111,7 +124,7 @@ assert_procedures_stored()
 
 	local found_procedures=$(grep "^[0-9]*$" query_result)
 
-	if [ "$found_procedures" != "$procedures_count" ] || [ ! -e md5_stored_procedures ]; then
+	if [ "$found_procedures" != "$procedures_count" ] || [ ! -e "$MD5_STORED_PROCEDURES" ]; then
 		echo "Found $found_procedures out of $procedures_count required stored procedures." >&2
 		if [ "$INSERT_PROCEDURES" != "y" ]; then
 			echo "Without the stored procedures I can't be of much use. Sorry. You might want to run me connected to a dummy virtuoso server in a container as detailed in the README." >&2
@@ -159,6 +172,7 @@ assert_dump_completed_normal()
 	completed=$(cat $lastfile | { grep "# dump completed " || true; } )
 	if [ "$completed" = "" ] ; then
 		echo "DUMP ERROR: Dump did not complete normally." >&2
+
 		exit 1
 	fi
 	echo "$lastfile"
@@ -194,6 +208,7 @@ dump_nquads()
 execute_dump()
 {
 	echo "Executing dump..." >&2
+	printf $(date +"%Y%m%d%H%M%S") > "$STARTED_AT_FILE"
 
 	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfdump-" -n 10 -sz - "/^# at checkpoint  /" {*}
 	assert_no_isql_error
@@ -230,7 +245,10 @@ dump_if_needed()
 	if [ "$DUMP_INITIAL_STATE" = "y" ]; then
 		if [ ! -e "$DUMP_DIR/rdfdump-9999999999" ]; then
 				if ls "$DUMP_DIR/rdfpatch-"* 1> /dev/null 2>&1; then
-						echo "'rdfpatch-*' files found in '$DUMP_DIR'. Remove them before dumping." >&2
+						echo "Error: 'rdfpatch-*' files found in '$DUMP_DIR'. Remove 'rdfpatch-*' and 'rdfdump-*' files before dumping." >&2
+						exit 1
+				elif ls "$DUMP_DIR/rdfdump-"* 1> /dev/null 2>&1; then
+						echo "Error: 'rdfdump-*' files found in '$DUMP_DIR'. Remove 'rdfpatch-*' and 'rdfdump-*' files before dumping." >&2
 						exit 1
 				else
 					execute_dump
@@ -241,6 +259,9 @@ dump_if_needed()
 		fi
 	else
 		echo "Not checking dump status because DUMP_INITIAL_STATE is not 'y'" >&2
+		if [ ! -e "$STARTED_AT_FILE" ]; then
+		    printf $(date +"%Y%m%d%H%M%S") > "$STARTED_AT_FILE"
+		fi
 	fi
 
 	# Quit, in case dump-and-exit was requested.

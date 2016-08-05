@@ -22,7 +22,7 @@ class TestSynchronizer(unittest.TestCase):
         return dst_dir
 
     def test_publish_zero_resources(self):
-        resource_dir = self.copy_files([])
+        resource_dir = self.copy_files(["started_at.txt"])
         publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
@@ -33,7 +33,7 @@ class TestSynchronizer(unittest.TestCase):
         self.assertTrue(os.path.isdir(publish_dir))
 
     def test_not_publish_last_dump_file(self):
-        resource_dir = self.copy_files(["rdfdump-00001"])
+        resource_dir = self.copy_files(["rdfdump-00001", "started_at.txt"])
         publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
@@ -45,7 +45,7 @@ class TestSynchronizer(unittest.TestCase):
         self.assertEqual(0, len(zip_end_files))
 
     def test_publish_dump_files(self):
-        resource_dir = self.copy_files(["rdfdump-00001", "rdfdump-00002", "rdfdump-00003"])
+        resource_dir = self.copy_files(["rdfdump-00001", "rdfdump-00002", "rdfdump-00003", "started_at.txt"])
         publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
@@ -59,7 +59,7 @@ class TestSynchronizer(unittest.TestCase):
 
     def test_publish_incremental_zips(self):
         resource_dir = self.copy_files(["rdfdump-00001", "rdfdump-00002", "rdfdump-00003", "rdfdump-99999",
-            "rdfpatch-20160113072513", "rdfpatch-20160113082513"])
+            "rdfpatch-20160113072513", "rdfpatch-20160113082513", "started_at.txt"])
         publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
@@ -92,6 +92,92 @@ class TestSynchronizer(unittest.TestCase):
         zip_end_files = glob(os.path.join(publish_dir, synchronizer.PREFIX_END_ZIP + "*.zip"))
         self.assertEqual(0, len(zip_end_files))
 
+    def test_verify_handshake_with_no_resource_handshake(self):
+        resource_dir = self.copy_files(["rdfdump-00001"])
+        publish_url = "http://example.com/rdf/pub/"
+        publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
+
+        guinea_file = os.path.join(publish_dir, "test.txt")
+        with open(guinea_file, "w") as w_file:
+            w_file.write("some string")
+
+        syncer = Synchronizer(resource_dir, publish_dir, publish_url)
+        # should do nothing 'cause no resource_handshake
+        handshake = syncer.verify_handshake()
+
+        self.assertIsNone(handshake)
+        self.assertTrue(os.path.isdir(publish_dir))
+        self.assertTrue(os.path.isfile(guinea_file))
+
+    def test_verify_handshake_with_no_resource_handshake_but_publish_handshake(self):
+        resource_dir = self.copy_files(["rdfdump-00001"])
+        publish_url = "http://example.com/rdf/pub/"
+        publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
+
+        guinea_file = os.path.join(publish_dir, "test.txt")
+        with open(guinea_file, "w") as w_file:
+            w_file.write("some string")
+
+        path_publish_handshake = os.path.join(publish_dir, synchronizer.FILE_HANDSHAKE)
+        with open(path_publish_handshake, "w") as w_file:
+            w_file.write("20160805110708")
+
+        syncer = Synchronizer(resource_dir, publish_dir, publish_url)
+        # should do nothing 'cause no resource_handshake
+        handshake = syncer.verify_handshake()
+
+        self.assertIsNone(handshake)
+        self.assertTrue(os.path.isdir(publish_dir))
+        self.assertTrue(os.path.isfile(guinea_file))
+        self.assertTrue(os.path.isfile(path_publish_handshake))
+
+    def test_verify_handshake_same_handshake(self):
+        resource_dir = self.copy_files(["rdfdump-00001", "started_at.txt"])
+        publish_url = "http://example.com/rdf/pub/"
+        publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
+
+        guinea_file = os.path.join(publish_dir, "test.txt")
+        with open(guinea_file, "w") as w_file:
+            w_file.write("some string")
+
+        path_publish_handshake = os.path.join(publish_dir, synchronizer.FILE_HANDSHAKE)
+        with open(path_publish_handshake, "w") as w_file:
+            w_file.write("20160805110708")
+
+        syncer = Synchronizer(resource_dir, publish_dir, publish_url)
+        # should do normal synchronizing
+        handshake = syncer.verify_handshake()
+
+        self.assertEqual("20160805110708", handshake)
+        self.assertTrue(os.path.isdir(publish_dir))
+        self.assertTrue(os.path.isfile(guinea_file))
+        self.assertTrue(os.path.isfile(path_publish_handshake))
+
+    def test_verify_handshake_shrubb(self):
+        resource_dir = self.copy_files(["rdfdump-00001", "started_at.txt"])
+        publish_url = "http://example.com/rdf/pub/"
+        publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
+
+        guinea_file = os.path.join(publish_dir, "test.txt")
+        with open(guinea_file, "w") as w_file:
+            w_file.write("some string")
+
+        path_publish_handshake = os.path.join(publish_dir, synchronizer.FILE_HANDSHAKE)
+        with open(path_publish_handshake, "w") as w_file:
+            w_file.write("20150805110708")
+
+        syncer = Synchronizer(resource_dir, publish_dir, publish_url)
+        # should do normal synchronizing
+        handshake = syncer.verify_handshake()
+
+        self.assertEqual("20160805110708", handshake)
+        self.assertTrue(os.path.isdir(publish_dir))
+        self.assertTrue(os.path.isfile(guinea_file))
+        self.assertTrue(os.path.isfile(path_publish_handshake))
+        with open(path_publish_handshake, "r") as r_file:
+            publish_handshake = r_file.read()
+
+        self.assertEqual(handshake, publish_handshake)
 
 
 
