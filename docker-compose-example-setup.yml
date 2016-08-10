@@ -5,12 +5,6 @@ services:
     build: ./example-virtuoso-server
     ports:
       - "8890:8890"
-  some_http_server:
-    image: nginx
-    volumes: 
-      - rdfpublish:/usr/share/nginx/html:ro
-    ports: 
-      - 8085:80
   the_quad_logger:
     build: ./quad-logger
     image: clariah/virtuoso-quad-log
@@ -22,19 +16,34 @@ services:
       - VIRTUOSO_HOST_NAME=virtuoso-source
       - MAX_QUADS_PER_DUMP_FILE=10
     volumes:
-      - rdfdump:/datadir 
-  resourcesync_generator:
-    build: ./resourcesync-generator
-    image: clariah/resourcesync-generator
+      - stash1:/output
+  the_graph_splitter:
+    build: ./graph-splitter
+    image: clariah/graph-splitter
     environment:
       - RUN_INTERVAL=60
-      - HTTP_SERVER_URL=http://192.168.99.100:8085 #this is used to generate links in the xml files. It should be the public url
-      - MAX_FILES_IN_ZIP=10
-      - WRITE_SEPARATE_MANIFEST=y # Write separate manifest files in publish dir.
-      - MOVE_RESOURCES=n # Move resources to publish dir. Set to 'y' if individual resources should be published along side the zip files
     volumes:
-      - rdfdump:/input
-      - rdfpublish:/output
+      - stash1:/input
+      - stash2:/output
+# Deze kant van de splitter nog niet aangesloten, dus comment
+#  resourcesync_generator:
+#    build: ./resourcesync-generator
+#    image: clariah/resourcesync-generator
+#    environment:
+#      - RUN_INTERVAL=60
+#      - HTTP_SERVER_URL=http://192.168.99.100:8085 #this is used to generate links in the xml files. It should be the public url
+#      - MAX_FILES_IN_ZIP=10
+#      - WRITE_SEPARATE_MANIFEST=y # Write separate manifest files in publish dir.
+#      - MOVE_RESOURCES=n # Move resources to publish dir. Set to 'y' if individual resources should be published along side the zip files
+#    volumes:
+#      - stash2:/input
+#      - stash3:/output
+#  some_http_server:
+#    image: nginx
+#    volumes:
+#      - stash3:/usr/share/nginx/html:ro
+#    ports:
+#      - 8085:80
   # todo: add an example crawler
   # an_example_crawler:
   #   image: huygensing/oai-rs-client
@@ -42,5 +51,6 @@ services:
   #     - some_http_server:nginx
   #   port: 8180
 volumes:
-  rdfdump:
-  rdfpublish:
+  stash1:
+  stash2:
+#  stash3:

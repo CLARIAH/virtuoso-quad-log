@@ -24,14 +24,15 @@ http://www.w3.org/2002/07/owl# \
 http://localhost:8890/sparql \
 http://localhost:8890/DAV/"
 
+# Graphs that are excluded from the initial dump. Space-separated list of iri's.
 EXCLUDED_GRAPHS=${EXCLUDED_GRAPHS:-$DEFAULT_EXCLUDED_GRAPHS}
 
-# Connection to the Virtuoso server. See also:
+# Connection to the Virtuoso server ISQL interface
 ISQL_SERVER="isql -H ${VIRTUOSO_HOST_NAME} -S ${VIRTUOSO_ISQL_PORT:-1111}"
 ISQL_CMD="$ISQL_SERVER -u ${VIRTUOSO_DB_USER:-dba} -p ${VIRTUOSO_DB_PASSWORD:-dba}"
 
-# Directory used for serving Resource Sync files. Should be mounted on the host.
-DUMP_DIR="${DATA_DIR:-/datadir}"
+# Directory used for dumping rdf-patch files.
+DUMP_DIR="${DUMP_DIR:-/output}"
 mkdir -p "$DUMP_DIR"
 
 # File to report isql errors

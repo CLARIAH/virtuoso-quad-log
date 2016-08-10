@@ -11,6 +11,6 @@ fi
 
 while true; do
 	echo "Running generate..."
-	bash generate-rdfpatch.sh && echo "generate successfull. sleep $RUN_INTERVAL" || echo "generate failed. sleep $RUN_INTERVAL"
+	bash generate-rdfpatch.sh && echo "generate successfull. sleep $RUN_INTERVAL" >&2 || echo "generate failed. sleep $RUN_INTERVAL" >&2
 	sleep ${RUN_INTERVAL}
 done
