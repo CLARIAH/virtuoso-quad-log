@@ -10,7 +10,7 @@ and has [distinguished advantages](https://www.w3.org/RDF/advantages.html) over 
 Keeping track of state and changes in dispersed data stores and propagating state and changes
 to other data stores or a central hub
 is out of scope of the data model it self. Reporting the initial state of a data store, keeping
-track of changes during the live of the store and publishing this state and these changes to the
+track of changes during the life of the store and publishing this state and these changes to the
 outside world in accordance with a well-described protocol is the subject of this repository.
 
 
