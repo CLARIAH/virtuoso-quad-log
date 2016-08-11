@@ -149,8 +149,8 @@ reached. Default value is `1111`.
 **LOG_FILE_LOCATION** - The location of transaction logs on the Virtuoso server.
 Default value is `/usr/local/var/lib/virtuoso/db`.
 
-<a id="DATA_DIR"></a>**DATA_DIR** - The directory for (temporary) storage of the rdf-patch files. 
-Default value is `/datadir`.
+<a id="DUMP_DIR"></a>**DUMP_DIR** - The directory for (temporary) storage of the rdf-patch files. 
+Default value is `/output`.
 
 **INSERT_PROCEDURES** - Should stored procedures be automatically inserted on the 
 Virtuoso server. The procedures that will be inserted all start with 'vql_'.
@@ -204,7 +204,7 @@ Default value is `3600` (1 hour).
 
 **RESOURCE_DIR** - The directory where rdf-patch files can be found. This should be the
 same directory as the dump directory of the quad-logger 
-(See [DATA_DIR](#DATA_DIR)). Under docker-compose the quad-logger DATA_DIR and the
+(See [DUMP_DIR](#DUMP_DIR)). Under docker-compose the quad-logger DATA_DIR and the
 resourcesync-generator RESOURCE_DIR should point to the same docker volume.
 Default value is `/input`.
 

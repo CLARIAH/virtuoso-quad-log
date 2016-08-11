@@ -50,6 +50,12 @@ MD5_STORED_PROCEDURES=md5_stored_procedures
 # File constituting handshake between this service and chained services.
 STARTED_AT_FILE="$DUMP_DIR/started_at.txt"
 
+# File enabling processing of last real 'rdfpatch-*' file by chained processes
+BADGER_FILE="$DUMP_DIR/rdfpatch-99999999999999"
+
+# File with dump information, also used to check if a successful dump has been executed.
+DUMP_INFO_FILE="$DUMP_DIR/rdfdump_info.txt"
+
 ##########################################################
 ## FUNCTIONS #############################################
 
@@ -163,20 +169,18 @@ assert_virtuoso_configuration()
 # assert_dump_completed_normal
 # Assert that an existing dump completed normal.
 #
-# Globals:      DUMP_DIR
-# Arguments:    None
-# Returns:      Name of the last file in the dump.
+# Globals:      None
+# Arguments:    path: path and filename of the file with dump information.
+# Returns:      None
 # Exit status:  1 if dump did not complete normally.
 assert_dump_completed_normal()
 {
-	local lastfile=$(ls "$DUMP_DIR"/rdfdump-* | sort -r | head -n 1)
-	completed=$(cat $lastfile | { grep "# dump completed " || true; } )
+    local path="$1"
+	completed=$(cat $path | { grep "# dump completed " || true; } )
 	if [ "$completed" = "" ] ; then
 		echo "DUMP ERROR: Dump did not complete normally." >&2
-
 		exit 1
 	fi
-	echo "$lastfile"
 }
 
 ###############################
@@ -197,10 +201,11 @@ dump_nquads()
 ###############################
 # execute_dump
 # Dump all quads on the server to rdf-patch-formatted files in the directory DUMP_DIR with the name pattern
-# 'rdfdump-xxxxxxxxxx', where 'xxxxxxxxxx' is a 10 digit serial number. In order to make sure new data is only updated
-# atomically and will never contain half a dump synchronic processes should not work with the last file with this
-# name pattern. This method will create a badger file with the name 'rdfdump-9999999999' when finished,
-# thus enabling the processing of the last real rdfdump-*.
+# 'rdfpatch-0Dxxxxxxxxxxxx', where 'xxxxxxxxxxxx' is a 12 digit serial number.
+# In order to make sure new data is only updated
+# atomically and will never contain half a dump synchronic processes should not work with the last file with a
+# name pattern 'rdfpatch-*'. This method will create a badger file with the name 'rdfpatch-99999999999999'
+# when finished, thus enabling the processing of the last real 'rdfpatch-*' file.
 # This method writes the timestamp of the for last transaction log to the file LAST_LOG_SUFFIX.
 #
 # Globals:      DUMP_DIR, LAST_LOG_SUFFIX
@@ -211,9 +216,10 @@ execute_dump()
 	echo "Executing dump..." >&2
 	printf $(date +"%Y%m%d%H%M%S") > "$STARTED_AT_FILE"
 
-	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfdump-" -n 10 -sz - "/^# at checkpoint  /" {*}
+	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfpatch-0d" -n 12 -sz - "/^# at checkpoint  /" {*}
 	assert_no_isql_error
-	local lastfile=$(assert_dump_completed_normal)
+	local lastfile=$(ls "$DUMP_DIR"/rdfpatch-0d* | sort -r | head -n 1)
+	assert_dump_completed_normal "$lastfile"
 
 	# The last file only contains information on the dump. Keep it as a mark.
 	# Also set the last file as latestlogsuffix marker
@@ -223,9 +229,12 @@ execute_dump()
 	# Write checkpoint as lastlogsuffix in dedicated file.
 	printf "$checkpoint" > "$LAST_LOG_SUFFIX"
 
-	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfdump-*.
+	# Set the marker file to mark dump has completed
+	cp "$lastfile" "$DUMP_INFO_FILE"
+
+	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfpatch-*.
 	# Enable processing of last dump file by creating an extra file.
-	cp "$lastfile" "$DUMP_DIR/rdfdump-9999999999"
+	touch "$BADGER_FILE"
 
 	# report
 	echo "Dump reported in '$lastfile'" >&2
@@ -244,19 +253,16 @@ execute_dump()
 dump_if_needed()
 {
 	if [ "$DUMP_INITIAL_STATE" = "y" ]; then
-		if [ ! -e "$DUMP_DIR/rdfdump-9999999999" ]; then
+		if [ ! -e "$DUMP_INFO_FILE" ]; then
 				if ls "$DUMP_DIR/rdfpatch-"* 1> /dev/null 2>&1; then
-						echo "Error: 'rdfpatch-*' files found in '$DUMP_DIR'. Remove 'rdfpatch-*' and 'rdfdump-*' files before dumping." >&2
-						exit 1
-				elif ls "$DUMP_DIR/rdfdump-"* 1> /dev/null 2>&1; then
-						echo "Error: 'rdfdump-*' files found in '$DUMP_DIR'. Remove 'rdfpatch-*' and 'rdfdump-*' files before dumping." >&2
+						echo "Error: 'rdfpatch-*' files found in '$DUMP_DIR'. Remove 'rdfpatch-*' files before dumping." >&2
 						exit 1
 				else
 					execute_dump
 					CHANGES_WERE_MADE=y
 				fi
 		else
-			assert_dump_completed_normal > /dev/null
+			assert_dump_completed_normal "$DUMP_INFO_FILE"
 		fi
 	else
 		echo "Not checking dump status because DUMP_INITIAL_STATE is not 'y'" >&2
@@ -287,10 +293,9 @@ dump_if_needed()
 # Returns:      None
 sync_transaction_logs()
 {
-	local badger_file="$DUMP_DIR/rdfpatch-99999999999999"
-	if [ -e "$badger_file" ]; then
+	if [ -e "$BADGER_FILE" ]; then
 		# Prevent posible synchronous processing of the last rdfpatch-* file.
-		rm "$badger_file"
+		rm "$BADGER_FILE"
 	fi
 
 	local latestlogsuffix=""
@@ -332,7 +337,7 @@ sync_transaction_logs()
 				echo "generated rdfpatch-${timestamp}" >&2
 				cp $file "$DUMP_DIR/rdfpatch-${timestamp}"
 				# Write timestamp as lastlogsuffix.
-				printf "$timestamp" > "$DUMP_DIR/lastlogsuffix.txt"
+				printf "$timestamp" > "$LAST_LOG_SUFFIX"
 				CHANGES_WERE_MADE=y
 			fi
 		fi
@@ -341,7 +346,7 @@ sync_transaction_logs()
 	rm "$output"
 	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfpatch-*.
 	# Enable processing of last patch file by creating an extra file.
-	touch "$badger_file"
+	touch "$BADGER_FILE"
 }
 
 ###############################
