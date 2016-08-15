@@ -1,5 +1,5 @@
-# These triples uploaded to Virtuoso, processed by Virtuoso and output by quad log
-# should give valid N-Quads
+# These triples uploaded to Virtuoso, processed by Virtuoso and output by quad log should give valid N-Quads.
+# However \' and \u{hexadecimal} are not preserved by Virtuoso and cannot be reconstructed.
 <http://one.example/subject1> <http://one.example/predicate1> "01\u0001-0001" .
 <http://one.example/subject1> <http://one.example/predicate1> "01\u0002-0002" .
 <http://one.example/subject1> <http://one.example/predicate1> "01\u0003-0003" .
@@ -35,8 +35,6 @@
 <http://one.example/subject1> <http://one.example/predicate1> "01\u0021-0021" .
 <http://one.example/subject1> <http://one.example/predicate1> "01\u0022-0022" .
 <http://one.example/subject1> <http://one.example/predicate1> "01\u0023-0023" .
-<http://one.example/subject1> <http://one.example/predicate1> "01\u0024-0024" .
-<http://one.example/subject1> <http://one.example/predicate1> "01\u0025-0025" .
 <http://one.example/subject1> <http://one.example/predicate1> "01\t23-backslash+t" .
 <http://one.example/subject1> <http://one.example/predicate1> "01\b23-backslash+b" .
 <http://one.example/subject1> <http://one.example/predicate1> "01\n23-backslash+n" .
@@ -47,3 +45,4 @@
 <http://one.example/subject1> <http://one.example/single_quote> "01'23-single quote" .
 <http://one.example/subject1> <http://one.example/predicate1> "01\\23-escaped backslash" .
 <http://one.example/subject1> <http://one.example/predicate1> "This is a \"literal\" with \"escaped\" double quotes" .
+<http://one.example/subject2> <http://one.example/predicate2> "another             simple                      text" .

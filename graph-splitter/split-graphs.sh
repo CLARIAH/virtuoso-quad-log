@@ -16,15 +16,34 @@ if [ ! -e "$SINK_DIR" ]; then
     echo "Created $SINK_DIR"
 fi
 
-# File constituting handshake between this service and chained services.
+# Files constituting handshake between this service and chained services.
 HS_SOURCE_FILE="$SOURCE_DIR/started_at.txt"
 HS_SINK_FILE="$SINK_DIR/started_at.txt"
+
+# File enabling processing of last real 'rdfpatch-*' file by chained processes
+SHAM_PATCH_FILE="rdfpatch-99999999999999"
+
+# File with total number of exported N-Quads thus far
+EXPORTED_NQUADS_FILE="$SOURCE_DIR/nquads_count.txt"
+
+# File with total number filed N-Quads thus far.
+FILED_NQUADS_FILE="$SINK_DIR/nquads_count.txt"
+
+# Exported N-Quads thus far - Read only.
+[ -f "$EXPORTED_NQUADS_FILE" ] && { EXPORTED_NQUADS=$(<"$EXPORTED_NQUADS_FILE"); } || { EXPORTED_NQUADS=0; }
+
+# Filed N-Quads by this routine thus far
+[ -f "$FILED_NQUADS_FILE" ] && { FILED_NQUADS=$(<"$FILED_NQUADS_FILE"); } || { FILED_NQUADS=0; }
+
+# Count N-Quads this run
+COUNT_NQUADS=0
+
 
 ###############################
 # process_nquad
 # File given N-Quad per graph iri in sink directory.
-# N-Quads will be stored in files with names equal to their source file, under a directory that is the
-# base64 translation of their graph iri in the sink directory.
+# N-Quads will be stored in files with names equal to their source file, under a directory
+# with a name that is the base64 translation of their graph iri. All will go in the sink directory.
 #
 # Globals:      SINK_DIR
 # Arguments:    filename: the name of the file in SOURCE_DIR
@@ -36,7 +55,7 @@ process_nquad() {
     declare -a header=("${!2}")
     local line="$3"
 
-    # Split line on spaces, position of graph iri is second to last in array...
+    # Split line on spaces, position of graph iri is second to last in resulting array...
     local arr=($(IFS=$'\n'; echo $line | egrep -o '"[^"]*"|\S+'))
     local pos=$((${#arr[@]}-2))
     local iri_ref="${arr[$pos]}"
@@ -71,7 +90,7 @@ process_lines_in_file() {
     local comments=("# origin $filename")
     local line_count=0
 
-    while read line
+    while read -r line || [ -n "$line" ];  # or: in case last line in file does not end with new line character.
     do
         if [[ "$line" == \#* ]]; then
             comments+=("$line")
@@ -81,6 +100,7 @@ process_lines_in_file() {
         fi
     done < "$path"
     echo "Extracted $line_count N-Quads from $path" >&2
+    COUNT_NQUADS=$(($COUNT_NQUADS+$line_count))
 }
 
 ###############################
@@ -101,6 +121,7 @@ split_files_over_graph_iri() {
         arr+=("$filename")
     done
     if [ ${#arr[@]} -gt 0 ]; then
+        # do not process the last file (alphabetically) - chained source services may be handling those.
         unset arr[${#arr[@]}-1]
     fi
     echo "Found ${#arr[@]} files with prefix $prefix in $SOURCE_DIR" >&2
@@ -124,40 +145,105 @@ split_files_over_graph_iri() {
 # Returns:      None
 # Exit status:  1 if handshake file in SOURCE_DIR not found, 2 if handshake file in SINK_DIR not found.
 verify_handshake() {
-    [ -f "$HS_SOURCE_FILE" ] && { hs_source=$(<"$HS_SOURCE_FILE"); } || { hs_source=0; }
+    [ -f "$HS_SOURCE_FILE" ] && { HS_SOURCE=$(<"$HS_SOURCE_FILE"); } || { HS_SOURCE=0; }
     [ -f "$HS_SINK_FILE" ] && { hs_sink=$(<"$HS_SINK_FILE"); } || { hs_sink=0; }
 
-    if [ "$hs_source" == 0 ]; then
+    if [ "$HS_SOURCE" == 0 ]; then
         echo "Error: No source handshake found. Not interfering with status quo." >&2
         exit 1
     fi
 
-    if [ "$hs_sink" == 0 ]; then
-        # legal state only at start and sink dir is empty
-        if [ "$(ls -A $SINK_DIR)" ]; then
-            echo "Error: No sink handshake found and $SINK_DIR not empty." >&2
-            echo "Not interfering with status quo." >&2
-            exit 2
-        fi
+    if [ "$hs_sink" == 0 ] && [ "$(ls -A $SINK_DIR)" ]; then
+        echo "Error: No sink handshake found and $SINK_DIR not empty." >&2
+        echo "Not interfering with status quo." >&2
+        exit 2
     fi
 
-    if [ "$hs_source" != "$hs_sink" ]; then
-        echo "Handshake not equal. source=$hs_source sink=$hs_sink" >&2
+    if [ "$HS_SOURCE" != "$hs_sink" ]; then
+        echo "Handshake not equal. source=$HS_SOURCE sink=$hs_sink" >&2
         echo "Cleaning $SINK_DIR" >&2
         rm -Rf "$SINK_DIR/*"
         hs_sink=0
     fi
 
     if [ "$hs_sink" == 0 ]; then
-        printf "$hs_source" > "$HS_SINK_FILE"
-        echo "Signed new handshake: $hs_source" >&2
+        printf "$HS_SOURCE" > "$HS_SINK_FILE"
+        echo "Signed new handshake: $HS_SOURCE" >&2
     fi
 
-    echo "Synchronizing state on handshake $hs_source." >&2
+    # echo "Synchronizing state on handshake $HS_SOURCE." >&2
+}
+
+###############################
+# disable_processing_of_last_patch
+# Disable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+#
+# Globals:      SINK_DIR, SHAM_PATCH_FILE
+# Arguments:    None
+# Returns:      None
+disable_processing_of_last_patch() {
+    for dir in $SINK_DIR/*/; do
+        if [ -e "$dir$SHAM_PATCH_FILE" ]; then
+            rm "$dir$SHAM_PATCH_FILE"
+        fi
+    done
+}
+
+###############################
+# enable_processing_of_last_patch
+# Enable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+#
+# Globals:      SINK_DIR, SHAM_PATCH_FILE
+# Arguments:    None
+# Returns:      None
+enable_processing_of_last_patch() {
+    for dir in $SINK_DIR/*/; do
+        if [ -d "$dir" ]; then
+            touch "$dir$SHAM_PATCH_FILE"
+        fi
+    done
+}
+
+###############################
+# change_owner_if_needed
+#
+# Globals:      SINK_DIR, CHOWN_TO_ID
+# Arguments:    None
+# Returns:      None
+change_owner_if_needed()
+{
+	if [ -n "${CHOWN_TO_ID:-}" ]; then
+		echo "Changin the owner of the files to $CHOWN_TO_ID" >&2
+		chown -R "$CHOWN_TO_ID:$CHOWN_TO_ID" "$SINK_DIR"
+	fi
 }
 
 # Verify that handshake files in source directory and sink directory are equal.
 verify_handshake
 
+# Disable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+disable_processing_of_last_patch
+
 # Split rdf-patch files in the source directory into rdf-patch files in the sink directory per graph.
 split_files_over_graph_iri "rdfpatch-*"
+
+# Enable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+enable_processing_of_last_patch
+
+if [ "$COUNT_NQUADS" -gt 0 ]; then
+    FILED_NQUADS=$((FILED_NQUADS+COUNT_NQUADS))
+    printf "$FILED_NQUADS" > "$FILED_NQUADS_FILE"
+fi
+
+echo "Filed $COUNT_NQUADS N-Quads during this run" >&2
+echo "========= Total of filed N-Quads since $HS_SOURCE: $FILED_NQUADS" >&2
+
+if [ "$EXPORTED_NQUADS" != "$FILED_NQUADS" ]; then
+    diff=$((EXPORTED_NQUADS-FILED_NQUADS))
+    echo -e "WARNING: Total of exported N-Quads not equal to total of filed N-Quads. \
+    \n\texported: $EXPORTED_NQUADS, filed: $FILED_NQUADS, difference: $diff"
+fi
+
+change_owner_if_needed
+
+

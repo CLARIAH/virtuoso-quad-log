@@ -51,10 +51,13 @@ MD5_STORED_PROCEDURES=md5_stored_procedures
 STARTED_AT_FILE="$DUMP_DIR/started_at.txt"
 
 # File enabling processing of last real 'rdfpatch-*' file by chained processes
-BADGER_FILE="$DUMP_DIR/rdfpatch-99999999999999"
+SHAM_PATCH_FILE="$DUMP_DIR/rdfpatch-99999999999999"
 
 # File with dump information, also used to check if a successful dump has been executed.
 DUMP_INFO_FILE="$DUMP_DIR/rdfdump_info.txt"
+
+# File with total number exported nquads thus far.
+COUNT_NQUADS_FILE="$DUMP_DIR/nquads_count.txt"
 
 ##########################################################
 ## FUNCTIONS #############################################
@@ -201,7 +204,7 @@ dump_nquads()
 ###############################
 # execute_dump
 # Dump all quads on the server to rdf-patch-formatted files in the directory DUMP_DIR with the name pattern
-# 'rdfpatch-0Dxxxxxxxxxxxx', where 'xxxxxxxxxxxx' is a 12 digit serial number.
+# 'rdfpatch-0dxxxxxxxxxxxx', where 'xxxxxxxxxxxx' is a 12 digit serial number.
 # In order to make sure new data is only updated
 # atomically and will never contain half a dump synchronic processes should not work with the last file with a
 # name pattern 'rdfpatch-*'. This method will create a badger file with the name 'rdfpatch-99999999999999'
@@ -232,9 +235,13 @@ execute_dump()
 	# Set the marker file to mark dump has completed
 	cp "$lastfile" "$DUMP_INFO_FILE"
 
+	# Keep track of the number of exported N-Quads
+	local nquads=$(cat $lastfile | grep "# quad count" | sed -e s/[^0-9]//g)
+	printf "$nquads" > "$COUNT_NQUADS_FILE"
+
 	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfpatch-*.
 	# Enable processing of last dump file by creating an extra file.
-	touch "$BADGER_FILE"
+	touch "$SHAM_PATCH_FILE"
 
 	# report
 	echo "Dump reported in '$lastfile'" >&2
@@ -259,7 +266,6 @@ dump_if_needed()
 						exit 1
 				else
 					execute_dump
-					CHANGES_WERE_MADE=y
 				fi
 		else
 			assert_dump_completed_normal "$DUMP_INFO_FILE"
@@ -268,6 +274,7 @@ dump_if_needed()
 		echo "Not checking dump status because DUMP_INITIAL_STATE is not 'y'" >&2
 		if [ ! -e "$STARTED_AT_FILE" ]; then
 		    printf $(date +"%Y%m%d%H%M%S") > "$STARTED_AT_FILE"
+		    printf 0 > "$COUNT_NQUADS_FILE"
 		fi
 	fi
 
@@ -280,11 +287,10 @@ dump_if_needed()
 
 ###############################
 # sync_transaction_logs
-#  to rdf patch files.
 # Parse newly found transaction logs to rdf-patch-formatted files in the directory DUMP_DIR with the name pattern
 # 'rdfpatch-xxxxxxxxxxxxxx', where 'xxxxxxxxxxxxxx' is a datestamp. In order to make sure new data is only updated
 # atomically and will never contain half a patch synchronic processes should not work with the last file with this
-# name pattern. This method will create a badger file with the name 'rdfpatch-99999999999999' when finished,
+# name pattern. This method will create a sham file with the name 'rdfpatch-99999999999999' when finished,
 # thus enabling the processing of the last real rdfpatch-*.
 # This method writes the timestamp of the last transaction log processed to the file LAST_LOG_SUFFIX.
 #
@@ -293,10 +299,13 @@ dump_if_needed()
 # Returns:      None
 sync_transaction_logs()
 {
-	if [ -e "$BADGER_FILE" ]; then
+	if [ -e "$SHAM_PATCH_FILE" ]; then
 		# Prevent posible synchronous processing of the last rdfpatch-* file.
-		rm "$BADGER_FILE"
+		rm "$SHAM_PATCH_FILE"
 	fi
+
+	local exp_nquads=$(<"$COUNT_NQUADS_FILE")
+	local count_nquads=0
 
 	local latestlogsuffix=""
 	if [ -e "$LAST_LOG_SUFFIX" ]; then
@@ -314,18 +323,19 @@ sync_transaction_logs()
 	EOF
 	assert_no_isql_error
 
-
 	# split output to marked files; use more than standard 2 digits for file suffix
 	local prefix='xyx'$mark'_'
-	csplit -f "$DUMP_DIR/$prefix" -n 4 -s "$output" "/^# start: /" '{*}'
+	csplit -f "$DUMP_DIR/$prefix" -n 6 -s "$output" "/^# start: /" '{*}'
 	#loop over all files
 	local file
 	for file in "$DUMP_DIR/$prefix"*; do
 		# first line is the header, so a one-line file is effectively empty
-		if [ `wc -l $file | grep -o '^[0-9]\+'` -gt 1 ]; then
+		local nquads=$(($(wc -l $file | grep -o '[0-9]\+' | head -1) - 1))
+		if [ "$nquads" -gt 0 ]; then
 			# line with the filename,   just the filename, remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
 			local timestamp=`head -n1 $file | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//' | grep -o '[0-9]\{14\}$' || echo ''`
 			if [ -n "$timestamp" ]; then
+                # Signal when latestlogsuffix apparantly not in range of server timestamps.
 				if [[ ! "$latestlogsuffix" < "$timestamp" ]]; then
 					echo -e "Timestamp on parsed transaction log is smaller than or equal to recorded latest log suffix:" \
 						"\n\t$timestamp <= $latestlogsuffix" \
@@ -334,11 +344,12 @@ sync_transaction_logs()
 					rm "$output"
 					exit 1
 				fi
-				echo "generated rdfpatch-${timestamp}" >&2
+                #
 				cp $file "$DUMP_DIR/rdfpatch-${timestamp}"
 				# Write timestamp as lastlogsuffix.
 				printf "$timestamp" > "$LAST_LOG_SUFFIX"
-				CHANGES_WERE_MADE=y
+				count_nquads=$((count_nquads+nquads))
+				echo "generated rdfpatch-${timestamp}" >&2
 			fi
 		fi
 		rm $file
@@ -346,12 +357,20 @@ sync_transaction_logs()
 	rm "$output"
 	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfpatch-*.
 	# Enable processing of last patch file by creating an extra file.
-	touch "$BADGER_FILE"
+	touch "$SHAM_PATCH_FILE"
+
+    # Keep scores...
+    if [ "$count_nquads" -gt 0 ]; then
+	    exp_nquads=$((exp_nquads+count_nquads))
+	    printf "$exp_nquads" > "$COUNT_NQUADS_FILE"
+	fi
+	echo "Exported $count_nquads N-Quads during this run" >&2
+	local start_date=$(<"$STARTED_AT_FILE")
+	echo "====== Total of exported N-Quads since $start_date: $exp_nquads" >&2
 }
 
 ###############################
 # change_owner_if_needed
-# make sure newdata is only updated atomically and will never contain half a dump
 #
 # Globals:      DUMP_DIR, CHOWN_TO_ID
 # Arguments:    None
@@ -381,10 +400,6 @@ dump_if_needed
 # Parse newly found transaction logs to rdf patch files.
 sync_transaction_logs
 
-if [ -n "${CHANGES_WERE_MADE:-}" ]; then
-	change_owner_if_needed
-else
-	echo "No new data exported"
-fi
+change_owner_if_needed
 
 exit 0

@@ -8,8 +8,8 @@ COPY virtuoso.ini /usr/local/var/lib/virtuoso/db/virtuoso.ini
 RUN virtuoso-t +wait +configfile /usr/local/var/lib/virtuoso/db/virtuoso.ini && \
   ls /usr/local/var/lib/virtuoso/db/ && \
   isql 1111 dba dba exec="ld_add('/usr/local/var/lib/virtuoso/db/wordnet-subset.nt', 'http://example.com/clariah'); \
-    ld_add('/usr/local/var/lib/virtuoso/db/special-chars.nt', 'http://example.com/clariah/special'); \
-    ld_add('/usr/local/var/lib/virtuoso/db/continents.rdf', 'http://example.com/clariah/#'); \
+    ld_add('/usr/local/var/lib/virtuoso/db/special-chars.nt', 'info:special'); \
+    ld_add('/usr/local/var/lib/virtuoso/db/continents.rdf', 'http://www.telegraphis.net/ontology/geography/geography#'); \
     rdf_loader_run(NULL, 3); \
     delay(5); \
     shutdown;" && \
