@@ -20,6 +20,9 @@ fi
 HS_SOURCE_FILE="$SOURCE_DIR/started_at.txt"
 HS_SINK_FILE="$SINK_DIR/started_at.txt"
 
+# File mapping between graph iri and base64-translated directory name. Also indicates that sources have been split.
+INDEX_FILE="$SINK_DIR/index.csv"
+
 # File enabling processing of last real 'rdfpatch-*' file by chained processes
 SHAM_PATCH_FILE="rdfpatch-99999999999999"
 
@@ -43,7 +46,7 @@ COUNT_NQUADS=0
 # process_nquad
 # File given N-Quad per graph iri in sink directory.
 # N-Quads will be stored in files with names equal to their source file, under a directory
-# with a name that is the base64 translation of their graph iri. All will go in the sink directory.
+# with a name that is the base64 translation of their graph iri. All will go into the sink directory.
 #
 # Globals:      SINK_DIR
 # Arguments:    filename: the name of the file in SOURCE_DIR
@@ -63,7 +66,10 @@ process_nquad() {
 
     # File under base64 of graph
     local dir=$(echo $graph | base64)
-    mkdir -p "$SINK_DIR/$dir"
+    if [ ! -d "$SINK_DIR/$dir" ]; then
+        mkdir -p "$SINK_DIR/$dir"
+        echo -E "$graph,$dir" >> "$INDEX_FILE"
+    fi
     local file="$SINK_DIR/$dir/$filename"
     # Use echo to write lines. echo -E = Disable the interpretation of backslash-escaped characters
     if [ ! -e "$file" ]; then

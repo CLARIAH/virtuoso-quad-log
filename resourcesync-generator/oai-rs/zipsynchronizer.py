@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os, re, shutil, resync.w3c_datetime as w3cdt
+from syncdirector import Synchronizer
 from resync.dump import Dump
 from resync.resource import Resource
 from resync.resource_list import ResourceList
@@ -10,7 +11,6 @@ from resync.sitemap import Sitemap
 from resync.resource_dump import ResourceDump
 from resync.resource_dump_manifest import ResourceDumpManifest
 from resync.capability_list import CapabilityList
-from resync.source_description import SourceDescription
 from glob import glob
 
 # Alternative strategy to publish rdf patch files as resource dumps.
@@ -19,12 +19,10 @@ PREFIX_COMPLETED_ZIP = "part_"
 PREFIX_END_ZIP = "zip_end_"
 PREFIX_MANIFEST = "manifest_"
 
-FILE_HANDSHAKE = "started_at.txt"
 
-
-class Synchronizer(object):
+class ZipSynchronizer(Synchronizer):
     """
-    Takes care of presenting resources in accordance with the Resource Sync Framework.
+    Takes care of presenting resources in accordance with the Resource Sync Framework as g-zipped resources.
     See: http://www.openarchives.org/rs/1.0/resourcesync
 
 
@@ -36,85 +34,24 @@ class Synchronizer(object):
         and a document size of 50 MB. ...
     """
 
-    def __init__(self, resource_dir, publish_dir, publish_url, max_files_in_zip=50000, write_separate_manifest=True,
+    def __init__(self, resource_dir, publish_dir, publish_url, src_desc_url,
+                 max_files_compressed=50000,
+                 write_separate_manifest=True,
                  move_resources=False):
         """
-        Initialize a new Synchronizer.
+        Initialize a new ZipSynchronizer.
         :param resource_dir: the source directory for resources
         :param publish_dir: the directory resources should be published to
         :param publish_url: public url pointing to publish dir
-        :param max_files_in_zip: the maximum number of resource files that should be compressed in one zip file
+        :param src_desc_url: public url pointing to resource description
+        :param max_files_compressed: the maximum number of resource files that should be compressed in one zip file
         :param write_separate_manifest: will each zip file be accompanied by a separate resourcedump manifest.
         :param move_resources: Do we move the zipped resources to publish_dir or simply delete them from resource_dir.
         :return:
         """
-        self.resource_dir = resource_dir
-        self.publish_dir = publish_dir
-        self.publish_url = publish_url
-        if self.publish_url is None or self.publish_url == "":
-            self.publish_url = "http://example.com/"
-        if self.publish_url[-1] != '/':
-            self.publish_url += '/'
-        if max_files_in_zip > 50000:
-            raise RuntimeError("%s exceeds limit of 50000 items per document of the Sitemap protocol." % str(max_files_in_zip))
-        self.max_files_in_zip = max_files_in_zip
-        self.write_separate_manifest = write_separate_manifest
-        self.move_resources = move_resources
-        self.handshake = None
+        Synchronizer.__init__(self, resource_dir, publish_dir, publish_url, src_desc_url, max_files_compressed,
+                              write_separate_manifest, move_resources)
 
-    @staticmethod
-    def is_our_file(a_file):
-        return a_file.startswith((PREFIX_COMPLETED_ZIP,
-                                  PREFIX_END_ZIP,
-                                  PREFIX_MANIFEST,
-                                  FILE_HANDSHAKE,
-                                  "resource-dump",
-                                  "capability-list",
-                                  ".well-known"))
-
-    @staticmethod
-    def compute_timestamp(raw_ts):
-        """
-        Convert a string like '20160613082341' into an xml-date format '2016-06-13T08:23:41Z'.
-        :param raw_ts: a timestamp in a raw format
-        :return: raw_ts as xml date format
-        """
-        ts = (
-            raw_ts[:4] + "-" +
-            raw_ts[4:6] + "-" +
-            raw_ts[6:8] + "T" +
-            raw_ts[8:10] + ":" +
-            raw_ts[10:12] + ":" +
-            raw_ts[12:14] + "Z"
-        )
-        return ts
-
-    @staticmethod
-    def is_same(rl_1, rl_2):
-        """
-        Compare (uri's of resources of) two resourcelists for equality.
-        :param rl_1: a Resourcelist
-        :param rl_2: a Resourcelist
-        :return: True if rl_1 resources are equal to rl_2 resources, False otherwise
-        """
-        same, updated, deleted, created = rl_1.compare(rl_2)
-        return len(same) == len(rl_1) == len(rl_2)
-
-    @staticmethod
-    def last_modified(resourcelist):
-        """
-        Find the last modified date of resources in resourcelist.
-        :param resourcelist: the resourcelist to be inspected
-        :return: last modified date of resource last modified
-                    or None if last modified date not specified or empty resourcelist
-        """
-        lastmod = None
-        for resource in resourcelist:
-            rlm = resource.lastmod
-            if rlm > lastmod:
-                lastmod = rlm
-
-        return lastmod
 
     def publish(self):
         """
@@ -129,12 +66,6 @@ class Synchronizer(object):
         if not os.path.isdir(self.publish_dir):
             os.makedirs(self.publish_dir)
             print "Created %s" % self.publish_dir
-
-        self.handshake = self.verify_handshake()
-        if self.handshake is None:
-            return
-
-        print "Synchronizing state as of %s" % self.handshake
 
         try:
             self.do_publish()
@@ -198,7 +129,7 @@ class Synchronizer(object):
         while not exhausted:
             resourcelist, exhausted = self.list_resources_chunk()
 
-            if len(resourcelist) == self.max_files_in_zip:  # complete zip
+            if len(resourcelist) == self.max_files_compressed:  # complete zip
                 state_changed = True
                 zip_resource = self.create_zip(resourcelist, PREFIX_COMPLETED_ZIP, False,
                                                self.write_separate_manifest)
@@ -234,63 +165,6 @@ class Synchronizer(object):
         if not state_changed:
             print "No changes"
 
-    def verify_handshake(self):
-        """
-        Resources in resource_dir and publish_dir should stem from the same start date.
-        This method compares start date of resource_dir with start_date of publish_dir.
-        If they are not the same adeqate action will be taken.
-        :return:
-        """
-        resource_handshake = None
-        publish_handshake = None
-
-        path_resource_handshake = os.path.join(self.resource_dir, FILE_HANDSHAKE)
-        if os.path.isfile(path_resource_handshake):
-            with open(path_resource_handshake, "r") as r_file:
-                resource_handshake = r_file.read()
-
-        path_publish_handshake = os.path.join(self.publish_dir, FILE_HANDSHAKE)
-        if os.path.isfile(path_publish_handshake):
-            with open(path_publish_handshake, "r") as r_file:
-                publish_handshake = r_file.read()
-
-        if resource_handshake is None:
-            print "Error: No resource_handshake found. Not interfering with status quo of published resources."
-            return None
-
-        if publish_handshake is None:
-            # This can only be at the very start of synchronizing with a fresh empty publish_dir
-            if self.walk_publish_dir() > 0:
-                print "Error: No publish_handshake found and %s not empty. " \
-                      "Not interfering with status quo of published resources." % self.publish_dir
-                return None
-
-        if resource_handshake != publish_handshake:
-            print "Resource_handshake is %s, publish_handshake is % s. Shrubbing %s" \
-                  % (resource_handshake, publish_handshake, self.publish_dir)
-            self.walk_publish_dir(remove_our_files=True)
-            publish_handshake = None
-
-        if resource_handshake and publish_handshake is None:
-            with open(path_publish_handshake, "w") as w_file:
-                w_file.write(resource_handshake)
-            print "Signed new handshake: %s" % resource_handshake
-
-        return resource_handshake
-
-    def walk_publish_dir(self, remove_our_files=False):
-        our_things = 0
-        for a_file in os.listdir(self.publish_dir):
-            if self.is_our_file(a_file):
-                our_things += 1
-                if remove_our_files:
-                    file_path = os.path.join(self.publish_dir, a_file)
-                    if os.path.isfile(file_path):
-                        os.remove(file_path)
-                    elif os.path.isdir(file_path):
-                        shutil.rmtree(file_path)
-        return our_things
-
     def publish_metadata(self, new_zips, exluded_zip=None):
         """
         (Re)publish metadata with addition of new_zips. An excluded zip will be removed from previously published
@@ -303,8 +177,6 @@ class Synchronizer(object):
         rs_dump_path = os.path.join(self.publish_dir, "resource-dump.xml")
         capa_list_url = self.publish_url + "capability-list.xml"
         capa_list_path = os.path.join(self.publish_dir, "capability-list.xml")
-        src_desc_url = self.publish_url + ".well-known/resourcesync"
-        src_desc_path = os.path.join(self.publish_dir, ".well-known", "resourcesync")
 
         rs_dump = ResourceDump()
 
@@ -315,7 +187,7 @@ class Synchronizer(object):
                 sm.parse_xml(rs_dump_file, resources=rs_dump)
 
         else:
-            rs_dump.md_at = self.compute_timestamp(self.handshake)
+            rs_dump.md_at = w3cdt.datetime_to_str(no_fractions=True)
             rs_dump.link_set(rel="up", href=capa_list_url)
 
         # Remove excluded zip, if any
@@ -340,25 +212,25 @@ class Synchronizer(object):
         # Write capability-list.xml
         if not os.path.isfile(capa_list_path):
             capa_list = CapabilityList()
-            capa_list.link_set(rel="up", href=src_desc_url)
+            capa_list.link_set(rel="up", href=self.src_desc_url)
             capa_list.add_capability(rs_dump, rs_dump_url)
             with open(capa_list_path, "w") as capa_list_file:
                 capa_list_file.write(capa_list.as_xml())
 
             print "Published capability list. See %s" % capa_list_url
 
-        # Write resourcesync
-        wellknown = os.path.dirname(src_desc_path)
-        if not os.path.isdir(wellknown):
-            os.makedirs(wellknown)
-
-        if not os.path.isfile(src_desc_path):
-            src_desc = SourceDescription()
-            src_desc.add_capability_list(capa_list_url)
-            with open(src_desc_path, "w") as src_desc_file:
-                src_desc_file.write(src_desc.as_xml())
-
-            print "Published resource description. See %s" % src_desc_url
+        # # Write resourcesync
+        # wellknown = os.path.dirname(src_desc_path)
+        # if not os.path.isdir(wellknown):
+        #     os.makedirs(wellknown)
+        #
+        # if not os.path.isfile(src_desc_path):
+        #     src_desc = SourceDescription()
+        #     src_desc.add_capability_list(capa_list_url)
+        #     with open(src_desc_path, "w") as src_desc_file:
+        #         src_desc_file.write(src_desc.as_xml())
+        #
+        #     print "Published resource description. See %s" % src_desc_url
 
     def get_state_published(self):
         """
@@ -446,54 +318,50 @@ class Synchronizer(object):
         :return: the ResourceList, exhausted
         """
         resourcelist = ResourceList()
-        exhausted = self.list_dump_files(resourcelist, max_files=self.max_files_in_zip)
-        max_files = self.max_files_in_zip - len(resourcelist)
-        if max_files > 0:
-            patch_exhausted = self.list_patch_files(resourcelist, max_files=max_files)
-            exhausted = exhausted and patch_exhausted
+        exhausted = self.list_patch_files(resourcelist, max_files=self.max_files_compressed)
         return resourcelist, exhausted
 
-    def list_dump_files(self, resourcelist, max_files=-1):
-        """
-        Append resources of the rdfdump-* files to a resourcelist. All resources in
-        resource_dir are included except for the last one in alphabetical sort order. If max_files is set to a
-        value greater than 0, will only include up to max_files.
-        :param resourcelist:
-        :param max_files:
-        :return: True if the list includes the one but last rdfdump-* file in resource_dir, False otherwise
-        """
-
-        # Add dump files to the resource list. Last modified for all these files is the time dump was executed.
-        # Last modified is recorded in the header of each file in a line starting with '# at checkpoint'.
-        t = None
-        dumpfiles = sorted(glob(os.path.join(self.resource_dir, "rdfdump-*")))
-        if len(dumpfiles) > 0:
-            dumpfiles.pop()  # remove last from the list
-        if len(dumpfiles) > 0:
-            with open(dumpfiles[0]) as search:
-                for line in search:
-                    if re.match("# at checkpoint.*", line):
-                        t = re.findall('\d+', line)[0]
-                        break
-
-            if t is None:
-                raise RuntimeError("Found dump files but did not find timestamp for checkpoint in '%s'" % dumpfiles[0])
-
-            timestamp = self.compute_timestamp(t)
-
-        n = 0
-        for file in dumpfiles:
-            filename = os.path.basename(file)
-            length = os.stat(file).st_size
-            md5 = compute_md5_for_file(file)
-            resourcelist.add(
-                Resource(self.publish_url + filename, md5=md5, length=length, lastmod=timestamp, path=file))
-            n += 1
-            if 0 < max_files == n:
-                break
-
-        exhausted = len(dumpfiles) == n
-        return exhausted
+    # def list_dump_files(self, resourcelist, max_files=-1):
+    #     """
+    #     Append resources of the rdfdump-* files to a resourcelist. All resources in
+    #     resource_dir are included except for the last one in alphabetical sort order. If max_files is set to a
+    #     value greater than 0, will only include up to max_files.
+    #     :param resourcelist:
+    #     :param max_files:
+    #     :return: True if the list includes the one but last rdfdump-* file in resource_dir, False otherwise
+    #     """
+    #
+    #     # Add dump files to the resource list. Last modified for all these files is the time dump was executed.
+    #     # Last modified is recorded in the header of each file in a line starting with '# at checkpoint'.
+    #     t = None
+    #     dumpfiles = sorted(glob(os.path.join(self.resource_dir, "rdfdump-*")))
+    #     if len(dumpfiles) > 0:
+    #         dumpfiles.pop()  # remove last from the list
+    #     if len(dumpfiles) > 0:
+    #         with open(dumpfiles[0]) as search:
+    #             for line in search:
+    #                 if re.match("# at checkpoint.*", line):
+    #                     t = re.findall('\d+', line)[0]
+    #                     break
+    #
+    #         if t is None:
+    #             raise RuntimeError("Found dump files but did not find timestamp for checkpoint in '%s'" % dumpfiles[0])
+    #
+    #         timestamp = self.compute_timestamp(t)
+    #
+    #     n = 0
+    #     for file in dumpfiles:
+    #         filename = os.path.basename(file)
+    #         length = os.stat(file).st_size
+    #         md5 = compute_md5_for_file(file)
+    #         resourcelist.add(
+    #             Resource(self.publish_url + filename, md5=md5, length=length, lastmod=timestamp, path=file))
+    #         n += 1
+    #         if 0 < max_files == n:
+    #             break
+    #
+    #     exhausted = len(dumpfiles) == n
+    #     return exhausted
 
     def list_patch_files(self, resourcelist, max_files=-1):
         """
@@ -510,8 +378,7 @@ class Synchronizer(object):
         n = 0
         for file in patchfiles:
             filename = os.path.basename(file)
-            _, raw_ts = filename.split("-")
-            timestamp = self.compute_timestamp(raw_ts)
+            timestamp = self.extract_timestamp(file)
             length = os.stat(file).st_size
             md5 = compute_md5_for_file(file)
             resourcelist.add(
@@ -522,3 +389,5 @@ class Synchronizer(object):
 
         exhausted = len(patchfiles) == n
         return exhausted
+
+
