@@ -42,7 +42,7 @@
     <node id="n2">
       <data key="d6">
         <y:SVGNode>
-          <y:Geometry height="59.78448486328125" width="56.827667236328125" x="358.0176544189453" y="277.6077575683594"/>
+          <y:Geometry height="59.78448486328125" width="56.827667236328125" x="358.0176544189453" y="276.6077575683594"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="55.9140625" x="0.4568023681640625" y="-36.265625">internet/
