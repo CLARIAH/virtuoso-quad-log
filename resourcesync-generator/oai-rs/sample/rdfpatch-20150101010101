@@ -1,2 +1,2 @@
-# start: /usr/local/var/lib/virtuoso/db/virtuoso20160712145231.trx
+# start: /usr/local/var/lib/virtuoso/db/virtuoso20150101010101.trx
 + <http://one.com/two> <http://two.com/one> <http://three.com/four> <http://localhost:8890/one> .

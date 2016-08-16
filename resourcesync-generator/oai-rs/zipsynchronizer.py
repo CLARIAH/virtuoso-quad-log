@@ -2,22 +2,19 @@
 # -*- coding: utf-8 -*-
 
 import os, re, shutil, resync.w3c_datetime as w3cdt
-from syncdirector import Synchronizer
+from glob import glob
+from synchronizer import Synchronizer, PREFIX_MANIFEST, PREFIX_COMPLETED_PART, PREFIX_END_PART, \
+    RS_RESOURCE_DUMP_XML, RS_CAPABILITY_LIST_XML
 from resync.dump import Dump
 from resync.resource import Resource
 from resync.resource_list import ResourceList
-from resync.utils import compute_md5_for_file
 from resync.sitemap import Sitemap
 from resync.resource_dump import ResourceDump
 from resync.resource_dump_manifest import ResourceDumpManifest
 from resync.capability_list import CapabilityList
-from glob import glob
+from resync.utils import compute_md5_for_file
 
-# Alternative strategy to publish rdf patch files as resource dumps.
-
-PREFIX_COMPLETED_ZIP = "part_"
-PREFIX_END_ZIP = "zip_end_"
-PREFIX_MANIFEST = "manifest_"
+# Strategy to publish rdf patch files as resource dumps in g-zip format.
 
 
 class ZipSynchronizer(Synchronizer):
@@ -34,7 +31,8 @@ class ZipSynchronizer(Synchronizer):
         and a document size of 50 MB. ...
     """
 
-    def __init__(self, resource_dir, publish_dir, publish_url, src_desc_url,
+    def __init__(self, resource_dir, publish_dir, publish_url,
+                 src_desc_url=None,
                  max_files_compressed=50000,
                  write_separate_manifest=True,
                  move_resources=False):
@@ -51,7 +49,6 @@ class ZipSynchronizer(Synchronizer):
         """
         Synchronizer.__init__(self, resource_dir, publish_dir, publish_url, src_desc_url, max_files_compressed,
                               write_separate_manifest, move_resources)
-
 
     def publish(self):
         """
@@ -71,31 +68,32 @@ class ZipSynchronizer(Synchronizer):
             self.do_publish()
         except:
             # Something went wrong. Best we can do is clean up end of zip chain.
-            zip_end_files = glob(os.path.join(self.publish_dir, PREFIX_END_ZIP + "*.zip"))
+            zip_end_files = glob(os.path.join(self.publish_dir, PREFIX_END_PART + "*.zip"))
             for ze_file in zip_end_files:
                 os.remove(ze_file)
                 print "error recovery: removed %s" % ze_file
 
-            zip_end_xmls = glob(os.path.join(self.publish_dir, PREFIX_END_ZIP + "*.xml"))
+            zip_end_xmls = glob(os.path.join(self.publish_dir, PREFIX_END_PART + "*.xml"))
             for ze_xml in zip_end_xmls:
                 os.remove(ze_xml)
                 print "error recovery: removed %s" % ze_xml
 
             zip_end_manis = glob(
-                os.path.join(self.publish_dir, PREFIX_MANIFEST + PREFIX_END_ZIP + "*.xml"))
+                os.path.join(self.publish_dir,
+                             PREFIX_MANIFEST + PREFIX_END_PART + "*.xml"))
             for ze_mani in zip_end_manis:
                 os.remove(ze_mani)
                 print "error recovery: removed %s" % ze_mani
 
             # remove zip-end entries from resource-dump.xml
-            rs_dump_path = os.path.join(self.publish_dir, "resource-dump.xml")
+            rs_dump_path = os.path.join(self.publish_dir, RS_RESOURCE_DUMP_XML)
             rs_dump = ResourceDump()
             if os.path.isfile(rs_dump_path):
                 with open(rs_dump_path, "r") as rs_dump_file:
                     sm = Sitemap()
                     sm.parse_xml(rs_dump_file, resources=rs_dump)
 
-            prefix = self.publish_url + PREFIX_END_ZIP
+            prefix = self.publish_url + PREFIX_END_PART
 
             for uri in rs_dump.resources.keys():
                 if uri.startswith(prefix):
@@ -131,7 +129,7 @@ class ZipSynchronizer(Synchronizer):
 
             if len(resourcelist) == self.max_files_compressed:  # complete zip
                 state_changed = True
-                zip_resource = self.create_zip(resourcelist, PREFIX_COMPLETED_ZIP, False,
+                zip_resource = self.create_zip(resourcelist, PREFIX_COMPLETED_PART, False,
                                                self.write_separate_manifest)
                 new_zips.add(zip_resource)
                 # move resources from resource_dir
@@ -145,7 +143,7 @@ class ZipSynchronizer(Synchronizer):
                 assert exhausted
                 state_changed = True
                 if len(resourcelist) > 0:
-                    zip_resource = self.create_zip(resourcelist, PREFIX_END_ZIP, True,
+                    zip_resource = self.create_zip(resourcelist, PREFIX_END_PART, True,
                                                    self.write_separate_manifest)
                     new_zips.add(zip_resource)
 
@@ -162,8 +160,7 @@ class ZipSynchronizer(Synchronizer):
             if os.path.isfile(manifest_file):
                 os.remove(manifest_file)
 
-        if not state_changed:
-            print "No changes"
+        return state_changed
 
     def publish_metadata(self, new_zips, exluded_zip=None):
         """
@@ -173,10 +170,10 @@ class ZipSynchronizer(Synchronizer):
         :param exluded_zip: local path to zip file that will be removed from previously published metadata.
         :return: None
         """
-        rs_dump_url = self.publish_url + "resource-dump.xml"
-        rs_dump_path = os.path.join(self.publish_dir, "resource-dump.xml")
-        capa_list_url = self.publish_url + "capability-list.xml"
-        capa_list_path = os.path.join(self.publish_dir, "capability-list.xml")
+        rs_dump_url = self.publish_url + RS_RESOURCE_DUMP_XML
+        rs_dump_path = os.path.join(self.publish_dir, RS_RESOURCE_DUMP_XML)
+        capa_list_url = self.publish_url + RS_CAPABILITY_LIST_XML
+        capa_list_path = os.path.join(self.publish_dir, RS_CAPABILITY_LIST_XML)
 
         rs_dump = ResourceDump()
 
@@ -219,19 +216,6 @@ class ZipSynchronizer(Synchronizer):
 
             print "Published capability list. See %s" % capa_list_url
 
-        # # Write resourcesync
-        # wellknown = os.path.dirname(src_desc_path)
-        # if not os.path.isdir(wellknown):
-        #     os.makedirs(wellknown)
-        #
-        # if not os.path.isfile(src_desc_path):
-        #     src_desc = SourceDescription()
-        #     src_desc.add_capability_list(capa_list_url)
-        #     with open(src_desc_path, "w") as src_desc_file:
-        #         src_desc_file.write(src_desc.as_xml())
-        #
-        #     print "Published resource description. See %s" % src_desc_url
-
     def get_state_published(self):
         """
         See if publish_dir has a zip end file. If so, return the path of the zip end file and the resourcelist
@@ -242,10 +226,10 @@ class ZipSynchronizer(Synchronizer):
         path_zip_end_old = None
         rl_end_old = ResourceList()
 
-        zip_end_files = glob(os.path.join(self.publish_dir, PREFIX_END_ZIP + "*.zip"))
+        zip_end_files = glob(os.path.join(self.publish_dir, PREFIX_END_PART + "*.zip"))
         if len(zip_end_files) > 1:
             raise RuntimeError("Found more than one %s*.zip files. Inconsistent structure of %s."
-                               % (PREFIX_END_ZIP, self.publish_dir))
+                               % (PREFIX_END_PART, self.publish_dir))
         elif len(zip_end_files) == 1:
             path_zip_end_old = zip_end_files[0]
 
@@ -311,83 +295,6 @@ class ZipSynchronizer(Synchronizer):
 
         return zip_resource
 
-    def list_resources_chunk(self):
-        """
-        Fill a resource list up to max_files_in_zip or with as much rdf-files as there are left in resource_dir.
-        A boolean indicates whether the resource_dir was exhausted.
-        :return: the ResourceList, exhausted
-        """
-        resourcelist = ResourceList()
-        exhausted = self.list_patch_files(resourcelist, max_files=self.max_files_compressed)
-        return resourcelist, exhausted
 
-    # def list_dump_files(self, resourcelist, max_files=-1):
-    #     """
-    #     Append resources of the rdfdump-* files to a resourcelist. All resources in
-    #     resource_dir are included except for the last one in alphabetical sort order. If max_files is set to a
-    #     value greater than 0, will only include up to max_files.
-    #     :param resourcelist:
-    #     :param max_files:
-    #     :return: True if the list includes the one but last rdfdump-* file in resource_dir, False otherwise
-    #     """
-    #
-    #     # Add dump files to the resource list. Last modified for all these files is the time dump was executed.
-    #     # Last modified is recorded in the header of each file in a line starting with '# at checkpoint'.
-    #     t = None
-    #     dumpfiles = sorted(glob(os.path.join(self.resource_dir, "rdfdump-*")))
-    #     if len(dumpfiles) > 0:
-    #         dumpfiles.pop()  # remove last from the list
-    #     if len(dumpfiles) > 0:
-    #         with open(dumpfiles[0]) as search:
-    #             for line in search:
-    #                 if re.match("# at checkpoint.*", line):
-    #                     t = re.findall('\d+', line)[0]
-    #                     break
-    #
-    #         if t is None:
-    #             raise RuntimeError("Found dump files but did not find timestamp for checkpoint in '%s'" % dumpfiles[0])
-    #
-    #         timestamp = self.compute_timestamp(t)
-    #
-    #     n = 0
-    #     for file in dumpfiles:
-    #         filename = os.path.basename(file)
-    #         length = os.stat(file).st_size
-    #         md5 = compute_md5_for_file(file)
-    #         resourcelist.add(
-    #             Resource(self.publish_url + filename, md5=md5, length=length, lastmod=timestamp, path=file))
-    #         n += 1
-    #         if 0 < max_files == n:
-    #             break
-    #
-    #     exhausted = len(dumpfiles) == n
-    #     return exhausted
-
-    def list_patch_files(self, resourcelist, max_files=-1):
-        """
-        Append resources of the rdfpatch-* files to a resourcelist. All resources in
-        resource_dir are included except for the last one in alphabetical sort order. If max_files is set to a
-        value greater than 0, will only include up to max_files.
-        :param resourcelist:
-        :param max_files:
-        :return: True if the list includes the one but last rdfpatch-* file in resource_dir, False otherwise
-        """
-        patchfiles = sorted(glob(os.path.join(self.resource_dir, "rdfpatch-*")))
-        if len(patchfiles) > 0:
-            patchfiles.pop()  # remove last from list
-        n = 0
-        for file in patchfiles:
-            filename = os.path.basename(file)
-            timestamp = self.extract_timestamp(file)
-            length = os.stat(file).st_size
-            md5 = compute_md5_for_file(file)
-            resourcelist.add(
-                Resource(self.publish_url + filename, md5=md5, length=length, lastmod=timestamp, path=file))
-            n += 1
-            if 0 < max_files == n:
-                break
-
-        exhausted = len(patchfiles) == n
-        return exhausted
 
 

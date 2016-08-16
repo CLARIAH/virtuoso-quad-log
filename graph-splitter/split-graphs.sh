@@ -21,7 +21,7 @@ HS_SOURCE_FILE="$SOURCE_DIR/started_at.txt"
 HS_SINK_FILE="$SINK_DIR/started_at.txt"
 
 # File mapping between graph iri and base64-translated directory name. Also indicates that sources have been split.
-INDEX_FILE="$SINK_DIR/index.csv"
+INDEX_FILE="$SINK_DIR/graph_folder.csv"
 
 # File enabling processing of last real 'rdfpatch-*' file by chained processes
 SHAM_PATCH_FILE="rdfpatch-99999999999999"
