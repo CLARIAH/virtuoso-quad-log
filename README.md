@@ -29,7 +29,7 @@ services under [Docker-compose](https://docs.docker.com/compose/).
 
 ## Overview
 
-![Overview](/img/environment.png)
+![Overview](/img/environment2.png)
 
 <i><small>The above image shows the quad-logger and the resourcesync-generator in their environment.
 The Virtuoso server is instructed to log its transactions in log files. The quad-logger interacts
