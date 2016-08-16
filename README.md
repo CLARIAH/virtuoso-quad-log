@@ -14,14 +14,20 @@ track of changes during the life of the store and publishing this state and thes
 outside world in accordance with a well-described protocol is the subject of this repository.
 
 
-This *virtuoso-quad-log* repository harbors tools for propagating and publishing changes in RDF-data
-that are kept in a [Virtuoso triple store](http://virtuoso.openlinksw.com/). Two components are 
-essential in this process. These are:
+This *virtuoso-quad-log* repository harbors a chain of tools for propagating and publishing 
+changes in RDF-data
+that are kept in a [Virtuoso triple store](http://virtuoso.openlinksw.com/). Essential components 
+in this chain are:
 
-1. **quad-logger** generates logs of all initial, added, mutated or deleted quads in a
+1. **quad-logger** generates logs of all initial, added, mutated or 
+deleted [N-Quads](https://www.w3.org/TR/n-quads/) in a
 [Virtuoso quad store](http://virtuoso.openlinksw.com/rdf-quad-store/) in the
 [RDF-patch](https://afs.github.io/rdf-patch/) format.
-2. **resourcesync-generator** enables the synchronization of these resources over the internet by means
+2. **graph-splitter** will subdivide the N-Quads in these rdf-patch files into 
+other rdf-patch files grouped by graph iri. If a subdivision along graph iri is not nescesary 
+or not wanted, the graph-splitter can be left out of the chain.
+3. **resourcesync-generator** enables the synchronization of the produced resources over the 
+internet by means
 of the [Resource Sync Framework](http://www.openarchives.org/rs/1.0/resourcesync).
 
 The **example-virtuoso-server** is for reference and demonstration purposes. The tools can be deployed as
@@ -31,14 +37,24 @@ services under [Docker-compose](https://docs.docker.com/compose/).
 
 ![Overview](/img/environment2.png)
 
-<i><small>The above image shows the quad-logger and the resourcesync-generator in their environment.
-The Virtuoso server is instructed to log its transactions in log files. The quad-logger interacts
+<i><small>The above image shows the quad-logger, the graph-splitter and the resourcesync-generator 
+in their environment.
+The Virtuoso server is instructed to log its transactions in log files. 
+The quad-logger interacts
 with the Virtuoso server by means of the Interactive SQL interface. It reads the 
-transaction logs and transforms them to rdf-patch formatted files. The resourcesync-generator
+transaction logs and transforms them to rdf-patch formatted files. 
+The graph-splitter
+subdivides the N-Quads found in these rdf-patch files along graph iri. N-Quads are stored 
+again in rdf-patch files and grouped in folders. The folder names are the base64 translation of the graph
+iri.
+The resourcesync-generator
 bundles the rdf-patch files in zip-files and publishes them in accordance with the
-Resource Sync Framework. Both quad-logger and resourcesync-generator can be deployed as
-Docker containers. Here they are deployed as docker-compose services. Also 
-the Http server (and the Virtuoso server) can be deployed as docker-compose service.</small></i>
+Resource Sync Framework. In case N-Quads are subdivided along graph iri, each folder will
+be represented as a distinct set of resources.  
+The quad-logger, the graph-splitter and the resourcesync-generator 
+can be deployed as
+Docker containers. Here they are deployed as docker-compose services. 
+The Http server and the Virtuoso server can also be deployed as docker-compose service.</small></i>
 
 ## Documentation
 Documentation of the software in this repository is split over several files.
