@@ -39,15 +39,16 @@ services under [Docker-compose](https://docs.docker.com/compose/).
 
 <i><small>The above image shows the quad-logger, the graph-splitter and the resourcesync-generator 
 in their environment.
-The Virtuoso server is instructed to log its transactions in log files. 
-The quad-logger interacts
+The Virtuoso server is instructed to log its transactions in log files.  
+The **quad-logger** interacts
 with the Virtuoso server by means of the Interactive SQL interface. It reads the 
-transaction logs and transforms them to rdf-patch formatted files. 
-The graph-splitter
-subdivides the N-Quads found in these rdf-patch files along graph iri. N-Quads are stored 
-again in rdf-patch files and grouped in folders. The folder names are the base64 translation of the graph
-iri.
-The resourcesync-generator
+transaction logs and transforms them to rdf-patch formatted files.  
+The **graph-splitter**
+will subdivide the N-Quads in these rdf-patch files into other rdf-patch files grouped 
+in folders per graph iri. Folder names are the base64 translation of the graph iri.
+If a subdivision along graph iri is not nescesary or not wanted, 
+the graph-splitter can be left out of the chain.  
+The **resourcesync-generator**
 bundles the rdf-patch files in zip-files and publishes them in accordance with the
 Resource Sync Framework. In case N-Quads are subdivided along graph iri, each folder will
 be represented as a distinct set of resources.  
