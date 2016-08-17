@@ -63,7 +63,6 @@ class SyncDirector(object):
         self.src_desc_url = self.publish_url + RS_WELL_KNOWN + "/" + RS_RESOURCESYNC
         self.src_desc_path = os.path.join(self.sink_dir, RS_WELL_KNOWN, RS_RESOURCESYNC)
 
-
     def synchronize(self):
         """
         Publish the resources found in source_dir in accordance with the Resourcesync Framework in sink_dir.
@@ -82,6 +81,7 @@ class SyncDirector(object):
         ####################
 
         print "Synchronizing state as of %s" % self.handshake
+        state_changed = False
 
         ### initial resource description
         wellknown = os.path.join(self.sink_dir, RS_WELL_KNOWN)
@@ -103,33 +103,27 @@ class SyncDirector(object):
         ### the existance of FILE_INDEX indicates whether resources reside directly in source_dir or in subdirectories.
         index_file = os.path.join(self.source_dir, FILE_INDEX)
         if os.path.isfile(index_file):
-            self.__synchronize_subdirs__(src_desc)
+            for dirname in os.walk(self.source_dir).next()[1]:
+                source = os.path.join(self.source_dir, dirname)
+                sink = os.path.join(self.sink_dir, dirname)
+                publish_url = self.publish_url + dirname + "/"
+                state_changed = self.__execute_sync__(source, sink, publish_url, src_desc) or state_changed
         else:
-            self.__execute_sync__(self.source_dir, self.sink_dir, self.publish_url, src_desc)
+            state_changed = self.__execute_sync__(self.source_dir, self.sink_dir, self.publish_url, src_desc)
 
         if new_src_desc or count_lists != len(src_desc.resources):
             ### publish resource description
+            state_changed = True
             with open(self.src_desc_path, "w") as src_desc_file:
                 src_desc_file.write(src_desc.as_xml())
                 print "Published new resource description. See %s" % self.src_desc_url
 
-        else:
+        if not state_changed:
             print "no changes in %s" % self.sink_dir
-
-    def __synchronize_subdirs__(self, src_desc):
-        """
-        Do the synchronization over subdirectories.
-        :param src_desc: the current SourceDescription
-        """
-        for dirname in os.walk(self.source_dir).next()[1]:
-            source = os.path.join(self.source_dir, dirname)
-            sink = os.path.join(self.sink_dir, dirname)
-            publish_url = self.publish_url + dirname + "/"
-            self.__execute_sync__(source, sink, publish_url, src_desc)
 
     def __execute_sync__(self, source, sink, url, src_desc):
         """
-        Execute one synchronisation.
+        Execute synchronisation of one source directory.
         :param source: the directory where resources reside
         :param sink: the directory to publish resources
         :param url: the public url pointing to the sink
@@ -138,10 +132,13 @@ class SyncDirector(object):
         synchronizer = self.sync_class(source, sink, url,
                             self.src_desc_url, self.max_files_compressed,
                             self.write_separate_manifest, self.move_resources)
-        synchronizer.publish()
-        capa_list_url = url + RS_CAPABILITY_LIST_XML
-        if not capa_list_url in src_desc.resources:
-            src_desc.add_capability_list(capa_list_url)
+        state_changed = synchronizer.publish()
+        if state_changed:
+            capa_list_url = url + RS_CAPABILITY_LIST_XML
+            if not capa_list_url in src_desc.resources:
+                src_desc.add_capability_list(capa_list_url)
+
+        return state_changed
 
     def verify_handshake(self):
         """
@@ -164,13 +161,13 @@ class SyncDirector(object):
                 publish_handshake = r_file.read()
 
         if resource_handshake is None:
-            print "Error: No resource_handshake found. Not interfering with status quo of published resources."
+            print "Error: No source handshake found. Not interfering with status quo of published resources."
             return None
 
         if publish_handshake is None:
             # This can only be at the very start of synchronizing with a fresh empty publish_dir
             if self.walk_publish_dir() > 0:
-                print "Error: No publish_handshake found and %s not empty. " \
+                print "Error: No publish handshake found and %s not empty. " \
                       "Not interfering with status quo of published resources." % self.sink_dir
                 return None
 

@@ -36,7 +36,7 @@ class Synchronizer:
                  write_separate_manifest=True,
                  move_resources=False):
         """
-        Initialize a new Synchronizer.
+        Constructor. Initialize a new Synchronizer.
         :param resource_dir: the source directory for resources
         :param publish_dir: the directory resources should be published to
         :param publish_url: public url pointing to publish dir
@@ -189,5 +189,6 @@ class Synchronizer:
     def publish(self):
         """
         Publish the resources found in source_dir in accordance with the Resourcesync Framework in sink_dir.
+        :return: boolean indicating whether the state of the sink directory has changed
         """
         pass

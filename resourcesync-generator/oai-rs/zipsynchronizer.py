@@ -65,7 +65,8 @@ class ZipSynchronizer(Synchronizer):
             print "Created %s" % self.publish_dir
 
         try:
-            self.do_publish()
+            state_changed = self.do_publish()
+            return state_changed
         except:
             # Something went wrong. Best we can do is clean up end of zip chain.
             zip_end_files = glob(os.path.join(self.publish_dir, PREFIX_END_PART + "*.zip"))
@@ -116,7 +117,7 @@ class ZipSynchronizer(Synchronizer):
 
         WARNING: This method removes resources that are published in packages marked as complete from resource_dir.
 
-        :return:
+        :return: boolean indicating whether the state of the sink directory has changed
         """
 
         path_zip_end_old, rl_end_old = self.get_state_published()
