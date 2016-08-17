@@ -7,9 +7,9 @@ that should get you started quickly.
 
 1. The `docker-compose-example-setup.yml` includes an example Virtuoso server and an
 nginx http server, so it incorporates a complete environment  for the chain of components.
-You can use this experimental setup as a playground to watch the components at work.
+You can use this experimental setup as a playground and watch the components at work.
 2. The `docker-compose.yml` is a stub that you can use as a starting point
-to incorporate the two components in your own environment. 
+to incorporate the services in your own environment. 
 
 We will first inspect the example setup and see what the components do. Than we will elaborate
 on the environment variables which give you control over the exact behavior of the components.
@@ -31,7 +31,7 @@ docker-compose -f docker-compose-example-setup.yml up
 
 This will start 5 docker containers under the compose framework:
 
-1. **some_virtuoso_server_with_data_preloaded** is an example Virtuoso server with over 900
+1. **some_virtuoso_server_with_data_preloaded** is an example Virtuoso server with over 1000
 quads preloaded in the Virtuoso quad store.
 2. **the_quad_logger** connects to the example Virtuoso server and creates files
 in the [RDF-patch](https://afs.github.io/rdf-patch/) format. Initially it will dump
@@ -63,7 +63,8 @@ for instance. The `aW5mbzpzcGVjaWFsCg==` part in this path is the base64 transla
 `info:special`, the graph iri of a particular graph in the `virtuoso_server_with_data_preloaded`.
 The normal entry for Resourcesync destinations would be 
 [http://192.168.99.100:8085/.well-known/resourcesync](http://192.168.99.100:8085/.well-known/resourcesync).
-Again, verify your docker machine IP address if this does not work.
+Again, verify your docker machine IP address if this does not work and adjust the
+_resourcesync_generator_ environment variable HTTP_SERVER_URL accordingly.
 
 ## What it does
 
@@ -156,7 +157,7 @@ how to configure Virtuoso to make this all work.
 
 ### Environment variables for quad-logger
 The following environment variables can be set on the **quad-logger**. Environment variables
-can be set in the `docker-compose.yml` under the **environment:** heading.
+can be set in the `docker-compose.yml` under the heading **environment**.
 
 **RUN_INTERVAL** - The time between consecutive runs of the quad logger. Value can be 
 NUMBER[SUFFIX], where SUFFIX is
@@ -173,16 +174,19 @@ server is also deployed as a service under docker-compose this can be the name o
 that server.
 
 **VIRTUOSO_ISQL_PORT** - The port of the Virtuoso server where the Interactive SQL interface can be
-reached. Default value is `1111`.
+reached.  
+Default value is `1111`.
 
-**VIRTUOSO_DB_USER** - The username of the Virtuoso user. Default value is `dba`.
+**VIRTUOSO_DB_USER** - The username of the Virtuoso user.  
+Default value is `dba`.
 
-**VIRTUOSO_DB_PASSWORD** - The password of the Virtuoso user. Default value is `dba`.
+**VIRTUOSO_DB_PASSWORD** - The password of the Virtuoso user.  
+Default value is `dba`.
 
-**LOG_FILE_LOCATION** - The location of transaction logs on the Virtuoso server.
+**LOG_FILE_LOCATION** - The location of transaction logs on the Virtuoso server.  
 Default value is `/usr/local/var/lib/virtuoso/db`.
 
-<a id="DUMP_DIR"></a>**DUMP_DIR** - The directory for (temporary) storage of the rdf-patch files. 
+<a id="DUMP_DIR"></a>**DUMP_DIR** - The directory for (temporary) storage of the rdf-patch files.  
 Default value is `/output`.
 
 **INSERT_PROCEDURES** - Should stored procedures be automatically inserted on the 
@@ -201,14 +205,14 @@ Possible values: `y|n`. Default value is `n`.
 No transactions should take place during execution of the dump. 
 On average the dump routine will take 1 hour per 100 million quads execution time.
 If a dump has been executed previously and 
-was completed successfully, this parameter has no effect.
+was completed successfully, this parameter has no effect.  
 Possible values: `y|n`. Default value is `y`.
 
-**DUMP_AND_EXIT** - Dump the current state of the quad store and then exit.
+**DUMP_AND_EXIT** - Dump the current state of the quad store and then exit.  
 Possible values: `y|n`. Default value is `n`.
 
 **MAX_QUADS_PER_DUMP_FILE** - The maximum number of quads that should go into one 
-dump file. On average 100000 quads will give file sizes of approximately 12.5 MB.
+dump file. On average 100000 quads will give file sizes of approximately 12.5 MB.  
 Default value is `100000`.
 
 **EXCLUDED_GRAPHS** - Space-separated list of graph iris that are excluded from the dump.
@@ -233,7 +237,7 @@ resourcesync-generator.
 ### Environment variables for graph-splitter
 The following environment variables can be set on the **graph-splitter**. 
 Environment variables
-can be set in the `docker-compose.yml` under the **environment:** heading.
+can be set in the `docker-compose.yml` under the heading **environment**.
 
 **RUN_INTERVAL** - The time between consecutive runs of the splitter. Value can be 
 NUMBER[SUFFIX], where SUFFIX is
@@ -246,10 +250,10 @@ NUMBER[SUFFIX], where SUFFIX is
 Default value is `3600` (1 hour).
 
 **SOURCE_DIR** - The directory where rdf-patch files for processing are found, which coincides with the output
-directory of the quad-logger. 
+directory of the quad-logger.  
 Default value is `/input`.
 
-**SINK_DIR** - The directory where rdf-patch files after processing are stored.
+**SINK_DIR** - The directory where rdf-patch files after processing are stored.  
 Default value is `/output`.
 
 ## The resourcesync-generator
@@ -264,7 +268,7 @@ produced.
 ### Environment variables for resourcesync-generator
 The following environment variables can be set on the **resourcesync-generator**. 
 Environment variables
-can be set in the `docker-compose.yml` under the **environment:** heading.
+can be set in the `docker-compose.yml` under the heading **environment**.
 
 **RUN_INTERVAL** - The time between consecutive runs of the generator. Value can be 
 NUMBER[SUFFIX], where SUFFIX is
@@ -278,11 +282,11 @@ Default value is `3600` (1 hour).
 
 **SOURCE_DIR** - The directory where rdf-patch files can be found. This should coincide with the output
 directory of the graph splitter or, if no graph-splitter is used, with the output directory
-of the quad-logger.
+of the quad-logger.  
 Default value is `/input`.
 
 **SINK_DIR** - The directory where resource dump files and metadata are published.
-This directory should be accessible and served by the Http server.
+This directory should be accessible and served by the Http server.  
 Default value is `/output`.
 
 **HTTP_SERVER_URL** - `(Required)` The public URL pointing to directory being served by 
@@ -293,23 +297,23 @@ a class that compresses in the g-zip format. If you want to provide a builder cl
 have a constructor compatible with the constructor of class `Synchronizer` and support the method
 `publish` which should return a boolean indicating whether the state of the sink directory has changed.
 Apart from duck typing you can use the abstract base class `Synchronizer` as a starting point. 
-See [synchronizer.py](/resourcesync-generator/oai-rs/synchronizer.py).
+See [synchronizer.py](/resourcesync-generator/oai-rs/synchronizer.py).  
 Default value is `zipsynchronizer.ZipSynchronizer`.
 
-**MAX_FILES_COMPRESSED** - The maximum number of files that should go into one compression file.
+**MAX_FILES_COMPRESSED** - The maximum number of files that should go into one compression file.  
 Default value is `1000`.
 
 **WRITE_SEPARATE_MANIFEST** - Write a separate resourcedump manifest in SINK_DIR. 
 This file is the same as the one included in each compressed file under the name `manifest.xml`.
 The separate manifest files wil have names like `manifest_xxx_xxx.xml`, where
 `xxx_xxx` is the same as the basename of the zip file it accompanies without 
-the extension. For instance 'manifest_part_def_00004.xml' accompanies 'part_def_00004.zip'.
+the extension. For instance 'manifest_part_def_00004.xml' accompanies 'part_def_00004.zip'.  
 Possible values: `y|n`. Default value is `y`.
 
 **MOVE_RESOURCES** - Move the resources from SOURCE_DIR to SINK_DIR or simply 
 delete them from SOURCE_DIR after they have been packaged. Only rdf-patch files that are packaged into
 `part_def_xxxxx` files are affected. Rdf-patch files that are provisionally packaged in the
-`part_end_xxxxx` file will remain in SOURCE_DIR.
+`part_end_xxxxx` file will remain in SOURCE_DIR.  
 Possible values: `y|n`. Default value is `n`.
 
 ## Connect to a production Virtuoso server

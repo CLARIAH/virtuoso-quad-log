@@ -30,7 +30,7 @@ or not wanted, the graph-splitter can be left out of the chain.
 internet by means
 of the [Resource Sync Framework](http://www.openarchives.org/rs/1.0/resourcesync).
 
-The **example-virtuoso-server** is for reference and demonstration purposes. The tools can be deployed as
+The **example-virtuoso-server** is there for reference and demonstration purposes. The tools can be deployed as
 services under [Docker-compose](https://docs.docker.com/compose/).
 
 ## Overview
@@ -50,12 +50,12 @@ If a subdivision along graph iri is not nescesary or not wanted,
 the graph-splitter can be left out of the chain.  
 The `resourcesync-generator`
 bundles the rdf-patch files in zip-files and publishes them in accordance with the
-Resource Sync Framework. In case N-Quads are subdivided along graph iri, each folder will
+Resource Sync Framework. In case N-Quads are subdivided along graph iri in separate folders, each folder will
 be represented as a distinct set of resources.  
 The quad-logger, the graph-splitter and the resourcesync-generator 
 can be deployed as
 Docker containers. Here they are deployed as docker-compose services. 
-The Http server and the Virtuoso server can also be deployed as docker-compose service.</small></i>
+The Http server and the Virtuoso server can also be included in the docker-compose services.</small></i>
 
 ## Documentation
 Documentation of the software in this repository is split over several files.
