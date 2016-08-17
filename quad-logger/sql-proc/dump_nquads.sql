@@ -49,7 +49,6 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
         IF (mod(inx, maxq) = 0) {
             result(concat('# at checkpoint   ', chckp));
             result(concat('# dump started    ', startdate));
-            result(concat('# quad count      ', inx));
         }
         result(vql_create_nquad('+', "s", "p", "o", "g"));
         inx := inx + 1;

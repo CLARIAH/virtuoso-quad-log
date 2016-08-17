@@ -1,0 +1,48 @@
+# These triples uploaded to Virtuoso, processed by Virtuoso and output by quad log should give valid N-Quads.
+# However \' and \u{hexadecimal} are not preserved by Virtuoso and cannot be reconstructed.
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0001-0001" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0002-0002" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0003-0003" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0004-0004" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0005-0005" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0006-0006" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0007-0007" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0008-0008" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0009-0009" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u000A-000A" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u000B-000B" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u000C-000C" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u000D-000D" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u000E-000E" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u000F-000F" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0010-0010" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0011-0011" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0012-0012" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0013-0013" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0014-0014" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0015-0015" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0016-0016" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0017-0017" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0018-0018" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0019-0019" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u001A-001A" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u001B-001B" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u001C-001C" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u001D-001D" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u001E-001E" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u001F-001F" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0020-0020" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0021-0021" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0022-0022" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\u0023-0023" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\t23-backslash+t" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\b23-backslash+b" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\n23-backslash+n" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\r23-backslash+r" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\f23-backslash+f" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\a23-backslash+a" .
+<http://one.example/subject1> <http://one.example/single_quote_after_backslash> "01\'23-backslash+single quote" .
+<http://one.example/subject1> <http://one.example/single_quote> "01'23-single quote" .
+<http://one.example/subject1> <http://one.example/predicate1> "01\\23-escaped backslash" .
+<http://one.example/subject1> <http://one.example/predicate1> "This is a \"literal\" with \"escaped\" double quotes" .
+<http://one.example/subject2> <http://one.example/predicate2> "another             simple                      text" .

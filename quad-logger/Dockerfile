@@ -6,6 +6,4 @@ COPY sql-proc/ /sql-proc/
 COPY entrypoint.sh /
 COPY generate-rdfpatch.sh /
 
-RUN mkdir /datadir
-
 ENTRYPOINT ["/entrypoint.sh"]

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:java="http://www.yworks.com/xml/yfiles-common/1.0/java" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
-  <!--Created by yEd 3.14.4-->
+  <!--Created by yEd 3.16.1-->
   <key attr.name="Description" attr.type="string" for="graph" id="d0"/>
   <key for="port" id="d1" yfiles.type="portgraphics"/>
   <key for="port" id="d2" yfiles.type="portgeometry"/>
@@ -16,11 +16,22 @@
     <data key="d0"/>
     <node id="n0">
       <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="227.0" width="411.0" x="444.84532165527344" y="216.05377197265625"/>
+          <y:Fill color="#F2F3F5" transparent="false"/>
+          <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="tl" textColor="#000000" verticalTextPosition="bottom" visible="true" width="110.4296875" x="4.0" y="4.0">Docker-compose</y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n1">
+      <data key="d6">
         <y:SVGNode>
           <y:Geometry height="146.4892578125" width="134.05633544921875" x="214.96131896972656" y="234.25537109375"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="99.431640625" x="17.312347412109375" y="150.4892578125">Virtuoso server</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="99.431640625" x="17.312347412109375" y="150.4892578125">Virtuoso server</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="1"/>
@@ -28,13 +39,13 @@
         </y:SVGNode>
       </data>
     </node>
-    <node id="n1">
+    <node id="n2">
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="59.78448486328125" width="56.827667236328125" x="358.0176544189453" y="276.6077575683594"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="sandwich" modelPosition="n" textColor="#000000" visible="true" width="55.9140625" x="0.4568023681640625" y="-36.265625">internet/
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="55.9140625" x="0.4568023681640625" y="-36.265625">internet/
 intranet</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
@@ -43,31 +54,16 @@ intranet</y:NodeLabel>
         </y:SVGNode>
       </data>
     </node>
-    <node id="n2">
+    <node id="n3">
       <data key="d6">
         <y:SVGNode>
-          <y:Geometry height="45.15776062011719" width="74.0" x="532.9314880371094" y="353.1585693359375"/>
+          <y:Geometry height="39.317138671875" width="56.827667236328125" x="532.9314880371094" y="358.9991912841797"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="93.35546875" x="-9.677734375" y="49.15776062011719">dump directory</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="42.384765625" x="7.2214508056640625" y="43.317138671875">stash1</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="3"/>
-          </y:SVGModel>
-        </y:SVGNode>
-      </data>
-    </node>
-    <node id="n3">
-      <data key="d5"/>
-      <data key="d6">
-        <y:SVGNode>
-          <y:Geometry height="52.317138671875" width="100.0" x="593.8453216552734" y="280.3414306640625"/>
-          <y:Fill color="#CCCCFF" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="n" textColor="#000000" visible="true" width="143.8046875" x="-21.90234375" y="-22.1328125">resourecsync-generator</y:NodeLabel>
-          <y:SVGNodeProperties usingVisualBounds="true"/>
-          <y:SVGModel svgBoundsPolicy="0">
-            <y:SVGContent refid="4"/>
           </y:SVGModel>
         </y:SVGNode>
       </data>
@@ -75,39 +71,11 @@ intranet</y:NodeLabel>
     <node id="n4">
       <data key="d6">
         <y:SVGNode>
-          <y:Geometry height="45.15776062011719" width="74.0" x="656.7591552734375" y="353.1585693359375"/>
+          <y:Geometry height="39.317138671875" width="65.93148803710938" x="593.8453216552734" y="286.8414306640625"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="102.654296875" x="-14.3271484375" y="49.15776062011719">publish directory</y:NodeLabel>
-          <y:SVGNodeProperties usingVisualBounds="true"/>
-          <y:SVGModel svgBoundsPolicy="0">
-            <y:SVGContent refid="3"/>
-          </y:SVGModel>
-        </y:SVGNode>
-      </data>
-    </node>
-    <node id="n5">
-      <data key="d6">
-        <y:SVGNode>
-          <y:Geometry height="102.95098876953125" width="86.82766723632812" x="806.8453216552734" y="324.26195526123047"/>
-          <y:Fill color="#CCCCFF" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="73.873046875" x="6.4773101806640625" y="106.95098876953125">Http server</y:NodeLabel>
-          <y:SVGNodeProperties usingVisualBounds="true"/>
-          <y:SVGModel svgBoundsPolicy="0">
-            <y:SVGContent refid="5"/>
-          </y:SVGModel>
-        </y:SVGNode>
-      </data>
-    </node>
-    <node id="n6">
-      <data key="d5"/>
-      <data key="d6">
-        <y:SVGNode>
-          <y:Geometry height="52.317138671875" width="100.0" x="458.84532165527344" y="280.3414306640625"/>
-          <y:Fill color="#CCCCFF" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="n" textColor="#000000" visible="true" width="77.5234375" x="11.23828125" y="-22.1328125">quad-logger</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="45.1796875" x="10.375900268554688" y="-36.265625">graph-
+splitter</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="4"/>
@@ -115,25 +83,56 @@ intranet</y:NodeLabel>
         </y:SVGNode>
       </data>
     </node>
-    <node id="n7">
-      <data key="d5"/>
+    <node id="n5">
       <data key="d6">
-        <y:ShapeNode>
-          <y:Geometry height="219.0" width="318.0" x="434.84532165527344" y="222.25537109375"/>
-          <y:Fill hasColor="false" transparent="false"/>
-          <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="internal" modelPosition="tl" textColor="#000000" visible="true" width="110.4296875" x="4.0" y="4.0">Docker-compose</y:NodeLabel>
-          <y:Shape type="rectangle"/>
-        </y:ShapeNode>
+        <y:SVGNode>
+          <y:Geometry height="39.317138671875" width="56.827667236328125" x="656.7591552734375" y="358.9991912841797"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="42.384765625" x="7.2214508056640625" y="43.317138671875">stash2</y:NodeLabel>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="3"/>
+          </y:SVGModel>
+        </y:SVGNode>
+      </data>
+    </node>
+    <node id="n6">
+      <data key="d6">
+        <y:SVGNode>
+          <y:Geometry height="102.95098876953125" width="86.82766723632812" x="920.8453216552734" y="327.18226623535156"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="73.873046875" x="6.4773101806640625" y="106.95098876953125">Http server</y:NodeLabel>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="5"/>
+          </y:SVGModel>
+        </y:SVGNode>
+      </data>
+    </node>
+    <node id="n7">
+      <data key="d6">
+        <y:SVGNode>
+          <y:Geometry height="39.317138671875" width="65.93148803710938" x="467.0" y="286.8414306640625"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="41.400390625" x="12.265548706054688" y="-36.265625">quad-
+logger</y:NodeLabel>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="4"/>
+          </y:SVGModel>
+        </y:SVGNode>
       </data>
     </node>
     <node id="n8">
       <data key="d6">
         <y:SVGNode>
-          <y:Geometry height="78.4031982421875" width="65.93148803710938" x="547.0" y="125.8521728515625"/>
+          <y:Geometry height="59.78448486328125" width="56.827667236328125" x="287.15467834472656" y="125.8521728515625"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="n" textColor="#000000" visible="true" width="94.1640625" x="-14.116287231445312" y="-22.1328125">RDF-patch files</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="97.375" x="-20.273666381835938" y="-22.1328125">transaction logs</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="6"/>
@@ -143,37 +142,22 @@ intranet</y:NodeLabel>
     </node>
     <node id="n9">
       <data key="d6">
-        <y:SVGNode>
-          <y:Geometry height="78.4031982421875" width="65.93148803710938" x="287.15467834472656" y="125.8521728515625"/>
-          <y:Fill color="#CCCCFF" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="n" textColor="#000000" visible="true" width="97.375" x="-15.721755981445312" y="-22.1328125">transaction logs</y:NodeLabel>
-          <y:SVGNodeProperties usingVisualBounds="true"/>
-          <y:SVGModel svgBoundsPolicy="0">
-            <y:SVGContent refid="6"/>
-          </y:SVGModel>
-        </y:SVGNode>
-      </data>
-    </node>
-    <node id="n10">
-      <data key="d5"/>
-      <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="640.0" y="518.0"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0"/>
           <y:Shape type="rectangle"/>
         </y:ShapeNode>
       </data>
     </node>
-    <node id="n11">
-      <data key="d5"/>
+    <node id="n10">
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="22.317138671875" width="36.0" x="263.0" y="476.0"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sides" modelPosition="e" textColor="#000000" visible="true" width="103.50390625" x="40.0" y="2.0921630859375">Docker container</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="e" textColor="#000000" verticalTextPosition="bottom" visible="true" width="103.50390625" x="40.0" y="2.0921630859375">Docker container</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="4"/>
@@ -181,13 +165,13 @@ intranet</y:NodeLabel>
         </y:SVGNode>
       </data>
     </node>
-    <node id="n12">
+    <node id="n11">
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="22.317138671875" width="41.4158935546875" x="257.5841064453125" y="504.74462890625"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sides" modelPosition="e" textColor="#000000" visible="true" width="91.298828125" x="45.4158935546875" y="2.0921630859375">Docker volume</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="e" textColor="#000000" verticalTextPosition="bottom" visible="true" width="91.298828125" x="45.4158935546875" y="2.0921630859375">Docker volume</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="3"/>
@@ -195,18 +179,107 @@ intranet</y:NodeLabel>
         </y:SVGNode>
       </data>
     </node>
-    <node id="n13">
+    <node id="n12">
       <data key="d6">
         <y:ImageNode>
-          <y:Geometry height="70.0" width="77.0" x="790.8453216552734" y="130.05377197265625"/>
+          <y:Geometry height="70.0" width="77.0" x="914.8453216552734" y="120.74441528320312"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="sandwich" modelPosition="n" textColor="#000000" visible="true" width="155.271484375" x="-39.1357421875" y="-22.1328125">Resource Sync Framework</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="155.271484375" x="-39.1357421875" y="-22.1328125">Resource Sync Framework</y:NodeLabel>
           <y:Image alphaImage="true" refid="7"/>
         </y:ImageNode>
       </data>
     </node>
-    <edge id="e0" source="n0" target="n1">
+    <node id="n13">
+      <data key="d6">
+        <y:SVGNode>
+          <y:Geometry height="39.317138671875" width="65.93148803710938" x="717.6729888916016" y="286.8414306640625"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="87.197265625" x="-10.632888793945312" y="-36.265625">resourcesync-
+generator</y:NodeLabel>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="4"/>
+          </y:SVGModel>
+        </y:SVGNode>
+      </data>
+    </node>
+    <node id="n14">
+      <data key="d6">
+        <y:SVGNode>
+          <y:Geometry height="39.317138671875" width="56.827667236328125" x="780.5868225097656" y="358.9991912841797"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="42.384765625" x="7.2214508056640625" y="43.317138671875">stash3</y:NodeLabel>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="3"/>
+          </y:SVGModel>
+        </y:SVGNode>
+      </data>
+    </node>
+    <node id="n15">
+      <data key="d5"/>
+      <data key="d6">
+        <y:SVGNode>
+          <y:Geometry height="70.0" width="77.0" x="582.7768096923828" y="120.74441528320312"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="94.1640625" x="-8.58203125" y="-36.265625">RDF-patch files
+per graph</y:NodeLabel>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="8"/>
+          </y:SVGModel>
+        </y:SVGNode>
+      </data>
+    </node>
+    <node id="n16">
+      <data key="d6">
+        <y:SVGNode>
+          <y:Geometry height="60.0" width="57.0" x="451.0" y="125.74441528320312"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="94.1640625" x="-18.58203125" y="-22.1328125">RDF-patch files</y:NodeLabel>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="9"/>
+          </y:SVGModel>
+        </y:SVGNode>
+      </data>
+    </node>
+    <node id="n17">
+      <data key="d6">
+        <y:SVGNode>
+          <y:Geometry height="60.0" width="57.0" x="734.5536193847656" y="125.74441528320312"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="102.291015625" x="-22.6455078125" y="-36.265625">compressed files
++ RS-metadata</y:NodeLabel>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="10"/>
+          </y:SVGModel>
+        </y:SVGNode>
+      </data>
+    </node>
+    <node id="n18">
+      <data key="d5"/>
+      <data key="d6">
+        <y:SVGNode>
+          <y:Geometry height="36.007781982421875" width="36.0" x="723.4611206054688" y="154.73663330078125"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="16.0" y="40.007781982421875"/>
+          <y:SVGNodeProperties usingVisualBounds="true"/>
+          <y:SVGModel svgBoundsPolicy="0">
+            <y:SVGContent refid="11"/>
+          </y:SVGModel>
+        </y:SVGNode>
+      </data>
+    </node>
+    <edge id="e0" source="n1" target="n2">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -216,7 +289,7 @@ intranet</y:NodeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e1" source="n2" target="n3">
+    <edge id="e1" source="n3" target="n4">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -226,7 +299,7 @@ intranet</y:NodeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e2" source="n3" target="n4">
+    <edge id="e2" source="n4" target="n5">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -236,7 +309,7 @@ intranet</y:NodeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e3" source="n4" target="n5">
+    <edge id="e3" source="n2" target="n7">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -246,7 +319,7 @@ intranet</y:NodeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e4" source="n1" target="n6">
+    <edge id="e4" source="n7" target="n3">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -256,7 +329,7 @@ intranet</y:NodeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e5" source="n6" target="n2">
+    <edge id="e5" source="n13" target="n14">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -266,17 +339,57 @@ intranet</y:NodeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e6" source="n9" target="n8">
+    <edge id="e6" source="n5" target="n13">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#808080" type="line" width="4.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e7" source="n14" target="n6">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#808080" type="line" width="4.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e8" source="n8" target="n16">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="-29.5" ty="0.0"/>
           <y:LineStyle color="#808080" type="line" width="4.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e7" source="n8" target="n13">
+    <edge id="e9" source="n16" target="n15">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="-41.27680969238281" ty="0.0"/>
+          <y:LineStyle color="#808080" type="line" width="4.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e10" source="n15" target="n17">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="-40.63873291015625" ty="0.0"/>
+          <y:LineStyle color="#808080" type="line" width="4.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e11" source="n17" target="n12">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2898,6 +3011,812 @@ GxY3btxAUVER0tLSRFfi66+/xgcffCA4iEFhABkEFp5cYvGRvYePKsBqmC9evBirV6/G5s2bhd7i&#13
 KuXWrVtOkdpSZPw/CdrDgGvOHcx7XPxXVVUJucIgcr25e/dubNmyBevWrYNerxe1JltsbKwAh99X&#13;
 69JLly6JjM29L/6+lvippd/+3/r7r4L2sPq1+fk8cOYfznDsMTdv3nQaA8zG7/N5LfGp9vlP9Z7/&#13;
 q6D9mIt8GPn+UEvq++xhEqj55/+/Au1h3vdTvr8lAf7f/Ps/6LqudDHaQz8AAAAASUVORK5CYII=</y:Resource>
+      <y:Resource id="8">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!-- Created with Inkscape (http://www.inkscape.org/) --&gt;
+&lt;svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://web.resource.org/cc/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns1="http://sozi.baierouge.fr" id="svg4123" viewBox="0 0 308.43 234.62" version="1.0" inkscape:version="0.91 r13725"&gt;
+  &lt;defs id="defs4125"&gt;
+    &lt;linearGradient id="linearGradient12737" y2="140.3" xlink:href="#linearGradient3534" gradientUnits="userSpaceOnUse" x2="114.71" gradientTransform="translate(-549.1 -163.2)" y1="55.915" x1="81.349"/&gt;
+    &lt;linearGradient id="linearGradient12735" y2="78.338" xlink:href="#linearGradient3488" gradientUnits="userSpaceOnUse" x2="150.18" gradientTransform="translate(-549.1 -163.2)" y1="216.27" x1="75.485"/&gt;
+    &lt;linearGradient id="linearGradient12733" y2="103.84" xlink:href="#linearGradient3534" gradientUnits="userSpaceOnUse" x2="153.64" gradientTransform="translate(-549.1 -163.2)" y1="69.702" x1="150.07"/&gt;
+    &lt;linearGradient id="linearGradient12731" y2="102.7" xlink:href="#linearGradient3488" gradientUnits="userSpaceOnUse" x2="127.22" gradientTransform="translate(-549.1 -163.2)" y1="321.59" x1="-75.391"/&gt;
+    &lt;linearGradient id="linearGradient12729" y2="147.26" xlink:href="#linearGradient3468" gradientUnits="userSpaceOnUse" x2="58.949" gradientTransform="translate(-549.1 -163.2)" y1="97.137" x1="198.59"/&gt;
+    &lt;linearGradient id="linearGradient12727" y2="56.956" gradientUnits="userSpaceOnUse" x2="227.46" gradientTransform="translate(-549.1 -163.2)" y1="184.18" x1="-4.734"&gt;
+      &lt;stop id="stop3807" style="stop-color:#288a29" offset="0"/&gt;
+      &lt;stop id="stop3809" style="stop-color:#00e91a" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12725" y2="778.66" gradientUnits="userSpaceOnUse" x2="255.14" gradientTransform="matrix(.31458 0.0331 -.031703 .28489 -530.57 -223.1)" y1="393.51" x1="664.32"&gt;
+      &lt;stop id="stop3801" style="stop-color:#019300;stop-opacity:0.8" offset="0"/&gt;
+      &lt;stop id="stop3803" style="stop-color:#7dff85;stop-opacity:.71765" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12723" y2="35.083" xlink:href="#linearGradient3534" gradientUnits="userSpaceOnUse" x2="26.839" gradientTransform="translate(-529.08 -219.59)" y1="77.996" x1="78.742"/&gt;
+    &lt;linearGradient id="linearGradient12721" y2="94.39" xlink:href="#linearGradient3534" gradientUnits="userSpaceOnUse" x2="50.208" gradientTransform="translate(-549.1 -163.2)" y1="38.275" x1="122.18"/&gt;
+    &lt;linearGradient id="linearGradient12719" y2="-160.23" xlink:href="#linearGradient3488" gradientUnits="userSpaceOnUse" x2="-89.169" gradientTransform="matrix(1.0011 0 0 .97714 -428.23 -61.49)" y1="111.33" x1="-52.615"/&gt;
+    &lt;linearGradient id="linearGradient12717" y2="166.59" xlink:href="#linearGradient3534" gradientUnits="userSpaceOnUse" x2="140.07" gradientTransform="matrix(1 0 0 .66342 -549.1 -146.13)" y1="-126.4" x1="79.246"/&gt;
+    &lt;linearGradient id="linearGradient12715" y2="167.01" gradientUnits="userSpaceOnUse" x2="115.26" gradientTransform="translate(-549.1 -163.2)" y1="40.434" x1="46.211"&gt;
+      &lt;stop id="stop3813" style="stop-color:#288a2a" offset="0"/&gt;
+      &lt;stop id="stop3815" style="stop-color:#00e910" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12713" y2="77.316" gradientUnits="userSpaceOnUse" x2="274.43" gradientTransform="matrix(.30595 -.029586 .042229 .31115 -530.13 -128.34)" y1="352.41" x1="218.06"&gt;
+      &lt;stop id="stop3795" style="stop-color:#2cc84e" offset="0"/&gt;
+      &lt;stop id="stop3797" style="stop-color:#c2ffc8" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12759" y2="100.84" xlink:href="#linearGradient3534" gradientUnits="userSpaceOnUse" x2="153.64" gradientTransform="translate(-549.1 -163.2)" y1="69.702" x1="148.07"/&gt;
+    &lt;linearGradient id="linearGradient12753" y2="56.956" gradientUnits="userSpaceOnUse" x2="227.46" gradientTransform="translate(-549.1 -163.2)" y1="184.18" x1="-4.734"&gt;
+      &lt;stop id="stop3671" style="stop-color:#8a6b28" offset="0"/&gt;
+      &lt;stop id="stop3673" style="stop-color:#e99400" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12751" y2="778.66" gradientUnits="userSpaceOnUse" x2="255.14" gradientTransform="matrix(.31458 0.0331 -.031703 .28489 -530.57 -223.1)" y1="393.51" x1="664.32"&gt;
+      &lt;stop id="stop3677" style="stop-color:#936200;stop-opacity:0.8" offset="0"/&gt;
+      &lt;stop id="stop3679" style="stop-color:#ffce7d;stop-opacity:.71765" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12741" y2="167.01" gradientUnits="userSpaceOnUse" x2="115.26" gradientTransform="translate(-549.1 -163.2)" y1="40.434" x1="46.211"&gt;
+      &lt;stop id="stop3665" style="stop-color:#8a6b28" offset="0"/&gt;
+      &lt;stop id="stop3667" style="stop-color:#e99500" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12739" y2="77.316" gradientUnits="userSpaceOnUse" x2="274.43" gradientTransform="matrix(.30595 -.029586 .042229 .31115 -530.13 -128.34)" y1="352.41" x1="218.06"&gt;
+      &lt;stop id="stop3659" style="stop-color:#ffcd55" offset="0"/&gt;
+      &lt;stop id="stop3661" style="stop-color:#ffebc2" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12779" y2="56.956" xlink:href="#linearGradient3314" gradientUnits="userSpaceOnUse" x2="227.46" gradientTransform="translate(-549.1 -163.2)" y1="184.18" x1="-4.734"/&gt;
+    &lt;linearGradient id="linearGradient12777" y2="778.66" gradientUnits="userSpaceOnUse" x2="255.14" gradientTransform="matrix(.31458 0.0331 -.031703 .28489 -530.57 -223.1)" y1="393.51" x1="664.32"&gt;
+      &lt;stop id="stop2409" style="stop-color:#003a93;stop-opacity:.79866" offset="0"/&gt;
+      &lt;stop id="stop2411" style="stop-color:#7db1ff;stop-opacity:.71812" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient3314"&gt;
+      &lt;stop id="stop3316" style="stop-color:#283f8a" offset="0"/&gt;
+      &lt;stop id="stop3318" style="stop-color:#0089e9" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12767" y2="167.01" xlink:href="#linearGradient3314" gradientUnits="userSpaceOnUse" x2="115.26" gradientTransform="translate(-549.1 -163.2)" y1="40.434" x1="46.211"/&gt;
+    &lt;linearGradient id="linearGradient12765" y2="77.316" gradientUnits="userSpaceOnUse" x2="274.43" gradientTransform="matrix(.30595 -.029586 .042229 .31115 -530.13 -128.34)" y1="352.41" x1="218.06"&gt;
+      &lt;stop id="stop2397" style="stop-color:#5599ff" offset="0"/&gt;
+      &lt;stop id="stop2399" style="stop-color:#c2dbff" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;filter id="filter3530"&gt;
+      &lt;feGaussianBlur id="feGaussianBlur3532" stdDeviation="1.0172855" inkscape:collect="always"/&gt;
+    &lt;/filter&gt;
+    &lt;linearGradient id="linearGradient3534"&gt;
+      &lt;stop id="stop3536" style="stop-color:#ffffff" offset="0"/&gt;
+      &lt;stop id="stop3538" style="stop-color:#ffffff;stop-opacity:0" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;filter id="filter3500"&gt;
+      &lt;feGaussianBlur id="feGaussianBlur3502" stdDeviation="1.0208063" inkscape:collect="always"/&gt;
+    &lt;/filter&gt;
+    &lt;linearGradient id="linearGradient3488"&gt;
+      &lt;stop id="stop3490" style="stop-color:#000000" offset="0"/&gt;
+      &lt;stop id="stop3492" style="stop-color:#000000;stop-opacity:0" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient3468"&gt;
+      &lt;stop id="stop3470" style="stop-color:#d8d8d8" offset="0"/&gt;
+      &lt;stop id="stop3476" style="stop-color:#f0f0f0" offset=".22455"/&gt;
+      &lt;stop id="stop3478" style="stop-color:#ffffff" offset=".46812"/&gt;
+      &lt;stop id="stop3480" style="stop-color:#f3f3f3" offset=".76308"/&gt;
+      &lt;stop id="stop3472" style="stop-color:#d6d6d6" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12805" y2="56.956" gradientUnits="userSpaceOnUse" x2="227.46" gradientTransform="translate(-549.1 -163.2)" y1="184.18" x1="-4.734"&gt;
+      &lt;stop id="stop11492" style="stop-color:#8a2883" offset="0"/&gt;
+      &lt;stop id="stop11494" style="stop-color:#e900de" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12803" y2="778.66" gradientUnits="userSpaceOnUse" x2="255.14" gradientTransform="matrix(.31458 0.0331 -.031703 .28489 -530.57 -223.1)" y1="393.51" x1="664.32"&gt;
+      &lt;stop id="stop11486" style="stop-color:#930085;stop-opacity:0.8" offset="0"/&gt;
+      &lt;stop id="stop11488" style="stop-color:#ff7df9;stop-opacity:.71765" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;filter id="filter3342" y="-.17679" width="1.0257" x="-.012874" height="1.3536"&gt;
+      &lt;feGaussianBlur id="feGaussianBlur3344" stdDeviation="0.73981434" inkscape:collect="always"/&gt;
+    &lt;/filter&gt;
+    &lt;filter id="filter3384" y="-.021205" width="1.2382" x="-.11909" height="1.0424"&gt;
+      &lt;feGaussianBlur id="feGaussianBlur3386" stdDeviation="0.81591018" inkscape:collect="always"/&gt;
+    &lt;/filter&gt;
+    &lt;linearGradient id="linearGradient12793" y2="167.01" gradientUnits="userSpaceOnUse" x2="115.26" gradientTransform="translate(-549.1 -163.2)" y1="40.434" x1="46.211"&gt;
+      &lt;stop id="stop11474" style="stop-color:#8a2884" offset="0"/&gt;
+      &lt;stop id="stop11476" style="stop-color:#e900df" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="linearGradient12791" y2="77.316" gradientUnits="userSpaceOnUse" x2="274.43" gradientTransform="matrix(.30595 -.029586 .042229 .31115 -530.13 -128.34)" y1="352.41" x1="218.06"&gt;
+      &lt;stop id="stop11480" style="stop-color:#c82cbd" offset="0"/&gt;
+      &lt;stop id="stop11482" style="stop-color:#ffc2fa" offset="1"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;g id="layer1" transform="translate(-30.235 -16.934)"&gt;
+    &lt;g id="g12333" transform="matrix(.86110 0 0 .86110 481.38 370.04)"&gt;
+      &lt;g id="g12335" transform="matrix(.76627 0 0 1 -124.26 -271.81)"&gt;
+        &lt;g id="g12337"&gt;
+          &lt;path id="path12339" style="stroke:url(#linearGradient12715);stroke-width:1.5;fill:url(#linearGradient12713)" d="m-506.24-108.72l42.28-4.09c2.89-0.27 4.25 0.75 4.7 3.33l0.74 5.17 85.66-8.29c1.48-0.14 2.83 0.96 3.04 2.46l10.67 78.639c0.2 1.503-0.82 2.827-2.3 2.97l-132.17 12.782c-1.48 0.143-2.83-0.952-3.04-2.454l-11.88-87.547c-0.2-1.51 0.82-2.83 2.3-2.97z"/&gt;
+          &lt;path id="path12341" style="opacity:.32114;fill:url(#linearGradient12717)" d="m-462.98-112.48c-0.31-0.01-0.64 0-1 0.02l-42.28 2.71c-1.48 0.1-2.51 0.98-2.31 1.97l7.58 38.833c10.62-6.466 25.44-17.117 46.54-19.01 41.26-3.662 62.91-10.743 84.71-15.203l-0.11-7.52c-0.21-1-1.56-1.73-3.03-1.64l-85.66 5.5-0.75-3.42c-0.39-1.5-1.48-2.21-3.69-2.24z"/&gt;
+          &lt;path id="path12343" style="filter:url(#filter3384);stroke:url(#linearGradient12719);stroke-width:1.4836;fill:none" d="m-492.36-17.091c-1.48 0.14-2.83-0.93-3.04-2.398l-11.89-85.551c-0.21-1.47 0.82-2.76 2.3-2.9"/&gt;
+          &lt;path id="path12345" style="filter:url(#filter3342);stroke:url(#linearGradient12721);stroke-width:1.5;fill:none" d="m-507.13-107.5l42.28-4.09c2.89-0.27 4.25 0.75 4.7 3.33l0.74 5.17 85.67-8.29c1.47-0.14 2.83 0.96 3.03 2.46"/&gt;
+          &lt;rect id="rect12347" style="opacity:.85772;fill:url(#linearGradient12723)" transform="matrix(.99454 -.10431 .10431 .99454 0 0)" ry="1.3321" width="41.653" y="-157.33" x="-490.92" height="6.7793"/&gt;
+        &lt;/g&gt;
+        &lt;g id="g12349"&gt;
+          &lt;path id="path12351" style="stroke:url(#linearGradient12727);stroke-width:1.5;fill:url(#linearGradient12725)" d="m-477.4-80.856l134.94-13.381c1.49-0.147 2.24 0.689 1.67 1.875l-15.73 61.762c-0.57 1.186-2.23 2.259-3.72 2.406l-133.58 13.175c-1.5 0.148-2.24-0.689-1.68-1.875l14.38-61.556c0.57-1.186 2.23-2.259 3.72-2.406z"/&gt;
+          &lt;path id="path12353" style="opacity:.80488;fill:url(#linearGradient12729)" d="m-350.51-56.712c-44.06 4.453-101.95 10.275-137.28 13.688l-5.91 25.218c-0.55 1.167 0.19 1.989 1.66 1.844l131.41-12.969c1.46-0.145 3.09-1.208 3.65-2.375l6.47-25.406z"/&gt;
+          &lt;path id="path12355" style="opacity:.82114;fill:url(#linearGradient12731)" d="m-476.72-80.098l132.75-13.163c1.47-0.145 2.2 0.678 1.65 1.844l-15.49 60.761c-0.55 1.166-2.19 2.222-3.65 2.367l-131.42 12.961c-1.47 0.145-2.2-0.677-1.65-1.844l14.15-60.558c0.56-1.167 2.19-2.223 3.66-2.368z"/&gt;
+          &lt;path id="path12357" style="opacity:.51626;fill:url(#linearGradient12733)" d="m-343.13-93.482l-132.75 13.156c-1.47 0.145-3.1 1.209-3.66 2.375l-8.09 34.625c17.47-8.015 37.19-14.444 54.18-16.312 38.02-4.177 64.41-6.536 89.88-23.875l2.06-8.125c0.56-1.167-0.15-1.989-1.62-1.844z"/&gt;
+          &lt;path id="path12359" style="filter:url(#filter3500);stroke:url(#linearGradient12735);stroke-width:1.4669;fill:none" d="m-357.25-31.25c-0.56 1.148-2.2 2.187-3.67 2.329l-131.97 12.754c-1.48 0.142-2.21-0.667-1.65-1.815l14.2-59.586c0.56-1.147 2.2-2.186 3.68-2.329"/&gt;
+          &lt;path id="path12361" style="filter:url(#filter3530);stroke:url(#linearGradient12737);stroke-width:1.5;fill:none" d="m-478.57-79.88l134.94-13.381c1.5-0.147 2.24 0.689 1.68 1.875l-15.74 61.762"/&gt;
+        &lt;/g&gt;
+      &lt;/g&gt;
+      &lt;rect id="rect12363" style="fill:none" ry="1.5435" height="148.65" width="148.65" y="-410.06" x="-523.92"/&gt;
+    &lt;/g&gt;
+    &lt;g id="g12365" transform="matrix(.86110 0 0 .86110 694.73 399.58)"&gt;
+      &lt;g id="g12367" transform="matrix(.76602 0 0 1 -480.61 -248.9)"&gt;
+        &lt;g id="g12369" transform="translate(232.8 -16.624)"&gt;
+          &lt;path id="path12371" style="stroke:url(#linearGradient12741);stroke-width:1.5;fill:url(#linearGradient12739)" d="m-506.24-108.72l42.28-4.09c2.89-0.27 4.25 0.75 4.7 3.33l0.74 5.17 85.66-8.29c1.48-0.14 2.83 0.96 3.04 2.46l10.67 78.639c0.2 1.503-0.82 2.827-2.3 2.97l-132.17 12.782c-1.48 0.143-2.83-0.952-3.04-2.454l-11.88-87.547c-0.2-1.51 0.82-2.83 2.3-2.97z"/&gt;
+          &lt;path id="path12373" style="opacity:.32114;fill:url(#linearGradient12717)" d="m-462.98-112.48c-0.31-0.01-0.64 0-1 0.02l-42.28 2.71c-1.48 0.1-2.51 0.98-2.31 1.97l7.58 38.833c10.62-6.466 25.44-17.117 46.54-19.01 41.26-3.662 62.91-10.743 84.71-15.203l-0.11-7.52c-0.21-1-1.56-1.73-3.03-1.64l-85.66 5.5-0.75-3.42c-0.39-1.5-1.48-2.21-3.69-2.24z"/&gt;
+          &lt;path id="path12375" style="filter:url(#filter3384);stroke:url(#linearGradient12719);stroke-width:1.4836;fill:none" d="m-492.36-17.091c-1.48 0.14-2.83-0.93-3.04-2.398l-11.89-85.551c-0.21-1.47 0.82-2.76 2.3-2.9"/&gt;
+          &lt;path id="path12377" style="filter:url(#filter3342);stroke:url(#linearGradient12721);stroke-width:1.5;fill:none" d="m-507.13-107.5l42.28-4.09c2.89-0.27 4.25 0.75 4.7 3.33l0.74 5.17 85.67-8.29c1.47-0.14 2.83 0.96 3.03 2.46"/&gt;
+          &lt;rect id="rect12379" style="opacity:.85772;fill:url(#linearGradient12723)" transform="matrix(.99454 -.10431 .10431 .99454 0 0)" ry="1.3321" width="41.653" y="-157.33" x="-490.92" height="6.7793"/&gt;
+        &lt;/g&gt;
+        &lt;g id="g12381" transform="translate(232.8 -16.624)"&gt;
+          &lt;path id="path12383" style="stroke:url(#linearGradient12753);stroke-width:1.5;fill:url(#linearGradient12751)" d="m-477.4-80.856l134.94-13.381c1.49-0.147 2.24 0.689 1.67 1.875l-15.73 61.762c-0.57 1.186-2.23 2.259-3.72 2.406l-133.58 13.175c-1.5 0.148-2.24-0.689-1.68-1.875l14.38-61.556c0.57-1.186 2.23-2.259 3.72-2.406z"/&gt;
+          &lt;path id="path12385" style="opacity:.80488;fill:url(#linearGradient12729)" d="m-350.51-56.712c-44.06 4.453-101.95 10.275-137.28 13.688l-5.91 25.218c-0.55 1.167 0.19 1.989 1.66 1.844l131.41-12.969c1.46-0.145 3.09-1.208 3.65-2.375l6.47-25.406z"/&gt;
+          &lt;path id="path12387" style="opacity:.82114;fill:url(#linearGradient12731)" d="m-476.72-80.098l132.75-13.163c1.47-0.145 2.2 0.678 1.65 1.844l-15.49 60.761c-0.55 1.166-2.19 2.222-3.65 2.367l-131.42 12.961c-1.47 0.145-2.2-0.677-1.65-1.844l14.15-60.558c0.56-1.167 2.19-2.223 3.66-2.368z"/&gt;
+          &lt;path id="path12389" style="opacity:.51626;fill:url(#linearGradient12759)" d="m-343.13-93.482l-132.75 13.156c-1.47 0.145-3.1 1.209-3.66 2.375l-8.09 34.625c17.47-8.015 37.19-14.444 54.18-16.312 38.02-4.177 64.41-6.536 89.88-23.875l2.06-8.125c0.56-1.167-0.15-1.989-1.62-1.844z"/&gt;
+          &lt;path id="path12391" style="filter:url(#filter3500);stroke:url(#linearGradient12735);stroke-width:1.4669;fill:none" d="m-357.25-31.25c-0.56 1.148-2.2 2.187-3.67 2.329l-131.97 12.754c-1.48 0.142-2.21-0.667-1.65-1.815l14.2-59.586c0.56-1.147 2.2-2.186 3.68-2.329"/&gt;
+          &lt;path id="path12393" style="filter:url(#filter3530);stroke:url(#linearGradient12737);stroke-width:1.5;fill:none" d="m-478.57-79.88l134.94-13.381c1.5-0.147 2.24 0.689 1.68 1.875l-15.74 61.762"/&gt;
+        &lt;/g&gt;
+      &lt;/g&gt;
+      &lt;rect id="rect12395" style="fill:none" ry="1.5435" height="148.65" width="148.65" y="-403.77" x="-701.84"/&gt;
+    &lt;/g&gt;
+    &lt;g id="g12397" transform="matrix(.86110 0 0 .86110 459.97 155.42)"&gt;
+      &lt;g id="g12399" transform="matrix(.76591 0 0 1 40.152 59.737)"&gt;
+        &lt;g id="g12401"&gt;
+          &lt;path id="path12403" style="stroke:url(#linearGradient12767);stroke-width:1.5;fill:url(#linearGradient12765)" d="m-506.24-108.72l42.28-4.09c2.89-0.27 4.25 0.75 4.7 3.33l0.74 5.17 85.66-8.29c1.48-0.14 2.83 0.96 3.04 2.46l10.67 78.639c0.2 1.503-0.82 2.827-2.3 2.97l-132.17 12.782c-1.48 0.143-2.83-0.952-3.04-2.454l-11.88-87.547c-0.2-1.51 0.82-2.83 2.3-2.97z"/&gt;
+          &lt;path id="path12405" style="opacity:.32114;fill:url(#linearGradient12717)" d="m-462.98-112.48c-0.31-0.01-0.64 0-1 0.02l-42.28 2.71c-1.48 0.1-2.51 0.98-2.31 1.97l7.58 38.833c10.62-6.466 25.44-17.117 46.54-19.01 41.26-3.662 62.91-10.743 84.71-15.203l-0.11-7.52c-0.21-1-1.56-1.73-3.03-1.64l-85.66 5.5-0.75-3.42c-0.39-1.5-1.48-2.21-3.69-2.24z"/&gt;
+          &lt;path id="path12407" style="filter:url(#filter3384);stroke:url(#linearGradient12719);stroke-width:1.4836;fill:none" d="m-492.36-17.091c-1.48 0.14-2.83-0.93-3.04-2.398l-11.89-85.551c-0.21-1.47 0.82-2.76 2.3-2.9"/&gt;
+          &lt;path id="path12409" style="filter:url(#filter3342);stroke:url(#linearGradient12721);stroke-width:1.5;fill:none" d="m-507.13-107.5l42.28-4.09c2.89-0.27 4.25 0.75 4.7 3.33l0.74 5.17 85.67-8.29c1.47-0.14 2.83 0.96 3.03 2.46"/&gt;
+          &lt;rect id="rect12411" style="opacity:.85772;fill:url(#linearGradient12723)" transform="matrix(.99454 -.10431 .10431 .99454 0 0)" ry="1.3321" width="41.653" y="-157.33" x="-490.92" height="6.7793"/&gt;
+        &lt;/g&gt;
+        &lt;g id="g12413"&gt;
+          &lt;path id="path12415" style="stroke:url(#linearGradient12779);stroke-width:1.5;fill:url(#linearGradient12777)" d="m-477.4-80.856l134.94-13.381c1.49-0.147 2.24 0.689 1.67 1.875l-15.73 61.762c-0.57 1.186-2.23 2.259-3.72 2.406l-133.58 13.175c-1.5 0.148-2.24-0.689-1.68-1.875l14.38-61.556c0.57-1.186 2.23-2.259 3.72-2.406z"/&gt;
+          &lt;path id="path12417" style="opacity:.80488;fill:url(#linearGradient12729)" d="m-350.51-56.712c-44.06 4.453-101.95 10.275-137.28 13.688l-5.91 25.218c-0.55 1.167 0.19 1.989 1.66 1.844l131.41-12.969c1.46-0.145 3.09-1.208 3.65-2.375l6.47-25.406z"/&gt;
+          &lt;path id="path12419" style="opacity:.82114;fill:url(#linearGradient12731)" d="m-476.72-80.098l132.75-13.163c1.47-0.145 2.2 0.678 1.65 1.844l-15.49 60.761c-0.55 1.166-2.19 2.222-3.65 2.367l-131.42 12.961c-1.47 0.145-2.2-0.677-1.65-1.844l14.15-60.558c0.56-1.167 2.19-2.223 3.66-2.368z"/&gt;
+          &lt;path id="path12421" style="opacity:.51626;fill:url(#linearGradient12733)" d="m-343.13-93.482l-132.75 13.156c-1.47 0.145-3.1 1.209-3.66 2.375l-8.09 34.625c17.47-8.015 37.19-14.444 54.18-16.312 38.02-4.177 64.41-6.536 89.88-23.875l2.06-8.125c0.56-1.167-0.15-1.989-1.62-1.844z"/&gt;
+          &lt;path id="path12423" style="filter:url(#filter3500);stroke:url(#linearGradient12735);stroke-width:1.4669;fill:none" d="m-357.25-31.25c-0.56 1.148-2.2 2.187-3.67 2.329l-131.97 12.754c-1.48 0.142-2.21-0.667-1.65-1.815l14.2-59.586c0.56-1.147 2.2-2.186 3.68-2.329"/&gt;
+          &lt;path id="path12425" style="filter:url(#filter3530);stroke:url(#linearGradient12737);stroke-width:1.5;fill:none" d="m-478.57-79.88l134.94-13.381c1.5-0.147 2.24 0.689 1.68 1.875l-15.74 61.762"/&gt;
+        &lt;/g&gt;
+      &lt;/g&gt;
+      &lt;rect id="rect12427" style="fill:none" ry="1.5435" height="148.65" width="148.65" y="-83.08" x="-359.37"/&gt;
+    &lt;/g&gt;
+    &lt;g id="g12429" transform="matrix(.86110 0 0 .86110 661.81 476.65)"&gt;
+      &lt;g id="g12431" transform="matrix(.76627 0 0 1 -124.26 -271.81)"&gt;
+        &lt;g id="g12433"&gt;
+          &lt;path id="path12435" style="stroke:url(#linearGradient12793);stroke-width:1.5;fill:url(#linearGradient12791)" d="m-506.24-108.72l42.28-4.09c2.89-0.27 4.25 0.75 4.7 3.33l0.74 5.17 85.66-8.29c1.48-0.14 2.83 0.96 3.04 2.46l10.67 78.639c0.2 1.503-0.82 2.827-2.3 2.97l-132.17 12.782c-1.48 0.143-2.83-0.952-3.04-2.454l-11.88-87.547c-0.2-1.51 0.82-2.83 2.3-2.97z"/&gt;
+          &lt;path id="path12437" style="opacity:.32114;fill:url(#linearGradient12717)" d="m-462.98-112.48c-0.31-0.01-0.64 0-1 0.02l-42.28 2.71c-1.48 0.1-2.51 0.98-2.31 1.97l7.58 38.833c10.62-6.466 25.44-17.117 46.54-19.01 41.26-3.662 62.91-10.743 84.71-15.203l-0.11-7.52c-0.21-1-1.56-1.73-3.03-1.64l-85.66 5.5-0.75-3.42c-0.39-1.5-1.48-2.21-3.69-2.24z"/&gt;
+          &lt;path id="path12439" style="filter:url(#filter3384);stroke:url(#linearGradient12719);stroke-width:1.4836;fill:none" d="m-492.36-17.091c-1.48 0.14-2.83-0.93-3.04-2.398l-11.89-85.551c-0.21-1.47 0.82-2.76 2.3-2.9"/&gt;
+          &lt;path id="path12441" style="filter:url(#filter3342);stroke:url(#linearGradient12721);stroke-width:1.5;fill:none" d="m-507.13-107.5l42.28-4.09c2.89-0.27 4.25 0.75 4.7 3.33l0.74 5.17 85.67-8.29c1.47-0.14 2.83 0.96 3.03 2.46"/&gt;
+          &lt;rect id="rect12443" style="opacity:.85772;fill:url(#linearGradient12723)" transform="matrix(.99454 -.10431 .10431 .99454 0 0)" ry="1.3321" width="41.653" y="-157.33" x="-490.92" height="6.7793"/&gt;
+        &lt;/g&gt;
+        &lt;g id="g12445"&gt;
+          &lt;path id="path12447" style="stroke:url(#linearGradient12805);stroke-width:1.5;fill:url(#linearGradient12803)" d="m-477.4-80.856l134.94-13.381c1.49-0.147 2.24 0.689 1.67 1.875l-15.73 61.762c-0.57 1.186-2.23 2.259-3.72 2.406l-133.58 13.175c-1.5 0.148-2.24-0.689-1.68-1.875l14.38-61.556c0.57-1.186 2.23-2.259 3.72-2.406z"/&gt;
+          &lt;path id="path12449" style="opacity:.80488;fill:url(#linearGradient12729)" d="m-350.51-56.712c-44.06 4.453-101.95 10.275-137.28 13.688l-5.91 25.218c-0.55 1.167 0.19 1.989 1.66 1.844l131.41-12.969c1.46-0.145 3.09-1.208 3.65-2.375l6.47-25.406z"/&gt;
+          &lt;path id="path12451" style="opacity:.82114;fill:url(#linearGradient12731)" d="m-476.72-80.098l132.75-13.163c1.47-0.145 2.2 0.678 1.65 1.844l-15.49 60.761c-0.55 1.166-2.19 2.222-3.65 2.367l-131.42 12.961c-1.47 0.145-2.2-0.677-1.65-1.844l14.15-60.558c0.56-1.167 2.19-2.223 3.66-2.368z"/&gt;
+          &lt;path id="path12453" style="opacity:.51626;fill:url(#linearGradient12733)" d="m-343.13-93.482l-132.75 13.156c-1.47 0.145-3.1 1.209-3.66 2.375l-8.09 34.625c17.47-8.015 37.19-14.444 54.18-16.312 38.02-4.177 64.41-6.536 89.88-23.875l2.06-8.125c0.56-1.167-0.15-1.989-1.62-1.844z"/&gt;
+          &lt;path id="path12455" style="filter:url(#filter3500);stroke:url(#linearGradient12735);stroke-width:1.4669;fill:none" d="m-357.25-31.25c-0.56 1.148-2.2 2.187-3.67 2.329l-131.97 12.754c-1.48 0.142-2.21-0.667-1.65-1.815l14.2-59.586c0.56-1.147 2.2-2.186 3.68-2.329"/&gt;
+          &lt;path id="path12457" style="filter:url(#filter3530);stroke:url(#linearGradient12737);stroke-width:1.5;fill:none" d="m-478.57-79.88l134.94-13.381c1.5-0.147 2.24 0.689 1.68 1.875l-15.74 61.762"/&gt;
+        &lt;/g&gt;
+      &lt;/g&gt;
+      &lt;rect id="rect12459" style="fill:none" ry="1.5435" height="148.65" width="148.65" y="-410.06" x="-523.92"/&gt;
+    &lt;/g&gt;
+  &lt;/g&gt;
+  &lt;metadata&gt;
+    &lt;rdf:RDF&gt;
+      &lt;cc:Work&gt;
+        &lt;dc:format&gt;image/svg+xml&lt;/dc:format&gt;
+        &lt;dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/&gt;
+        &lt;cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/&gt;
+        &lt;dc:publisher&gt;
+          &lt;cc:Agent rdf:about="http://openclipart.org/"&gt;
+            &lt;dc:title&gt;Openclipart&lt;/dc:title&gt;
+          &lt;/cc:Agent&gt;
+        &lt;/dc:publisher&gt;
+        &lt;dc:title&gt;Simple Green Yellow Blue Violet Folders&lt;/dc:title&gt;
+        &lt;dc:date&gt;2008-02-12T18:07:57&lt;/dc:date&gt;
+        &lt;dc:description&gt;Colored version of folders used in my older works&lt;/dc:description&gt;
+        &lt;dc:source&gt;https://openclipart.org/detail/13763/simple-green-yellow-blue-violet-folders-by-sarxos&lt;/dc:source&gt;
+        &lt;dc:creator&gt;
+          &lt;cc:Agent&gt;
+            &lt;dc:title&gt;sarxos&lt;/dc:title&gt;
+          &lt;/cc:Agent&gt;
+        &lt;/dc:creator&gt;
+        &lt;dc:subject&gt;
+          &lt;rdf:Bag&gt;
+            &lt;rdf:li&gt;blue folder&lt;/rdf:li&gt;
+            &lt;rdf:li&gt;color folders&lt;/rdf:li&gt;
+            &lt;rdf:li&gt;green folder&lt;/rdf:li&gt;
+            &lt;rdf:li&gt;office&lt;/rdf:li&gt;
+            &lt;rdf:li&gt;orange folder&lt;/rdf:li&gt;
+            &lt;rdf:li&gt;violet folder&lt;/rdf:li&gt;
+          &lt;/rdf:Bag&gt;
+        &lt;/dc:subject&gt;
+      &lt;/cc:Work&gt;
+      &lt;cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/"&gt;
+        &lt;cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/&gt;
+        &lt;cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/&gt;
+        &lt;cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/&gt;
+      &lt;/cc:License&gt;
+    &lt;/rdf:RDF&gt;
+  &lt;/metadata&gt;
+&lt;/svg&gt;
+</y:Resource>
+      <y:Resource id="9">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!-- Created with Inkscape (http://www.inkscape.org/) --&gt;
+&lt;svg
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg2"
+    viewBox="0 0 128 128"
+    version="1.1"
+  &gt;
+  &lt;defs
+      id="defs4"
+    &gt;
+    &lt;linearGradient
+        id="linearGradient3851-7"
+        y2="8.2032"
+        gradientUnits="userSpaceOnUse"
+        x2="-79.987"
+        gradientTransform="matrix(.72281 0 0 .72281 87.917 115.61)"
+        y1="-137.23"
+        x1="9.3514"
+      &gt;
+      &lt;stop
+          id="stop3630-72-7"
+          style="stop-color:#dbdbdb"
+          offset="0"
+      /&gt;
+      &lt;stop
+          id="stop3632-7-2"
+          style="stop-color:#757575"
+          offset="1"
+      /&gt;
+    &lt;/linearGradient
+    &gt;
+  &lt;/defs
+  &gt;
+  &lt;rect
+      id="rect3872"
+      style="opacity:0;color:#000000;stroke-width:.96360"
+      rx="0"
+      ry="0"
+      height="128"
+      width="128"
+      y="0"
+      x="0"
+  /&gt;
+  &lt;path
+      id="rect3034"
+      style="color:#000000;fill:url(#linearGradient3851-7)"
+      d="m29.094 11.236c-3.1838 0-5.7188 2.5662-5.7188 5.75v94.029c0 3.1838 2.5349 5.75 5.7188 5.75h69.812c3.1838 0 5.7188-2.5662 5.7188-5.75v-70.654h-21.031c-4.3061 0-8.0625-3.1411-8.0625-7.3125v-21.812zm50.438 0v21.812c0 1.7141 1.632 3.3125 4.0625 3.3125h21.031z"
+  /&gt;
+  &lt;metadata
+    &gt;
+    &lt;rdf:RDF
+      &gt;
+      &lt;cc:Work
+        &gt;
+        &lt;dc:format
+          &gt;image/svg+xml&lt;/dc:format
+        &gt;
+        &lt;dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        /&gt;
+        &lt;cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        /&gt;
+        &lt;dc:publisher
+          &gt;
+          &lt;cc:Agent
+              rdf:about="http://openclipart.org/"
+            &gt;
+            &lt;dc:title
+              &gt;Openclipart&lt;/dc:title
+            &gt;
+          &lt;/cc:Agent
+          &gt;
+        &lt;/dc:publisher
+        &gt;
+        &lt;dc:title
+          &gt;File Icon&lt;/dc:title
+        &gt;
+        &lt;dc:date
+          &gt;2010-11-21T20:49:05&lt;/dc:date
+        &gt;
+        &lt;dc:description
+          &gt;Icon inspired by Awoken gtk icons theme. This icon is now a part of Clarity icons for GTK which can be found on gnome-look.org&lt;/dc:description
+        &gt;
+        &lt;dc:source
+          &gt;https://openclipart.org/detail/97525/file-icon-by-kuba&lt;/dc:source
+        &gt;
+        &lt;dc:creator
+          &gt;
+          &lt;cc:Agent
+            &gt;
+            &lt;dc:title
+              &gt;kuba&lt;/dc:title
+            &gt;
+          &lt;/cc:Agent
+          &gt;
+        &lt;/dc:creator
+        &gt;
+        &lt;dc:subject
+          &gt;
+          &lt;rdf:Bag
+            &gt;
+            &lt;rdf:li
+              &gt;AwOken&lt;/rdf:li
+            &gt;
+            &lt;rdf:li
+              &gt;file&lt;/rdf:li
+            &gt;
+            &lt;rdf:li
+              &gt;gradient&lt;/rdf:li
+            &gt;
+            &lt;rdf:li
+              &gt;grey&lt;/rdf:li
+            &gt;
+            &lt;rdf:li
+              &gt;icon&lt;/rdf:li
+            &gt;
+            &lt;rdf:li
+              &gt;monoshape&lt;/rdf:li
+            &gt;
+          &lt;/rdf:Bag
+          &gt;
+        &lt;/dc:subject
+        &gt;
+      &lt;/cc:Work
+      &gt;
+      &lt;cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        &gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        /&gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        /&gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        /&gt;
+      &lt;/cc:License
+      &gt;
+    &lt;/rdf:RDF
+    &gt;
+  &lt;/metadata
+  &gt;
+&lt;/svg
+&gt;
+</y:Resource>
+      <y:Resource id="10">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!-- Created with Inkscape (http://www.inkscape.org/) --&gt;
+&lt;svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg3491"
+    sodipodi:docname="file-icon-csv.svg"
+    viewBox="0 0 66.328 68.03"
+    version="1.1"
+    inkscape:version="0.48.1 r9760"
+  &gt;
+  &lt;defs
+      id="defs3493"
+    &gt;
+    &lt;filter
+        id="filter4402-9"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      &gt;
+      &lt;feGaussianBlur
+          id="feGaussianBlur4404-4"
+          stdDeviation="1.2625"
+          inkscape:collect="always"
+      /&gt;
+    &lt;/filter
+    &gt;
+    &lt;linearGradient
+        id="linearGradient3428"
+        y2="150.17"
+        xlink:href="#linearGradient3928-8-4"
+        gradientUnits="userSpaceOnUse"
+        x2="299.9"
+        gradientTransform="matrix(.53078 0 0 .52644 -129.36 -339.55)"
+        y1="238.13"
+        x1="298.48"
+        inkscape:collect="always"
+    /&gt;
+    &lt;linearGradient
+        id="linearGradient3928-8-4"
+      &gt;
+      &lt;stop
+          id="stop3930-2-0"
+          style="stop-color:#7c7c7c"
+          offset="0"
+      /&gt;
+      &lt;stop
+          id="stop3932-0-7"
+          style="stop-color:#e6e3e3"
+          offset="1"
+      /&gt;
+    &lt;/linearGradient
+    &gt;
+    &lt;filter
+        id="filter4396-9"
+        width="1.0832"
+        y="-.10750"
+        x="-.041613"
+        height="1.215"
+        color-interpolation-filters="sRGB"
+        inkscape:collect="always"
+      &gt;
+      &lt;feGaussianBlur
+          id="feGaussianBlur4398-8"
+          stdDeviation="0.53749999"
+          inkscape:collect="always"
+      /&gt;
+    &lt;/filter
+    &gt;
+    &lt;linearGradient
+        id="linearGradient3430"
+        y2="177.41"
+        xlink:href="#linearGradient3928-8-4"
+        gradientUnits="userSpaceOnUse"
+        x2="310.68"
+        gradientTransform="matrix(.52980 0 0 .52980 -129.02 -340.03)"
+        y1="161.52"
+        x1="326.01"
+        inkscape:collect="always"
+    /&gt;
+  &lt;/defs
+  &gt;
+  &lt;sodipodi:namedview
+      id="base"
+      fit-margin-left="0"
+      inkscape:showpageshadow="false"
+      inkscape:zoom="12.70028"
+      borderopacity="1.0"
+      inkscape:current-layer="layer1"
+      inkscape:cx="33.164162"
+      inkscape:cy="34.014999"
+      inkscape:window-maximized="1"
+      showgrid="false"
+      fit-margin-right="0"
+      inkscape:document-units="px"
+      bordercolor="#666666"
+      inkscape:window-x="0"
+      inkscape:window-y="24"
+      fit-margin-bottom="0"
+      inkscape:window-width="1920"
+      inkscape:pageopacity="0.0"
+      inkscape:pageshadow="2"
+      pagecolor="#ffffff"
+      inkscape:window-height="1033"
+      showborder="false"
+      fit-margin-top="0"
+  /&gt;
+  &lt;g
+      id="layer1"
+      inkscape:label="Layer 1"
+      inkscape:groupmode="layer"
+      transform="translate(-450.08 -233.92)"
+    &gt;
+    &lt;g
+        id="g3408"
+        inkscape:export-ydpi="75.042641"
+        inkscape:export-xdpi="75.042641"
+        inkscape:export-filename="/home/ramsakb/desk/cherryhill/text6715.png"
+        transform="translate(453.75 497.07)"
+      &gt;
+      &lt;path
+          id="path3410"
+          sodipodi:nodetypes="cccccccc"
+          style="opacity:.6;stroke-linejoin:round;color:#000000;stroke-dashoffset:117.54;filter:url(#filter4402-9);stroke:#000000;stroke-linecap:round;stroke-width:2;fill:#000000"
+          inkscape:connector-curvature="0"
+          d="m13.617-255.14v8.0776 13.21 34.712h45v-40.108l-16.023-15.892z"
+      /&gt;
+      &lt;path
+          id="path3412"
+          d="m6.6167-262.14v8.0776 13.21 34.712h45v-40.108l-16.023-15.892z"
+          sodipodi:nodetypes="cccccccc"
+          style="stroke-linejoin:round;color:#000000;stroke-dashoffset:117.54;stroke:#000000;stroke-linecap:round;stroke-width:2;fill:url(#linearGradient3428)"
+          inkscape:connector-curvature="0"
+      /&gt;
+      &lt;rect
+          id="rect3414"
+          style="color:#000000;filter:url(#filter4396-9);fill:#000000"
+          rx="1"
+          ry="1"
+          height="12"
+          width="31"
+          y="-251.14"
+          x="-2.3833"
+      /&gt;
+      &lt;rect
+          id="rect3416"
+          style="color:#000000;fill:#b827b8"
+          rx="1"
+          ry="1"
+          height="12"
+          width="31"
+          y="-251.14"
+          x="-2.3833"
+      /&gt;
+      &lt;path
+          id="path3418"
+          d="m51.617-246.14-15.989-15.989v15.989h15.989z"
+          style="stroke-linejoin:round;color:#000000;stroke-dashoffset:117.54;stroke:#000000;stroke-linecap:round;stroke-width:2;fill:url(#linearGradient3430)"
+          inkscape:connector-curvature="0"
+      /&gt;
+      &lt;text
+          id="text3420"
+          style="font-size:10.208px;font-family:Sans;fill:#ffffff;letter-spacing:0px;text-anchor:middle;line-height:125%;word-spacing:0px;font-weight:bold;text-align:center"
+          inkscape:export-ydpi="75.042641"
+          xml:space="preserve"
+          inkscape:export-filename="/home/ramsakb/desk/cherryhill/text6715.png"
+          transform="scale(.89596 1.1161)"
+          inkscape:export-xdpi="75.042641"
+          sodipodi:linespacing="125%"
+          y="-215.91681"
+          x="14.308331"
+        &gt;
+        &lt;tspan
+            id="tspan3422"
+            sodipodi:role="line"
+            x="14.308331"
+            y="-215.91681"
+          &gt;XML&lt;/tspan
+        &gt;
+      &lt;/text
+      &gt;
+      &lt;text
+          id="text3424"
+          style="font-size:20.934px;font-family:DejaVu Sans;fill:#b827b8;letter-spacing:0px;text-anchor:middle;line-height:125%;word-spacing:0px;font-weight:bold;text-align:center"
+          inkscape:export-ydpi="75.042641"
+          xml:space="preserve"
+          inkscape:export-filename="/home/ramsakb/desk/cherryhill/text6715.png"
+          inkscape:export-xdpi="75.042641"
+          y="-217.14209"
+          x="29.116678"
+          sodipodi:linespacing="125%"
+        &gt;
+        &lt;tspan
+            id="tspan3426"
+            sodipodi:role="line"
+            x="29.116678"
+            style="font-family:DejaVu Sans;font-weight:bold;fill:#b827b8"
+            y="-217.14209"
+          &gt;&amp;lt;/&amp;gt;&lt;/tspan
+        &gt;
+      &lt;/text
+      &gt;
+    &lt;/g
+    &gt;
+  &lt;/g
+  &gt;
+  &lt;metadata
+    &gt;
+    &lt;rdf:RDF
+      &gt;
+      &lt;cc:Work
+        &gt;
+        &lt;dc:format
+          &gt;image/svg+xml&lt;/dc:format
+        &gt;
+        &lt;dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        /&gt;
+        &lt;cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        /&gt;
+        &lt;dc:publisher
+          &gt;
+          &lt;cc:Agent
+              rdf:about="http://openclipart.org/"
+            &gt;
+            &lt;dc:title
+              &gt;Openclipart&lt;/dc:title
+            &gt;
+          &lt;/cc:Agent
+          &gt;
+        &lt;/dc:publisher
+        &gt;
+        &lt;dc:title
+          &gt;file-icon-xml&lt;/dc:title
+        &gt;
+        &lt;dc:date
+          &gt;2012-04-29T23:01:09&lt;/dc:date
+        &gt;
+        &lt;dc:description
+        /&gt;
+        &lt;dc:source
+          &gt;https://openclipart.org/detail/169753/file-icon-xml-by-jabon&lt;/dc:source
+        &gt;
+        &lt;dc:creator
+          &gt;
+          &lt;cc:Agent
+            &gt;
+            &lt;dc:title
+              &gt;jabon&lt;/dc:title
+            &gt;
+          &lt;/cc:Agent
+          &gt;
+        &lt;/dc:creator
+        &gt;
+        &lt;dc:subject
+          &gt;
+          &lt;rdf:Bag
+            &gt;
+            &lt;rdf:li
+              &gt;csv&lt;/rdf:li
+            &gt;
+            &lt;rdf:li
+              &gt;file&lt;/rdf:li
+            &gt;
+            &lt;rdf:li
+              &gt;icon&lt;/rdf:li
+            &gt;
+          &lt;/rdf:Bag
+          &gt;
+        &lt;/dc:subject
+        &gt;
+      &lt;/cc:Work
+      &gt;
+      &lt;cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        &gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        /&gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        /&gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        /&gt;
+      &lt;/cc:License
+      &gt;
+    &lt;/rdf:RDF
+    &gt;
+  &lt;/metadata
+  &gt;
+&lt;/svg
+&gt;
+</y:Resource>
+      <y:Resource id="11">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    xmlns:cc="http://web.resource.org/cc/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    id="svg1"
+    viewBox="0 0 60 60"
+    sodipodi:version="0.32"
+    _SVGFile__filename="oldscale/filesystems/link.svg"
+    version="1.0"
+    inkscape:version="0.41"
+    y="0"
+    x="0"
+    sodipodi:docname="zip_overlay.svg"
+    sodipodi:docbase="/home/danny/work/icons/primary/scalable/filesystems"
+  &gt;
+  &lt;sodipodi:namedview
+      id="base"
+      bordercolor="#666666"
+      inkscape:window-x="0"
+      inkscape:window-y="0"
+      pagecolor="#ffffff"
+      inkscape:zoom="8.0275825"
+      inkscape:pageshadow="2"
+      borderopacity="1.0"
+      inkscape:current-layer="svg1"
+      inkscape:cx="54.721548"
+      inkscape:cy="15.122706"
+      inkscape:window-width="1020"
+      inkscape:pageopacity="0.0"
+      inkscape:window-height="691"
+  /&gt;
+  &lt;path
+      id="path1103"
+      d="m38.003 36.669c-0.864 0-1.56 0.696-1.56 1.56v17.524c0 0.864 0.696 1.559 1.56 1.559h17.523c0.865 0 1.56-0.695 1.56-1.559v-17.524c0-0.864-0.695-1.56-1.56-1.56h-17.523z"
+      style="stroke-linejoin:round;stroke:#ffffff;stroke-linecap:round;stroke-width:5;fill:none"
+      transform="translate(-.21137 -.43750)"
+  /&gt;
+  &lt;path
+      id="rect850"
+      d="m38.003 36.7c-0.864 0-1.56 0.695-1.56 1.56v17.523c0 0.864 0.696 1.56 1.56 1.56h17.523c0.865 0 1.56-0.696 1.56-1.56v-17.523c0-0.865-0.695-1.56-1.56-1.56h-17.523z"
+      style="stroke-linejoin:round;fill-rule:evenodd;stroke:#000000;stroke-linecap:round;stroke-width:2.5;fill:#d9dddf"
+      transform="translate(-.21137 -.46820)"
+  /&gt;
+  &lt;path
+      id="path753"
+      style="stroke-linejoin:round;stroke:#000000;stroke-linecap:round;stroke-width:2.9882;fill:none"
+      transform="matrix(1.0458 0 0 1.0458 -2.1634 -4.8976)"
+      d="m38.342 47.488h9.533"
+  /&gt;
+  &lt;path
+      id="path754"
+      style="stroke-linejoin:round;stroke:#000000;stroke-linecap:round;stroke-width:2.9882;fill:none"
+      transform="matrix(1.0458 0 0 1.0458 -2.1634 -4.8976)"
+      d="m38.342 54.44h9.533"
+  /&gt;
+  &lt;path
+      id="path761"
+      style="stroke-linejoin:round;stroke:#000000;stroke-linecap:round;stroke-width:2.9882;fill:none"
+      transform="matrix(1.0458 0 0 1.0458 -2.1634 -4.8976)"
+      d="m45.294 43.957h9.533"
+  /&gt;
+  &lt;path
+      id="path762"
+      style="stroke-linejoin:round;stroke:#000000;stroke-linecap:round;stroke-width:2.9882;fill:none"
+      transform="matrix(1.0458 0 0 1.0458 -2.1634 -4.8976)"
+      d="m45.294 50.91h9.533"
+  /&gt;
+  &lt;metadata
+    &gt;
+    &lt;rdf:RDF
+      &gt;
+      &lt;cc:Work
+        &gt;
+        &lt;dc:format
+          &gt;image/svg+xml&lt;/dc:format
+        &gt;
+        &lt;dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        /&gt;
+        &lt;cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        /&gt;
+        &lt;dc:publisher
+          &gt;
+          &lt;cc:Agent
+              rdf:about="http://openclipart.org/"
+            &gt;
+            &lt;dc:title
+              &gt;Openclipart&lt;/dc:title
+            &gt;
+          &lt;/cc:Agent
+          &gt;
+        &lt;/dc:publisher
+        &gt;
+      &lt;/cc:Work
+      &gt;
+      &lt;cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        &gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        /&gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        /&gt;
+        &lt;cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        /&gt;
+      &lt;/cc:License
+      &gt;
+    &lt;/rdf:RDF
+    &gt;
+  &lt;/metadata
+  &gt;
+&lt;/svg
+&gt;
+</y:Resource>
     </y:Resources>
   </data>
 </graphml>
