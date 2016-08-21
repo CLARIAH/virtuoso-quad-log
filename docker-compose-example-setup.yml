@@ -14,14 +14,14 @@ services:
       - RUN_INTERVAL=20
       - INSERT_PROCEDURES=y
       - VIRTUOSO_HOST_NAME=virtuoso-source
-      - MAX_QUADS_PER_DUMP_FILE=10
+      - MAX_QUADS_PER_DUMP_FILE=100
     volumes:
       - stash1:/output
   the_graph_splitter:
     build: ./graph-splitter
     image: clariah/graph-splitter
     environment:
-      - RUN_INTERVAL=20
+      - RUN_INTERVAL=2000
     volumes:
       - stash1:/input
       - stash2:/output
@@ -29,7 +29,7 @@ services:
     build: ./resourcesync-generator
     image: clariah/resourcesync-generator
     environment:
-      - RUN_INTERVAL=20
+      - RUN_INTERVAL=2000
       - HTTP_SERVER_URL=http://192.168.99.100:8085 #this is used to generate links in the xml files. It should be the public url
       - MAX_FILES_COMPRESSED=10
       - WRITE_SEPARATE_MANIFEST=y # Write separate manifest files in publish dir.

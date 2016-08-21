@@ -10,7 +10,7 @@
 --              Default value is -, not excluding graphs. (Default value '' (empty string) hits on errors.)
 CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCHAR := '-') {
 
-    DECLARE nquad, excludes, chckp, startdate, currenttrx, rst ANY;
+    DECLARE nquad, buffer, excludes, at_checkpoint, startdate, currenttrx, rst ANY;
     DECLARE inx           INT;
     DECLARE cpinterval    INTEGER;
 
@@ -18,6 +18,7 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
     SET isolation = 'serializable';
 
     result_names(nquad);
+    buffer := dict_new(); -- Dictionary objects are always passed by reference.
 
     -- disable automatic checkpoints during dump.
     cpinterval := checkpoint_interval (-1);
@@ -32,7 +33,7 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
     EXEC ('CHECKPOINT');
     -- Full path to current transaction file.
     currenttrx := cfg_item_value(virtuoso_ini_path(), 'Database', 'TransactionFile');
-    chckp := right(regexp_replace(currenttrx, '[^0-9]', ''), 14);
+    at_checkpoint := right(regexp_replace(currenttrx, '[^0-9]', ''), 14);
 
     -- See note at foot of procedure.
     excludes := split_and_decode(excluded_graphs, 0, '\0\0 ');
@@ -46,18 +47,19 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
                 FILTER ( bif:position(?g, ?:excludes) = 0 )
             } ) AS sub OPTION (loop)) DO
     {
-        IF (mod(inx, maxq) = 0) {
-            result(concat('# at checkpoint   ', chckp));
-            result(concat('# dump started    ', startdate));
-        }
-        result(vql_create_nquad('+', "s", "p", "o", "g"));
+        vql_buffer_nquad('+', "s", "p", "o", "g", buffer, at_checkpoint, maxq);
         inx := inx + 1;
     }
-    result(concat('# at checkpoint   ', chckp));
-    result(concat('# dump started    ', startdate));
+
+    -- output the rest of the buffer
+    vql_print_buffer(buffer, at_checkpoint);
+
+    -- start a report
+    result(concat('# at checkpoint  ', at_checkpoint));
+    result(concat('# dump started   ', startdate));
 
     -- Datetime string in name of transaction logs has seconds resolution.
-    -- Set the next checkpoint at least 1 second later than chckp.
+    -- Set the next checkpoint at least 1 second later than at_checkpoint.
     delay(1);
 
     -- See if currenttrx is stil the current transaction log.
@@ -76,9 +78,8 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
     }
 
     -- Mark the dump as completed.
-    result(concat('# dump completed  ', datestring_GMT(now())));
-    result(concat('# quad count      ', inx));
-    result(concat('# excluded graphs ', excluded_graphs));
+    result(concat('# dump completed ', datestring_GMT(now())));
+    result(concat('# quad count     ', inx));
 }
 ;
 -- [Note]

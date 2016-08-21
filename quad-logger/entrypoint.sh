@@ -10,7 +10,6 @@ if [ -e md5_stored_procedures ]; then
 fi
 
 while true; do
-	echo "Running generate..."
 	bash generate-rdfpatch.sh && echo "generate successfull. sleep $RUN_INTERVAL" >&2 || echo "generate failed. sleep $RUN_INTERVAL" >&2
 	sleep ${RUN_INTERVAL}
 done

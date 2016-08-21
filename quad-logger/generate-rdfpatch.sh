@@ -50,8 +50,8 @@ MD5_STORED_PROCEDURES=md5_stored_procedures
 # File constituting handshake between this service and chained services.
 STARTED_AT_FILE="$DUMP_DIR/started_at.txt"
 
-# File enabling processing of last real 'rdfpatch-*' file by chained processes
-SHAM_PATCH_FILE="$DUMP_DIR/rdfpatch-99999999999999"
+# File enabling processing of last real 'rdf_out_*' file by chained processes
+SHAM_RDF_OUT_FILE="$DUMP_DIR/rdf_out_99999999999999-99999999999999"
 
 # File with dump information, also used to check if a successful dump has been executed.
 DUMP_INFO_FILE="$DUMP_DIR/rdfdump_info.txt"
@@ -121,9 +121,9 @@ write_md5_stored_procedures()
 assert_procedures_stored()
 {
 	# files are in the directory 'sql-proc'
-	local files=(utils.sql dump_nquads.sql parse_trx.sql)
+	local files=(utils.sql dump_nquads.sql parse_trx_logs.sql buffer_nquads.sql)
 	# the number of procedures that start with 'vql_*'
-	local procedures_count=9
+	local procedures_count=12
 
 	$ISQL_CMD <<-'EOF' > query_result 2>$ISQL_ERROR_FILE
 		SET CSV=ON;
@@ -219,33 +219,32 @@ execute_dump()
 	echo "Executing dump..." >&2
 	printf $(date +"%Y%m%d%H%M%S") > "$STARTED_AT_FILE"
 
-	dump_nquads | grep "^#\|^\+" | csplit -f "$DUMP_DIR/rdfpatch-0d" -n 12 -sz - "/^# at checkpoint  /" {*}
+    local output="$DUMP_DIR/rdf_out_00000000000000-"
+	dump_nquads | grep "^#\|^\+" | csplit -f "$output" -n 14 -sz - "/^# at checkpoint  /" {*}
 	assert_no_isql_error
-	local lastfile=$(ls "$DUMP_DIR"/rdfpatch-0d* | sort -r | head -n 1)
+	local lastfile=$(ls "$output"* | sort -r | head -n 1)
 	assert_dump_completed_normal "$lastfile"
 
-	# The last file only contains information on the dump. Keep it as a mark.
-	# Also set the last file as latestlogsuffix marker
+	# The last file only contains information on the dump.
 	local checkpoint=$(cat $lastfile | grep "# at checkpoint" | sed -e s/[^0-9]//g)
-	cp "$lastfile" "$DUMP_DIR/rdfpatch-$checkpoint"
+	local nquads=$(cat $lastfile | grep "# quad count" | sed -e s/[^0-9]//g)
+
+	# Set the marker file to mark dump has completed
+	mv "$lastfile" "$DUMP_INFO_FILE"
 
 	# Write checkpoint as lastlogsuffix in dedicated file.
 	printf "$checkpoint" > "$LAST_LOG_SUFFIX"
 
-	# Set the marker file to mark dump has completed
-	cp "$lastfile" "$DUMP_INFO_FILE"
-
 	# Keep track of the number of exported N-Quads
-	local nquads=$(cat $lastfile | grep "# quad count" | sed -e s/[^0-9]//g)
 	printf "$nquads" > "$COUNT_NQUADS_FILE"
 
-	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfpatch-*.
+	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdf_out_*.
 	# Enable processing of last dump file by creating an extra file.
-	touch "$SHAM_PATCH_FILE"
+	touch "$SHAM_RDF_OUT_FILE"
 
 	# report
-	echo "Dump reported in '$lastfile'" >&2
-	echo "$(cat $lastfile)" >&2
+	echo "Dump reported in '$DUMP_INFO_FILE'" >&2
+	echo "$(cat $DUMP_INFO_FILE)" >&2
 }
 
 ###############################
@@ -286,26 +285,44 @@ dump_if_needed()
 }
 
 ###############################
+# parse_nquads
+# Call vql_parse_trx_files on server.
+#
+# Globals:      MAX_QUADS_PER_DUMP_FILE, LOG_FILE_LOCATION
+# Arguments:    latestlogsuffix: timestamp of last transaction log inspected
+# Returns:      dump stream on &1, can be picked up with -
+parse_nquads()
+{
+    local latestlogsuffix="$1"
+	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE
+		vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix', $MAX_QUADS_PER_DUMP_FILE);
+		exit;
+		EOF
+}
+
+###############################
 # sync_transaction_logs
 # Parse newly found transaction logs to rdf-patch-formatted files in the directory DUMP_DIR with the name pattern
-# 'rdfpatch-xxxxxxxxxxxxxx', where 'xxxxxxxxxxxxxx' is a datestamp. In order to make sure new data is only updated
-# atomically and will never contain half a patch synchronic processes should not work with the last file with this
-# name pattern. This method will create a sham file with the name 'rdfpatch-99999999999999' when finished,
-# thus enabling the processing of the last real rdfpatch-*.
+# 'rdf_out_yyyymmddhhmmss-xxxxxxxxxxxxxx', where 'yyyymmddhhmmss' is the local timestamp of the
+# start of this function and 'xxxxxxxxxxxxxx' is a 14 digit serial number. In order to make sure new data is
+# only updated atomically and will never contain half a patch synchronic processes should not work with
+# the last file with this name pattern. This method will create a sham file with the name
+# 'rdf_out_99999999999999-99999999999999' when finished,
+# thus enabling the processing of the last real 'rdf_out_*' file.
 # This method writes the timestamp of the last transaction log processed to the file LAST_LOG_SUFFIX.
+# This method reads and keeps track of the amount of N-Quads processed in the file COUNT_NQUADS_FILE.
 #
-# Globals:      DUMP_DIR, CHANGES_WERE_MADE, LAST_LOG_SUFFIX
+# Globals:      DUMP_DIR, SHAM_RDF_OUT_FILE, LAST_LOG_SUFFIX, COUNT_NQUADS_FILE, STARTED_AT_FILE
 # Arguments:    None
 # Returns:      None
 sync_transaction_logs()
 {
-	if [ -e "$SHAM_PATCH_FILE" ]; then
-		# Prevent posible synchronous processing of the last rdfpatch-* file.
-		rm "$SHAM_PATCH_FILE"
+    if [ -e "$SHAM_RDF_OUT_FILE" ]; then
+		# Prevent posible synchronous processing of the last rdf_out_* file.
+		rm "$SHAM_RDF_OUT_FILE"
 	fi
 
-	local exp_nquads=$(<"$COUNT_NQUADS_FILE")
-	local count_nquads=0
+    local exp_nquads=$(<"$COUNT_NQUADS_FILE")
 
 	local latestlogsuffix=""
 	if [ -e "$LAST_LOG_SUFFIX" ]; then
@@ -313,60 +330,35 @@ sync_transaction_logs()
 	fi
 	echo "Syncing transaction logs starting from $latestlogsuffix" >&2
 
-	# parse_trx_files to marked output file
+	# write nquads to marked output file
 	local mark=$(date +"%Y%m%d%H%M%S")
-	local output="$DUMP_DIR/output$mark"
+	local output="$DUMP_DIR/rdf_out_$mark-"
 
-	$ISQL_CMD 2>$ISQL_ERROR_FILE > "$output" <<-EOF
-		vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix');
-		exit;
-	EOF
+    parse_nquads "$latestlogsuffix" | grep "^#\|^\+\|^-" | csplit -f "$output" -n 14 -sz - "/^# at checkpoint /" {*}
 	assert_no_isql_error
 
-	# split output to marked files; use more than standard 2 digits for file suffix
-	local prefix='xyx'$mark'_'
-	csplit -f "$DUMP_DIR/$prefix" -n 6 -s "$output" "/^# start: /" '{*}'
-	#loop over all files
-	local file
-	for file in "$DUMP_DIR/$prefix"*; do
-		# first line is the header, so a one-line file is effectively empty
-		local nquads=$(($(wc -l $file | grep -o '[0-9]\+' | head -1) - 1))
-		if [ "$nquads" -gt 0 ]; then
-			# line with the filename,   just the filename, remove .trx and trailing spaces, keep only the 14 digits at then end (not y10k proof)
-			local timestamp=`head -n1 $file | sed 's|^# start:.*/\(.*\)|\1|' | sed 's/\.trx *$//' | grep -o '[0-9]\{14\}$' || echo ''`
-			if [ -n "$timestamp" ]; then
-                # Signal when latestlogsuffix apparantly not in range of server timestamps.
-				if [[ ! "$latestlogsuffix" < "$timestamp" ]]; then
-					echo -e "Timestamp on parsed transaction log is smaller than or equal to recorded latest log suffix:" \
-						"\n\t$timestamp <= $latestlogsuffix" \
-						"\n\tServer transaction logs and recorded rdf-patch files are not in line. We quit." >&2
-					rm "$DUMP_DIR/$prefix"*
-					rm "$output"
-					exit 1
-				fi
-                #
-				cp $file "$DUMP_DIR/rdfpatch-${timestamp}"
-				# Write timestamp as lastlogsuffix.
-				printf "$timestamp" > "$LAST_LOG_SUFFIX"
-				count_nquads=$((count_nquads+nquads))
-				echo "generated rdfpatch-${timestamp}" >&2
-			fi
-		fi
-		rm $file
-	done
-	rm "$output"
+    # The last file only contains information on the sync.
+	local lastfile=$(ls "$output"* | sort -r | head -n 1)
+	local nquads=$(cat $lastfile | grep "# quad count" | sed -e s/[^0-9]//g)
+	local last_log=$(cat $lastfile | grep "# last trx log" | sed -e s/[^0-9]//g)
+	rm "$lastfile"
+
+    # Write lastlogsuffix in dedicated file.
+	printf "$last_log" > "$LAST_LOG_SUFFIX"
+
 	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfpatch-*.
 	# Enable processing of last patch file by creating an extra file.
-	touch "$SHAM_PATCH_FILE"
+	touch "$SHAM_RDF_OUT_FILE"
 
-    # Keep scores...
-    if [ "$count_nquads" -gt 0 ]; then
-	    exp_nquads=$((exp_nquads+count_nquads))
+	# Keep scores...
+    if [ "$nquads" -gt 0 ]; then
+	    exp_nquads=$((exp_nquads+nquads))
 	    printf "$exp_nquads" > "$COUNT_NQUADS_FILE"
 	fi
-	echo "Exported $count_nquads N-Quads during this run" >&2
+	echo "Exported $nquads N-Quads during this run" >&2
 	local start_date=$(<"$STARTED_AT_FILE")
 	echo "====== Total of exported N-Quads since $start_date: $exp_nquads" >&2
+
 }
 
 ###############################
