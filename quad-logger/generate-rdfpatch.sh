@@ -42,22 +42,25 @@ if [ -e "$ISQL_ERROR_FILE" ]; then
 fi
 
 # File for keeping last log suffix.
-LAST_LOG_SUFFIX="$DUMP_DIR/lastlogsuffix.txt"
+LAST_LOG_SUFFIX="$DUMP_DIR/vql_lastlogsuffix.txt"
 
 # File signalling stored procedures are up to date.
 MD5_STORED_PROCEDURES=md5_stored_procedures
 
 # File constituting handshake between this service and chained services.
-STARTED_AT_FILE="$DUMP_DIR/started_at.txt"
+STARTED_AT_FILE="$DUMP_DIR/vql_started_at.txt"
 
 # File enabling processing of last real 'rdf_out_*' file by chained processes
 SHAM_RDF_OUT_FILE="$DUMP_DIR/rdf_out_99999999999999-99999999999999"
 
 # File with dump information, also used to check if a successful dump has been executed.
-DUMP_INFO_FILE="$DUMP_DIR/rdfdump_info.txt"
+DUMP_INFO_FILE="$DUMP_DIR/vql_rdfdump_info.txt"
 
 # File with total number exported nquads thus far.
-COUNT_NQUADS_FILE="$DUMP_DIR/nquads_count.txt"
+COUNT_NQUADS_FILE="$DUMP_DIR/vql_nquads_count.txt"
+
+# File with total number exported files thus far.
+COUNT_NFILES_FILE="$DUMP_DIR/vql_files_count.txt"
 
 ##########################################################
 ## FUNCTIONS #############################################
@@ -223,11 +226,16 @@ execute_dump()
 	dump_nquads | grep "^#\|^\+" | csplit -f "$output" -n 14 -sz - "/^# at checkpoint  /" {*}
 	assert_no_isql_error
 	local lastfile=$(ls "$output"* | sort -r | head -n 1)
+	if [[ -z "${lastfile// }" ]]; then
+        echo "Error: execute_dump ended abnormal." >&2
+        exit 1
+	fi
 	assert_dump_completed_normal "$lastfile"
 
 	# The last file only contains information on the dump.
 	local checkpoint=$(cat $lastfile | grep "# at checkpoint" | sed -e s/[^0-9]//g)
 	local nquads=$(cat $lastfile | grep "# quad count" | sed -e s/[^0-9]//g)
+	local nfiles=$(cat $lastfile | grep "# file count" | sed -e s/[^0-9]//g)
 
 	# Set the marker file to mark dump has completed
 	mv "$lastfile" "$DUMP_INFO_FILE"
@@ -237,6 +245,9 @@ execute_dump()
 
 	# Keep track of the number of exported N-Quads
 	printf "$nquads" > "$COUNT_NQUADS_FILE"
+
+	# Keep track of the number of exported files
+	printf "$nfiles" > "$COUNT_NFILES_FILE"
 
 	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdf_out_*.
 	# Enable processing of last dump file by creating an extra file.
@@ -323,6 +334,7 @@ sync_transaction_logs()
 	fi
 
     local exp_nquads=$(<"$COUNT_NQUADS_FILE")
+    local exp_nfiles=$(<"$COUNT_NFILES_FILE")
 
 	local latestlogsuffix=""
 	if [ -e "$LAST_LOG_SUFFIX" ]; then
@@ -339,7 +351,12 @@ sync_transaction_logs()
 
     # The last file only contains information on the sync.
 	local lastfile=$(ls "$output"* | sort -r | head -n 1)
+	if [[ -z "${lastfile// }" ]]; then
+        echo "Error: sync_transaction_logs ended abnormal." >&2
+        exit 1
+	fi
 	local nquads=$(cat $lastfile | grep "# quad count" | sed -e s/[^0-9]//g)
+	local nfiles=$(cat $lastfile | grep "# file count" | sed -e s/[^0-9]//g)
 	local last_log=$(cat $lastfile | grep "# last trx log" | sed -e s/[^0-9]//g)
 	rm "$lastfile"
 
@@ -354,10 +371,12 @@ sync_transaction_logs()
     if [ "$nquads" -gt 0 ]; then
 	    exp_nquads=$((exp_nquads+nquads))
 	    printf "$exp_nquads" > "$COUNT_NQUADS_FILE"
+	    exp_nfiles=$((exp_nfiles+nfiles))
+	    printf "$exp_nfiles" > "$COUNT_NFILES_FILE"
 	fi
-	echo "Exported $nquads N-Quads during this run" >&2
+	echo "Exported $nquads N-Quads in $nfiles files during this run" >&2
 	local start_date=$(<"$STARTED_AT_FILE")
-	echo "====== Total of exported N-Quads since $start_date: $exp_nquads" >&2
+	echo "====== Exported since $start_date: $exp_nquads N-Quads in $exp_nfiles files" >&2
 
 }
 

@@ -10,15 +10,16 @@
 --              Default value is -, not excluding graphs. (Default value '' (empty string) hits on errors.)
 CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCHAR := '-') {
 
-    DECLARE nquad, buffer, excludes, at_checkpoint, startdate, currenttrx, rst ANY;
+    DECLARE nquad, buffer, report, excludes, at_checkpoint, startdate, currenttrx, rst ANY;
     DECLARE inx           INT;
     DECLARE cpinterval    INTEGER;
 
-    startdate := datestring_GMT(now());
-    SET isolation = 'serializable';
-
     result_names(nquad);
     buffer := dict_new(); -- Dictionary objects are always passed by reference.
+    report := dict_new();
+
+    startdate := datestring_GMT(now());
+    SET isolation = 'serializable';
 
     -- disable automatic checkpoints during dump.
     cpinterval := checkpoint_interval (-1);
@@ -47,12 +48,11 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
                 FILTER ( bif:position(?g, ?:excludes) = 0 )
             } ) AS sub OPTION (loop)) DO
     {
-        vql_buffer_nquad('+', "s", "p", "o", "g", buffer, at_checkpoint, maxq);
-        inx := inx + 1;
+        vql_buffer_nquad('+', "s", "p", "o", "g", buffer, report, at_checkpoint, maxq);
     }
 
     -- output the rest of the buffer
-    vql_print_buffer(buffer, at_checkpoint);
+    vql_print_buffer(buffer, report, at_checkpoint);
 
     -- start a report
     result(concat('# at checkpoint  ', at_checkpoint));
@@ -79,7 +79,8 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
 
     -- Mark the dump as completed.
     result(concat('# dump completed ', datestring_GMT(now())));
-    result(concat('# quad count     ', inx));
+    result(concat('# quad count     ', dict_get(report, 'quad_count', 0)));
+    result(concat('# file count     ', dict_get(report, 'file_count', 0)));
 }
 ;
 -- [Note]

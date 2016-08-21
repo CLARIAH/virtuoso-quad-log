@@ -24,14 +24,15 @@
 
 CREATE PROCEDURE vql_parse_trx_files(IN path VARCHAR, IN at_checkpoint VARCHAR, IN maxq INT := 100000){
 
-    DECLARE nquad, buffer, files, trx_files ANY;
+    DECLARE nquad, buffer, report, files, trx_files ANY;
     DECLARE filename, last_log, time_stamp VARCHAR;
-    DECLARE i, q_count INT;
+    DECLARE i INT;
 
     result_names (nquad);
     buffer := dict_new(); -- Dictionary objects are always passed by reference.
+    report := dict_new();
+
     last_log := at_checkpoint;
-    q_count := 0;
 
     if (not ends_with(path, '/')) {
         path := concat(path, '/');
@@ -56,29 +57,29 @@ CREATE PROCEDURE vql_parse_trx_files(IN path VARCHAR, IN at_checkpoint VARCHAR, 
         time_stamp := regexp_match('[0-9]{14}', filename);
         if (time_stamp > at_checkpoint) {
             -- write n-quads found in file to buffer
-            q_count := q_count + vql_parse_file(buffer, concat(path, filename), at_checkpoint, maxq);
+            vql_parse_file(buffer, report, concat(path, filename), at_checkpoint, maxq);
             last_log := time_stamp;
             -- dbg_printf('VQL: Last log timestamp is %s', last_log);
         }
     }
 
     -- output the rest of the buffer
-    vql_print_buffer(buffer, at_checkpoint);
+    vql_print_buffer(buffer, report, at_checkpoint);
 
-    -- output timestamp of last transaction file parsed.
-    result(concat('# at checkpoint ', at_checkpoint));
-    result(concat('# quad count    ', q_count));
-    result(concat('# last trx log  ', last_log));
+    -- output timestamp of last transaction log parsed, count of exported quads and files.
+    result(concat('# at checkpoint  ', at_checkpoint));
+    result(concat('# quad count     ', dict_get(report, 'quad_count', 0)));
+    result(concat('# file count     ', dict_get(report, 'file_count', 0)));
+    result(concat('# last trx log   ', last_log));
 }
 
 
-CREATE PROCEDURE vql_parse_file(IN buffer ANY, IN file VARCHAR, IN at_checkpoint VARCHAR, IN maxq INT) {
+CREATE PROCEDURE vql_parse_file(IN buffer ANY, IN report ANY, IN file VARCHAR, IN at_checkpoint VARCHAR, IN maxq INT) {
 
     DECLARE handle, quad, line, lines ANY;
     DECLARE op VARCHAR;
-    DECLARE pos, i, q_count INT;
+    DECLARE pos, i INT;
 
-    q_count := 0;
     handle := file_open (file, 0);
     while ((lines := read_log (handle, pos)) is not null) {
         quad := null;
@@ -103,11 +104,9 @@ CREATE PROCEDURE vql_parse_file(IN buffer ANY, IN file VARCHAR, IN at_checkpoint
                 if (quad[0] = 271) {
                     -- the table DB.DBA.RDF_QUAD (id=271) is the one that's always updated. So we can ignore the others
                     -- dbg_obj_print(quad);
-                    vql_buffer_nquad(op, quad[2], quad[3], quad[4], quad[1], buffer, at_checkpoint, maxq);
-                    q_count := q_count + 1;
+                    vql_buffer_nquad(op, quad[2], quad[3], quad[4], quad[1], buffer, report, at_checkpoint, maxq);
                 }
             }
         }
     }
-    return q_count;
 }
