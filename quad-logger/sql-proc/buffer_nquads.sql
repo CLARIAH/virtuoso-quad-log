@@ -1,7 +1,10 @@
-
+-- This file follows procedure signatures of split_nquads.sql, making the files interchangeable.
 
 -- Translate raw input into RDF-patch formatted N-Quads; subdivide N-Quads over graph iri, buffer N-Quads up to
 -- maxq per graph iri, output N-Quads per graph when maxq has been reached.
+--
+-- This strategy keeps quads in vectors per graph in a dict, until maxq for a vector/graph has been reached.
+-- disadvantage: Virtuoso runs out of memory.
 CREATE PROCEDURE vql_buffer_nquad(IN op ANY, IN raw_s ANY, IN raw_p ANY, IN raw_o ANY, IN raw_g ANY,
         IN buffer ANY, IN report ANY, IN at_checkpoint VARCHAR, IN maxq INT := 100000) {
 

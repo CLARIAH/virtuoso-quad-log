@@ -124,7 +124,7 @@ write_md5_stored_procedures()
 assert_procedures_stored()
 {
 	# files are in the directory 'sql-proc'
-	local files=(utils.sql dump_nquads.sql parse_trx_logs.sql buffer_nquads.sql)
+	local files=(utils.sql dump_nquads.sql parse_trx_logs.sql split_nquads.sql)
 	# the number of procedures that start with 'vql_*'
 	local procedures_count=12
 
