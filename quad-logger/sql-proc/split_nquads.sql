@@ -15,7 +15,7 @@ CREATE PROCEDURE vql_buffer_nquad(IN op ANY, IN raw_s ANY, IN raw_p ANY, IN raw_
     qline := vql_create_nquad(op, raw_s, raw_p, raw_o, raw_g);
     g_name := encode_base64(g_iri);
 
-    if (g_name <> dict_get(buffer, 'last_name', 'nop') or dict_get(report, 'current_graph_quad_count', 0) > maxq) {
+    if (g_name <> dict_get(buffer, 'last_name', '') or dict_get(report, 'current_graph_quad_count', 0) >= maxq) {
         dict_remove(report, 'current_graph_quad_count');
         dict_put(buffer, 'last_name', g_name);
         dict_inc_or_put(report, 'file_count', 1);

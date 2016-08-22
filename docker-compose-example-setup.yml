@@ -21,7 +21,7 @@ services:
     build: ./graph-splitter
     image: clariah/graph-splitter
     environment:
-      - RUN_INTERVAL=2000
+      - RUN_INTERVAL=20
     volumes:
       - stash1:/input
       - stash2:/output
