@@ -46,7 +46,7 @@ CREATE PROCEDURE vql_dump_nquads(IN maxq INT := 100000, IN excluded_graphs VARCH
             define input:param "excludes"
             SELECT ?s ?p ?o ?g { GRAPH ?g { ?s ?p ?o } .
                 FILTER ( bif:position(?g, ?:excludes) = 0 )
-            } ) AS sub OPTION (loop)) DO
+            } ORDER BY (?g) ) AS sub OPTION (loop)) DO
     {
         vql_buffer_nquad('+', "s", "p", "o", "g", buffer, report, at_checkpoint, maxq);
     }

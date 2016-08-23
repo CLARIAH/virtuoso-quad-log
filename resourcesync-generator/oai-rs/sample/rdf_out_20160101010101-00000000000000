@@ -1,2 +1,2 @@
-# start: /usr/local/var/lib/virtuoso/db/virtuoso20160101010101.trx
+# at checkpoint   20160712144328
 + <http://one.com/two> <http://two.com/one> <http://three.com/four> <http://localhost:8890/one> .

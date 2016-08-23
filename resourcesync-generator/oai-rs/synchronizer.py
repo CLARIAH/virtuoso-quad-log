@@ -14,8 +14,7 @@ RS_RESOURCESYNC = "resourcesync"
 RS_CAPABILITY_LIST_XML = "capability-list.xml"
 RS_RESOURCE_DUMP_XML = "resource-dump.xml"
 
-PATTERN_PATCH = "rdfpatch-"
-PATTERN_DUMP = PATTERN_PATCH + "0d"
+PATTERN_RDF_OUT = "rdf_out_"
 
 PREFIX_COMPLETED_PART = "part_def_"
 PREFIX_END_PART = "part_end_"
@@ -116,35 +115,27 @@ class Synchronizer:
 
     def extract_timestamp(self, path):
         """
-        Extract the timestamp from a file denoted with path. The filename should start with 'rdfpatch-'.
+        Extract the timestamp from a file denoted with path. The filename should start with 'rdf_out_'.
         :param path: path to the file
         :return: timestamp extracted from filename or file contents
         """
         filename = os.path.basename(path)
-        if filename.startswith(PATTERN_DUMP):
-            # All timestamps of dump files are the same, so keep it in a variable once set.
-            if self.dump_timestamp is None:
-                t = None
-                with open(path) as search:
-                    for line in search:
-                        if re.match("# at checkpoint.*", line):
-                            t = re.findall('\d+', line)[0]
-                            break
 
-                if t is None:
-                    raise RuntimeError(
-                        "Found dump files but did not find timestamp for checkpoint in '%s'" % path)
+        if filename.startswith(PATTERN_RDF_OUT):
+            t = None
+            with open(path) as search:
+                for line in search:
+                    if re.match("# at checkpoint.*", line):
+                        t = re.findall('\d+', line)[0]
+                        break
 
-                self.dump_timestamp = self.compute_timestamp(t)
+            if t is None:
+                raise RuntimeError("Did not find timestamp in '%s'" % path)
 
-            timestamp = self.dump_timestamp
-
-        elif filename.startswith(PATTERN_PATCH):
-            _, raw_ts = filename.split("-")
-            timestamp = self.compute_timestamp(raw_ts)
+            timestamp = self.compute_timestamp(t)
 
         else:
-            raise RuntimeError("Unable to extract timestamp: $s does not start with %s" % (filename, PATTERN_PATCH))
+            raise RuntimeError("Unable to extract timestamp: $s does not start with %s" % (filename, PATTERN_RDF_OUT))
 
         return timestamp
 
@@ -160,18 +151,18 @@ class Synchronizer:
 
     def list_patch_files(self, resourcelist, max_files=-1):
         """
-        Append resources with the name pattern 'rdfpatch-*' to a resourcelist. All resources in
+        Append resources with the name pattern 'rdf_out_*' to a resourcelist. All resources in
         resource_dir are included except for the last one in alphabetical sort order. If max_files is set to a
         value greater than 0, will only include up to max_files.
         :param resourcelist: the resourcelist to append to
-        :param max_files: the maximum nimber of resources to append to the list
-        :return: True if the list includes the one but last rdfpatch-* file in resource_dir, False otherwise
+        :param max_files: the maximum number of resources to append to the list
+        :return: True if the list includes the one but last rdf_out_* file in resource_dir, False otherwise
         """
-        patchfiles = sorted(glob(os.path.join(self.resource_dir, PATTERN_PATCH + "*")))
-        if len(patchfiles) > 0:
-            patchfiles.pop()  # remove last from list
+        rdf_out_files = sorted(glob(os.path.join(self.resource_dir, PATTERN_RDF_OUT + "*")))
+        if len(rdf_out_files) > 0:
+            rdf_out_files.pop()  # remove last from list
         n = 0
-        for file in patchfiles:
+        for file in rdf_out_files:
             filename = os.path.basename(file)
             timestamp = self.extract_timestamp(file)
             length = os.stat(file).st_size
@@ -182,13 +173,15 @@ class Synchronizer:
             if 0 < max_files == n:
                 break
 
-        exhausted = len(patchfiles) == n
+        exhausted = len(rdf_out_files) == n
         return exhausted
 
     @abstractmethod
     def publish(self):
         """
         Publish the resources found in source_dir in accordance with the Resourcesync Framework in sink_dir.
-        :return: boolean indicating whether the state of the sink directory has changed
+        :return: (  boolean indicating if change in sink directory or subdirectories,
+                    amount of resources definitively packaged,
+                    the difference of resources provisionally packaged)
         """
         pass

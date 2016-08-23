@@ -42,7 +42,7 @@ CREATE PROCEDURE vql_print_buffer(IN buffer ANY, IN report ANY, IN at_checkpoint
 
     fcount := dict_get(report, 'file_count', 0);
     if (fcount > 0) {
-        dbg_printf('VQL: End sending %d quads from checkpoint %s in %d files.', dict_get(report, 'quad_count', 0), at_checkpoint, fcount);
+        dbg_printf('VQL: End sending %d quads from checkpoint %s in %d streams.', dict_get(report, 'quad_count', 0), at_checkpoint, fcount);
     }
 }
 

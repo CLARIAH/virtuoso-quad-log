@@ -20,7 +20,7 @@ fi
 HS_SOURCE_FILE="$SOURCE_DIR/vql_started_at.txt"
 HS_SINK_FILE="$SINK_DIR/vql_started_at.txt"
 
-# File mapping between graph iri and base64-translated directory name.
+# File containing mapping between graph iri and base64-translated directory name.
 INDEX_FILE="$SINK_DIR/vql_graph_folder.csv"
 
 # File enabling processing of last real 'rdf_out_*' file by chained processes
@@ -76,6 +76,12 @@ process_file() {
         # should have been removed but just in case...
         return 0
     fi
+
+    # The outcome of encode_base64 in Virtuoso is a bit strange. It has new line characters?(!)
+    # select encode_base64('http://www.telegraphis.net/ontology/geography/geography#');
+    # gives:              aHR0cDovL3d3dy50ZWxlZ3JhcGhpcy5uZXQvb250b2xvZ3kvZ2VvZ3JhcGh5L2dlb2dyYXBo eSM=
+    # while it should be: aHR0cDovL3d3dy50ZWxlZ3JhcGhpcy5uZXQvb250b2xvZ3kvZ2VvZ3JhcGh5L2dlb2dyYXBoeSMK
+    base=$(echo $graph | base64)
 
     if [ ! -d "$SINK_DIR/$base" ]; then
         mkdir -p "$SINK_DIR/$base"
@@ -136,7 +142,7 @@ verify_handshake() {
     [ -f "$HS_SINK_FILE" ] && { hs_sink=$(<"$HS_SINK_FILE"); } || { hs_sink=0; }
 
     if [ "$HS_SOURCE" == 0 ]; then
-        echo "Error: No source handshake found. Not interfering with status quo." >&2
+        echo "WARNING: No source handshake found. Not interfering with status quo." >&2
         exit 1
     fi
 
@@ -163,7 +169,7 @@ verify_handshake() {
 
 ###############################
 # disable_processing_of_last_patch
-# Disable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+# Disable processing of last real 'rdf_out_*' file in sink directory by chained processes.
 #
 # Globals:      SINK_DIR, SHAM_PATCH_FILE
 # Arguments:    None
@@ -178,7 +184,7 @@ disable_processing_of_last_patch() {
 
 ###############################
 # enable_processing_of_last_patch
-# Enable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+# Enable processing of last real 'rdf_out_*' file in sink directory by chained processes.
 #
 # Globals:      SINK_DIR, SHAM_PATCH_FILE
 # Arguments:    None
@@ -222,19 +228,19 @@ report_totals()
         echo "INFO: File count out of sync: exported files=$EXPORTED_FILES, filed files=$FILED_FILES" >&2
     fi
     #     ====== Exported since 20160822122410: 1158 N-Quads in 15 files
-    echo "========= Filed since $HS_SOURCE: $FILED_NQUADS N-Quads in $FILED_FILES files"
+    echo -e "Filed since $HS_SOURCE: $FILED_NQUADS N-Quads in \t $FILED_FILES files" >&2
 }
 
 # Verify that handshake files in source directory and sink directory are equal.
 verify_handshake
 
-# Disable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+# Disable processing of last real 'rdf_out_*' file in sink directory by chained processes.
 disable_processing_of_last_patch
 
 # distribute rdf-patch files in the source directory over directories per graph in the sink directory.
 distribute_files_per_graph_iri
 
-# Enable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+# Enable processing of last real 'rdf_out_-*' file in sink directory by chained processes.
 enable_processing_of_last_patch
 
 change_owner_if_needed

@@ -211,8 +211,8 @@ Possible values: `y|n`. Default value is `y`.
 **DUMP_AND_EXIT** - Dump the current state of the quad store and then exit.  
 Possible values: `y|n`. Default value is `n`.
 
-**MAX_QUADS_PER_DUMP_FILE** - The maximum number of quads that should go into one 
-dump file. On average 100000 quads will give file sizes of approximately 12.5 MB.  
+**MAX_QUADS_PER_FILE** - The maximum number of quads that should go into one 
+output file. On average 100000 quads will give file sizes of approximately 12.5 MB.  
 Default value is `100000`.
 
 **EXCLUDED_GRAPHS** - Space-separated list of graph iris that are excluded from the dump.

@@ -12,8 +12,8 @@ INSERT_PROCEDURES=${INSERT_PROCEDURES:-n}
 # Should we dump the initial state of the quad store.
 DUMP_INITIAL_STATE=${DUMP_INITIAL_STATE:-y}
 
-# Maximum amount of quads per dump file. (100.000 quads ~ 12,5 MB)
-MAX_QUADS_PER_DUMP_FILE=${MAX_QUADS_PER_DUMP_FILE:-100000}
+# Maximum amount of quads per file. (100.000 quads ~ 12,5 MB)
+MAX_QUADS_PER_FILE=${MAX_QUADS_PER_FILE:-100000}
 
 # Should we dump the current state of the quad store and then exit.
 DUMP_AND_EXIT=${DUMP_AND_EXIT:-n}
@@ -193,13 +193,13 @@ assert_dump_completed_normal()
 # dump_nquads
 # Call vql_dump_nquads on server.
 #
-# Globals:      MAX_QUADS_PER_DUMP_FILE, EXCLUDED_GRAPHS
+# Globals:      MAX_QUADS_PER_FILE, EXCLUDED_GRAPHS
 # Arguments:    None
 # Returns:      dump stream on &1, can be picked up with -
 dump_nquads()
 {
 	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE
-		vql_dump_nquads($MAX_QUADS_PER_DUMP_FILE, '$EXCLUDED_GRAPHS');
+		vql_dump_nquads($MAX_QUADS_PER_FILE, '$EXCLUDED_GRAPHS');
 		exit;
 		EOF
 }
@@ -299,14 +299,14 @@ dump_if_needed()
 # parse_nquads
 # Call vql_parse_trx_files on server.
 #
-# Globals:      MAX_QUADS_PER_DUMP_FILE, LOG_FILE_LOCATION
+# Globals:      MAX_QUADS_PER_FILE, LOG_FILE_LOCATION
 # Arguments:    latestlogsuffix: timestamp of last transaction log inspected
 # Returns:      dump stream on &1, can be picked up with -
 parse_nquads()
 {
     local latestlogsuffix="$1"
 	$ISQL_CMD <<-EOF 2>$ISQL_ERROR_FILE
-		vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix', $MAX_QUADS_PER_DUMP_FILE);
+		vql_parse_trx_files('$LOG_FILE_LOCATION', '$latestlogsuffix', $MAX_QUADS_PER_FILE);
 		exit;
 		EOF
 }
@@ -340,7 +340,7 @@ sync_transaction_logs()
 	if [ -e "$LAST_LOG_SUFFIX" ]; then
 		latestlogsuffix=$(<"$LAST_LOG_SUFFIX")
 	fi
-	echo "Syncing transaction logs starting from $latestlogsuffix" >&2
+	echo "Reading transaction logs. Last log read had timestamp $latestlogsuffix" >&2
 
 	# write nquads to marked output file
 	local mark=$(date +"%Y%m%d%H%M%S")
@@ -376,7 +376,7 @@ sync_transaction_logs()
 	fi
 	echo "Exported $nquads N-Quads in $nfiles files during this run" >&2
 	local start_date=$(<"$STARTED_AT_FILE")
-	echo "====== Exported since $start_date: $exp_nquads N-Quads in $exp_nfiles files" >&2
+	echo -e "Exported since $start_date: $exp_nquads N-Quads in \t $exp_nfiles streams" >&2
 
 }
 

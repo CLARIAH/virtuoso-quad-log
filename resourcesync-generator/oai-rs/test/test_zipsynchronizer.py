@@ -34,7 +34,7 @@ class TestZipSynchronizer(unittest.TestCase):
         self.assertTrue(os.path.isdir(publish_dir))
 
     def test_not_publish_last_dump_file(self):
-        resource_dir = self.copy_files(["rdfpatch-0d000000000001", "started_at.txt"])
+        resource_dir = self.copy_files(["rdf_out_00000000000000-00000000000001", "started_at.txt"])
         publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
@@ -46,7 +46,7 @@ class TestZipSynchronizer(unittest.TestCase):
         self.assertEqual(0, len(zip_end_files))
 
     def test_publish_dump_files(self):
-        resource_dir = self.copy_files(["rdfpatch-0d000000000001", "rdfpatch-0d000000000002", "rdfpatch-0d000000000003", "started_at.txt"])
+        resource_dir = self.copy_files(["rdf_out_00000000000000-00000000000001", "rdf_out_00000000000000-00000000000002", "rdf_out_00000000000000-00000000000003", "started_at.txt"])
         publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
@@ -59,8 +59,8 @@ class TestZipSynchronizer(unittest.TestCase):
         # 2 rdfdump files in zip
 
     def test_publish_incremental_zips(self):
-        resource_dir = self.copy_files(["rdfpatch-0d000000000001", "rdfpatch-0d000000000002", "rdfpatch-0d000000000003", "rdfpatch-99999999999999",
-            "rdfpatch-20140101010101", "started_at.txt"])
+        resource_dir = self.copy_files(["rdf_out_00000000000000-00000000000001", "rdf_out_00000000000000-00000000000002", "rdf_out_00000000000000-00000000000003", "rdf_out_99999999999999-99999999999999",
+            "rdf_out_20140101010101-00000000000000", "started_at.txt"])
         publish_url = "http://example.com/rdf/pub/"
         publish_dir = os.path.expanduser("~/tmp/zipper_test/dump")
         shutil.rmtree(publish_dir, ignore_errors=True)
@@ -74,7 +74,7 @@ class TestZipSynchronizer(unittest.TestCase):
         self.assertEqual(0, len(zip_end_files))
 
         # add another file
-        self.copy_files(["rdfpatch-20150101010101"], rmtree=False)
+        self.copy_files(["rdf_out_20150101010101-00000000000000"], rmtree=False)
         syncer = ZipSynchronizer(resource_dir, publish_dir, publish_url, max_files_compressed=2)
         syncer.publish()
 
@@ -84,7 +84,7 @@ class TestZipSynchronizer(unittest.TestCase):
         self.assertEqual(1, len(zip_end_files))
 
         # add another file
-        self.copy_files(["rdfpatch-20160101010101"], rmtree=False)
+        self.copy_files(["rdf_out_20160101010101-00000000000000"], rmtree=False)
         syncer = ZipSynchronizer(resource_dir, publish_dir, publish_url, max_files_compressed=2)
         syncer.publish()
 
