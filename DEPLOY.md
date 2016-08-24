@@ -381,16 +381,16 @@ Upgrade to a newer version of Virtuoso.
 
 **message:**
 ```
-Error: 'rdfpatch-*' files found in '/datadir'. Remove 'rdfpatch-*' and 'rdfdump-*' files before dumping.
+Error: 'rdf_out_*' files found in '/datadir'. Remove 'rdf_out_*' files before dumping.
 ```
 **origin:** _the_quad_logger_
 
 **cause:** _the_quad_logger_ wants to do a fresh dump (`DUMP_INITIAL_STATE=y` and
 the file `rdfdump_info.txt` is missing or invalid) but there are old 
-`rdfpatch-*` files in the output directory or volume `stash1`.
+`rdf_out_*` files in the output directory or volume `stash1`.
 
 **remedy:**
-Remove `rdfpatch-*` files from the dump directory.
+Remove `rdf_out_*` files from the dump directory.
 
 ### No handshake
 
