@@ -420,7 +420,7 @@ Error: No publish_handshake found and /output not empty. Not interfering with st
 
 **origin:** _the_graph_splitter_ or _resourcesync_generator_
 
-**cause:** The handshake file `started_at.txt` is missing from the output directory
+**cause:** The handshake file `vql_started_at.txt` is missing from the output directory
 and the output directory is not empty. The _the_graph_splitter_ or
 _resourcesync_generator_ cannot verify synchronized action with the previous service in the chain
 and is maintaining status quo.
