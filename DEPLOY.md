@@ -38,8 +38,7 @@ in the [RDF-patch](https://afs.github.io/rdf-patch/) format. Initially it will d
 all quads found in the Virtuoso quad store. Later on it will keep track of all changes that take 
 place in the quad store. The quad logger writes these files to the docker volume `stash1`.
 3. **the_graph_splitter** splits up the rdf-patch files found in `stash1` along graph iri 
-of the N-Quads and will store them again as rdf-patch files in docker volume `stash2`, 
-grouped in folders who's names are the base64 translation of the graph iri.
+and will move them to folders in docker volume `stash2`. 
 4. **resourcesync_generator** reads the docker volume `stash2`, packages the files
 it finds there in zips and publishes the metadata as resource dumps under the
 [Resource Sync Framework](http://www.openarchives.org/rs/1.0/resourcesync) in a
