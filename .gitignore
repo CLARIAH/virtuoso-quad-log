@@ -5,6 +5,6 @@ data/
 .idea/
 resourcesync-generator/oai-rs/sample/test/
 docker-compose-test.yml
-dumpdir/
+**/*.pyc
 *.iml
 vql/
