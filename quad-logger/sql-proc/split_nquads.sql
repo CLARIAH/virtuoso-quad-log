@@ -9,22 +9,22 @@
 CREATE PROCEDURE vql_buffer_nquad(IN op ANY, IN raw_s ANY, IN raw_p ANY, IN raw_o ANY, IN raw_g ANY,
         IN buffer ANY, IN report ANY, IN at_checkpoint VARCHAR, IN maxq INT := 100000) {
 
-    DECLARE qline, g_name, g_iri VARCHAR;
+    DECLARE qline, g_iri VARCHAR;
 
     g_iri := __ro2sq(raw_g);
     qline := vql_create_nquad(op, raw_s, raw_p, raw_o, raw_g);
-    g_name := encode_base64(g_iri);
+    -- g_name := encode_base64(g_iri);
 
-    if (g_name <> dict_get(buffer, 'last_name', '') or dict_get(report, 'current_graph_quad_count', 0) >= maxq) {
+    if (g_iri <> dict_get(buffer, 'last_iri', '') or dict_get(report, 'current_graph_quad_count', 0) >= maxq) {
         dict_remove(report, 'current_graph_quad_count');
-        dict_put(buffer, 'last_name', g_name);
+        dict_put(buffer, 'last_iri', g_iri);
         dict_inc_or_put(report, 'file_count', 1);
 
         dbg_printf('VQL: Sending new header for graph %s', g_iri);
         -- header
         result(concat('# at checkpoint  ', at_checkpoint));
         result(concat('# graph          ', g_iri));
-        result(concat('# base64         ', g_name));
+        -- result(concat('# base64         ', '<Virtuoso encode_base64 not suited for URL encoding>'));
     }
 
     -- increase quad count in report

@@ -2,14 +2,14 @@
 set -o nounset
 set -o errexit
 
-# Source directory with rdf-patch files not split over graph iri's.
+# Source directory with rdf-patch files not subdivided over graph iri's.
 SOURCE_DIR="${SOURCE_DIR:-/input}"
 if [ ! -e "$SOURCE_DIR" ]; then
     mkdir -p "$SOURCE_DIR"
     echo "Created $SOURCE_DIR"
 fi
 
-# Sink directory for rdf-patch files split over graph iri's in base64-encoded directories.
+# Sink directory for rdf-patch files subdivided over graph iri's in base64-encoded directories.
 SINK_DIR="${SINK_DIR:-/output}"
 if [ ! -e "$SINK_DIR" ]; then
     mkdir -p "$SINK_DIR"
@@ -62,6 +62,14 @@ COUNT_NQUADS=0
 COUNT_FILES=0
 
 
+###############################
+# process_file
+# Read the header of the file and move the file to the appropriate directory. The name of the target directory is the
+# base64 translation of the graph iri.
+#
+# Globals:      SOURCE_DIR, SINK_DIR, COUNT_FILES, COUNT_NQUADS
+# Arguments:    filename: the base name of the file to process.
+# Returns:      None
 process_file() {
 
     filename="$1"
@@ -69,19 +77,24 @@ process_file() {
 
     header=$(head -n 3 "$src_file")
     graph=$(echo "$header" | sed -n 's/.*# graph         \(.*\) /\1/p')
-    base=$(echo "$header" | sed -n 's/.*# base64        \(.*\) /\1/p')
+    # base=$(echo "$header" | sed -n 's/.*# base64        \(.*\) /\1/p')
 
-    if [ "$graph" == "" ] && [ "$base" == "" ]; then
+    if [ "$graph" == "" ]; then
         # this is a message file, ending a dump ar patch run from quad-logger.
         # should have been removed but just in case...
         return 0
     fi
 
-    # The outcome of encode_base64 in Virtuoso is a bit strange. It has new line characters?(!)
+    # The outcome of encode_base64 in Virtuoso is a block of a certain width, each line in the block
+    # ending with a new line. Useful in mail and dating back to the time when machines could only handle 64
+    # characters per line. As such the Virtuoso routine is not useful for URL encoding.
     # select encode_base64('http://www.telegraphis.net/ontology/geography/geography#');
-    # gives:              aHR0cDovL3d3dy50ZWxlZ3JhcGhpcy5uZXQvb250b2xvZ3kvZ2VvZ3JhcGh5L2dlb2dyYXBo eSM=
+    # gives:              aHR0cDovL3d3dy50ZWxlZ3JhcGhpcy5uZXQvb250b2xvZ3kvZ2VvZ3JhcGh5L2dlb2dyYXBo
+    #                     eSM=
     # while it should be: aHR0cDovL3d3dy50ZWxlZ3JhcGhpcy5uZXQvb250b2xvZ3kvZ2VvZ3JhcGh5L2dlb2dyYXBoeSMK
-    base=$(echo $graph | base64)
+    # With Unix base64 you can disable line wrap - and you should.
+    # -w, --wrap=COLS Wrap encoded lines after COLS character (default 76). Use 0 to disable line wrapping.
+    base=$(echo $graph | base64 -w 0)
 
     if [ ! -d "$SINK_DIR/$base" ]; then
         mkdir -p "$SINK_DIR/$base"
@@ -94,8 +107,8 @@ process_file() {
     # Statistics..
     COUNT_FILES=$((COUNT_FILES + 1))
 
-    # each file has 3 header lines
-    local nquads=$(($(wc -l "$snk_file" | grep -o '[0-9]\+' | head -1) - 3))
+    # each file has 2 header lines
+    local nquads=$(($(wc -l "$snk_file" | grep -o '[0-9]\+' | head -1) - 2))
     COUNT_NQUADS=$((COUNT_NQUADS + nquads))
 }
 
@@ -161,6 +174,8 @@ verify_handshake() {
 
     if [ "$hs_sink" == 0 ]; then
         printf "$HS_SOURCE" > "$HS_SINK_FILE"
+        FILED_NQUADS=0
+        FILED_FILES=0
         echo "Signed new handshake: $HS_SOURCE" >&2
     fi
 
@@ -169,7 +184,7 @@ verify_handshake() {
 
 ###############################
 # disable_processing_of_last_patch
-# Disable processing of last real 'rdf_out_*' file in sink directory by chained processes.
+# Disable processing of last real 'rdf_out_*' file in sink directories by chained processes.
 #
 # Globals:      SINK_DIR, SHAM_PATCH_FILE
 # Arguments:    None
@@ -184,7 +199,7 @@ disable_processing_of_last_patch() {
 
 ###############################
 # enable_processing_of_last_patch
-# Enable processing of last real 'rdf_out_*' file in sink directory by chained processes.
+# Enable processing of last real 'rdf_out_*' file in sink directories by chained processes.
 #
 # Globals:      SINK_DIR, SHAM_PATCH_FILE
 # Arguments:    None
@@ -199,6 +214,7 @@ enable_processing_of_last_patch() {
 
 ###############################
 # change_owner_if_needed
+# Check if chown is requested, if so recursively change the owner of the files in SINK_DIR.
 #
 # Globals:      SINK_DIR, CHOWN_TO_ID
 # Arguments:    None
@@ -211,6 +227,13 @@ change_owner_if_needed()
 	fi
 }
 
+###############################
+# report_totals
+# Keep track of filed files and N-Quads, echo the results of this run to the console.
+#
+# Globals:      COUNT_NQUADS, COUNT_FILES, FILED_NQUADS, FILED_FILES, EXPORTED_NQUADS, EXPORTED_FILES, HS_SOURCE
+# Arguments:    None
+# Returns:      None
 report_totals()
 {
     if [ "$COUNT_NQUADS" > 0 ] || [ "$COUNT_FILES" > 0 ]; then
@@ -227,24 +250,26 @@ report_totals()
     if [ "$EXPORTED_FILES" != "$FILED_FILES" ]; then
         echo "INFO: File count out of sync: exported files=$EXPORTED_FILES, filed files=$FILED_FILES" >&2
     fi
-    #     ====== Exported since 20160822122410: 1158 N-Quads in 15 files
+
     echo -e "Filed since $HS_SOURCE: $FILED_NQUADS N-Quads in \t $FILED_FILES files" >&2
 }
 
 # Verify that handshake files in source directory and sink directory are equal.
 verify_handshake
 
-# Disable processing of last real 'rdf_out_*' file in sink directory by chained processes.
+# Disable processing of last real 'rdf_out_*' file in sink directories by chained processes.
 disable_processing_of_last_patch
 
 # distribute rdf-patch files in the source directory over directories per graph in the sink directory.
 distribute_files_per_graph_iri
 
-# Enable processing of last real 'rdf_out_-*' file in sink directory by chained processes.
+# Enable processing of last real 'rdf_out_-*' file in sink directories by chained processes.
 enable_processing_of_last_patch
 
+# Check if chown is requested, if so recursively change the owner of the files in SINK_DIR.
 change_owner_if_needed
 
+# Keep track of filed files and N-Quads, echo the results of this run to the console.
 report_totals
 
 

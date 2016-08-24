@@ -54,7 +54,9 @@ class ZipSynchronizer(Synchronizer):
         """
         Try and publish or remove zip end if something went wrong.
 
-        :return:
+        :return: (  boolean indicating if change in sink directory or subdirectories,
+                    amount of resources definitively packaged,
+                    the difference of resources provisionally packaged)
         """
         if not os.path.isdir(self.resource_dir):
             os.makedirs(self.resource_dir)
@@ -116,7 +118,9 @@ class ZipSynchronizer(Synchronizer):
 
         WARNING: This method removes resources that are published in packages marked as complete from resource_dir.
 
-        :return: boolean indicating whether the state of the sink directory has changed
+        :return: (  boolean indicating if change in sink directory or subdirectories,
+                    amount of resources definitively packaged,
+                    the difference of resources provisionally packaged)
         """
         count_def_resources = 0
         diff_end_resources = 0
@@ -144,11 +148,9 @@ class ZipSynchronizer(Synchronizer):
                         os.remove(r_path)
             elif not self.is_same(resourcelist, rl_end_old):
                 assert exhausted
-                #print ">>>>>>>>>>>>>>>>> old=%d, diff=%d" % (len(rl_end_old), diff_end_resources)
                 state_changed = True
                 if len(resourcelist) > 0:
                     diff_end_resources += len(resourcelist)
-                    #print ">>>>>>>>>>>>>>>>> new=%d, diff=%d" % (len(resourcelist), diff_end_resources)
                     zip_resource = self.create_zip(resourcelist, PREFIX_END_PART, True,
                                                    self.write_separate_manifest)
                     new_zips.add(zip_resource)
@@ -157,7 +159,8 @@ class ZipSynchronizer(Synchronizer):
         if state_changed:
             self.publish_metadata(new_zips, path_zip_end_old)
 
-        # remove old zip end file, resource list and manifest.
+        # remove old zip end file, resource list and manifest;
+        # account for difference of resources provisionally packaged.
         if state_changed and path_zip_end_old:
             diff_end_resources -= len(rl_end_old)
             os.remove(path_zip_end_old)
@@ -175,7 +178,6 @@ class ZipSynchronizer(Synchronizer):
         metadata.
         :param new_zips: a resourcelist with newly created zip resources
         :param exluded_zip: local path to zip file that will be removed from previously published metadata.
-        :return: None
         """
         rs_dump_url = self.publish_url + RS_RESOURCE_DUMP_XML
         rs_dump_path = os.path.join(self.publish_dir, RS_RESOURCE_DUMP_XML)
@@ -211,7 +213,10 @@ class ZipSynchronizer(Synchronizer):
         with open(rs_dump_path, "w") as rs_dump_file:
             rs_dump_file.write(rs_dump.as_xml())
 
-        iri = base64.b64decode(os.path.basename(self.publish_dir))
+        # There are several ways to decode base64, among them
+        # iri = base64.b64decode(os.path.basename(self.publish_dir)).rstrip('\n')
+        # iri = base64.b64decode(os.path.basename(self.publish_dir), '-_').rstrip('\n')
+        iri = base64.urlsafe_b64decode(os.path.basename(self.publish_dir)).rstrip('\n')
 
         print "New %s for graph %s" % (RS_RESOURCE_DUMP_XML, iri)
         print "See %s" % rs_dump_url

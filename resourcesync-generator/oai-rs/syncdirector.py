@@ -85,7 +85,6 @@ class SyncDirector(object):
         ####################
 
         # print "Synchronizing state as of %s" % self.handshake
-        state_changed = False
 
         ### initial resource description
         wellknown = os.path.join(self.sink_dir, RS_WELL_KNOWN)
@@ -111,13 +110,12 @@ class SyncDirector(object):
                 source = os.path.join(self.source_dir, dirname)
                 sink = os.path.join(self.sink_dir, dirname)
                 publish_url = self.publish_url + dirname + "/"
-                state_changed = self.__execute_sync__(source, sink, publish_url, src_desc) or state_changed
+                self.__execute_sync__(source, sink, publish_url, src_desc)
         else:
-            state_changed = self.__execute_sync__(self.source_dir, self.sink_dir, self.publish_url, src_desc)
+            self.__execute_sync__(self.source_dir, self.sink_dir, self.publish_url, src_desc)
 
         if new_src_desc or count_lists != len(src_desc.resources):
             ### publish resource description
-            state_changed = True
             with open(self.src_desc_path, "w") as src_desc_file:
                 src_desc_file.write(src_desc.as_xml())
                 print "New resource description. See %s" % self.src_desc_url
@@ -143,10 +141,10 @@ class SyncDirector(object):
             if not capa_list_url in src_desc.resources:
                 src_desc.add_capability_list(capa_list_url)
 
-        return state_changed
-
     def report(self):
-
+        """
+        Keep track of filed files and packaged resources, echo the results of this run to the console.
+        """
         synced_files_def = 0
         synced_files_end = 0
         synced_files_path = os.path.join(self.sink_dir, FILE_SYNCED_FILES)
@@ -252,6 +250,7 @@ class SyncDirector(object):
     def is_our_file(self, a_file):
         return a_file.startswith((FILE_HANDSHAKE,
                                   FILE_INDEX,
+                                  FILE_SYNCED_FILES,
                                   RS_RESOURCE_DUMP_XML,
                                   RS_CAPABILITY_LIST_XML,
                                   PREFIX_MANIFEST,

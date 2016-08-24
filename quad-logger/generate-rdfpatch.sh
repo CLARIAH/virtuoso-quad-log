@@ -45,7 +45,7 @@ fi
 LAST_LOG_SUFFIX="$DUMP_DIR/vql_lastlogsuffix.txt"
 
 # File signalling stored procedures are up to date.
-MD5_STORED_PROCEDURES=md5_stored_procedures
+MD5_STORED_PROCEDURES="md5_stored_procedures"
 
 # File constituting handshake between this service and chained services.
 STARTED_AT_FILE="$DUMP_DIR/vql_started_at.txt"
@@ -139,17 +139,19 @@ assert_procedures_stored()
 
 	if [ "$found_procedures" != "$procedures_count" ] || [ ! -e "$MD5_STORED_PROCEDURES" ]; then
 		echo "Found $found_procedures out of $procedures_count required stored procedures." >&2
-		if [ "$INSERT_PROCEDURES" != "y" ]; then
-			echo "Without the stored procedures I can't be of much use. Sorry. You might want to run me connected to a dummy virtuoso server in a container as detailed in the README." >&2
-			exit 1
-		else
-			echo "Inserting stored procedures..." >&2
+		if [ "$INSERT_PROCEDURES" == "y" ]; then
+		    echo "Inserting stored procedures..." >&2
 			for file in "${files[@]}"
 			do
 				$ISQL_CMD < "sql-proc/$file" > /dev/null 2>$ISQL_ERROR_FILE
 				assert_no_isql_error
 				echo "Inserted sql-proc/$file" >&2
 			done
+			write_md5_stored_procedures
+		elif [ "$found_procedures" != "$procedures_count" ]; then
+			echo "Without the stored procedures I can't be of much use. Sorry. You might want to run me connected to a dummy virtuoso server in a container as detailed in the README." >&2
+			exit 1
+		else
 			write_md5_stored_procedures
 		fi
 	fi
@@ -207,14 +209,19 @@ dump_nquads()
 ###############################
 # execute_dump
 # Dump all quads on the server to rdf-patch-formatted files in the directory DUMP_DIR with the name pattern
-# 'rdfpatch-0dxxxxxxxxxxxx', where 'xxxxxxxxxxxx' is a 12 digit serial number.
+# 'rdf_out_00000000000000-xxxxxxxxxxxxxx', where 'xxxxxxxxxxxxxx' is a 14 digit serial number.
 # In order to make sure new data is only updated
 # atomically and will never contain half a dump synchronic processes should not work with the last file with a
-# name pattern 'rdfpatch-*'. This method will create a badger file with the name 'rdfpatch-99999999999999'
-# when finished, thus enabling the processing of the last real 'rdfpatch-*' file.
+# name pattern 'rdf_out_*'. This method will create a sham rdf_out_ file with the name
+# 'rdf_out_99999999999999-99999999999999' when finished, thus enabling the processing of the last real
+# 'rdf_out_*' file.
+# During the execution of the dump no transactions should take place.
+# This method writes the local timestamp to the file STARTED_AT_FILE, which can be treated as a handshake to
+# other processes trying to keep in sync with this one.
 # This method writes the timestamp of the for last transaction log to the file LAST_LOG_SUFFIX.
 #
-# Globals:      DUMP_DIR, LAST_LOG_SUFFIX
+# Globals:      DUMP_DIR, LAST_LOG_SUFFIX, STARTED_AT_FILE, DUMP_INFO_FILE, COUNT_NQUADS_FILE, COUNT_NFILES_FILE,
+#               SHAM_RDF_OUT_FILE
 # Arguments:    None
 # Returns:      None
 execute_dump()
@@ -262,7 +269,7 @@ execute_dump()
 # dump_if_needed
 # Check if an initial dump has to be made and execute dump if needed.
 #
-# Globals:      DUMP_INITIAL_STATE, DUMP_DIR
+# Globals:      DUMP_INITIAL_STATE, DUMP_DIR, DUMP_INFO_FILE, STARTED_AT_FILE, COUNT_NQUADS_FILE, COUNT_NFILES_FILE
 # Arguments:    None
 # Returns:      None
 # Exit status:  1 if dump did not complete normally.
@@ -271,8 +278,8 @@ dump_if_needed()
 {
 	if [ "$DUMP_INITIAL_STATE" = "y" ]; then
 		if [ ! -e "$DUMP_INFO_FILE" ]; then
-				if ls "$DUMP_DIR/rdfpatch-"* 1> /dev/null 2>&1; then
-						echo "Error: 'rdfpatch-*' files found in '$DUMP_DIR'. Remove 'rdfpatch-*' files before dumping." >&2
+				if ls "$DUMP_DIR/rdf_out_"* 1> /dev/null 2>&1; then
+						echo "Error: 'rdf_out_-*' files found in '$DUMP_DIR'. Remove 'rdf_out_-*' files before dumping." >&2
 						exit 1
 				else
 					execute_dump
@@ -285,6 +292,7 @@ dump_if_needed()
 		if [ ! -e "$STARTED_AT_FILE" ]; then
 		    printf $(date +"%Y%m%d%H%M%S") > "$STARTED_AT_FILE"
 		    printf 0 > "$COUNT_NQUADS_FILE"
+		    printf 0 > "$COUNT_NFILES_FILE"
 		fi
 	fi
 
@@ -321,9 +329,10 @@ parse_nquads()
 # 'rdf_out_99999999999999-99999999999999' when finished,
 # thus enabling the processing of the last real 'rdf_out_*' file.
 # This method writes the timestamp of the last transaction log processed to the file LAST_LOG_SUFFIX.
-# This method reads and keeps track of the amount of N-Quads processed in the file COUNT_NQUADS_FILE.
+# This method reads and keeps track of the amount of N-Quads and files processed in the files COUNT_NQUADS_FILE
+# and COUNT_NFILES_FILE.
 #
-# Globals:      DUMP_DIR, SHAM_RDF_OUT_FILE, LAST_LOG_SUFFIX, COUNT_NQUADS_FILE, STARTED_AT_FILE
+# Globals:      DUMP_DIR, SHAM_RDF_OUT_FILE, LAST_LOG_SUFFIX, COUNT_NQUADS_FILE, COUNT_NFILES_FILE, STARTED_AT_FILE
 # Arguments:    None
 # Returns:      None
 sync_transaction_logs()
@@ -363,15 +372,15 @@ sync_transaction_logs()
     # Write lastlogsuffix in dedicated file.
 	printf "$last_log" > "$LAST_LOG_SUFFIX"
 
-	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdfpatch-*.
+	# Processes in chain will not consider last file (in alphabetical sort order) with pattern rdf_out_*.
 	# Enable processing of last patch file by creating an extra file.
 	touch "$SHAM_RDF_OUT_FILE"
 
 	# Keep scores...
     if [ "$nquads" -gt 0 ]; then
-	    exp_nquads=$((exp_nquads+nquads))
+	    exp_nquads=$((exp_nquads + nquads))
 	    printf "$exp_nquads" > "$COUNT_NQUADS_FILE"
-	    exp_nfiles=$((exp_nfiles+nfiles))
+	    exp_nfiles=$((exp_nfiles + nfiles))
 	    printf "$exp_nfiles" > "$COUNT_NFILES_FILE"
 	fi
 	echo "Exported $nquads N-Quads in $nfiles files during this run" >&2
@@ -382,6 +391,7 @@ sync_transaction_logs()
 
 ###############################
 # change_owner_if_needed
+# Check if chown is requested, if so recursively change the owner of the files in DUMP_DIR.
 #
 # Globals:      DUMP_DIR, CHOWN_TO_ID
 # Arguments:    None
@@ -411,6 +421,7 @@ dump_if_needed
 # Parse newly found transaction logs to rdf patch files.
 sync_transaction_logs
 
+# Check if chown is requested, if so recursively change the owner of the files in DUMP_DIR.
 change_owner_if_needed
 
 exit 0
