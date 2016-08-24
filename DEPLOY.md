@@ -401,7 +401,7 @@ Error: No source handshake found. Not interfering with status quo.
 
 **origin:** _the_graph_splitter_ or _resourcesync_generator_
 
-**cause:** The handshake file `started_at.txt` is missing from the input directory. The
+**cause:** The handshake file `vql_started_at.txt` is missing from the input directory. The
 service cannot verify synchronized action with the previous service in the chain
 and is maintaining status quo.
 
