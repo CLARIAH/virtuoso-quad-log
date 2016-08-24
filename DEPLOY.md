@@ -38,8 +38,7 @@ in the [RDF-patch](https://afs.github.io/rdf-patch/) format. Initially it will d
 all quads found in the Virtuoso quad store. Later on it will keep track of all changes that take 
 place in the quad store. The quad logger writes these files to the docker volume `stash1`.
 3. **the_graph_splitter** splits up the rdf-patch files found in `stash1` along graph iri 
-of the N-Quads and will store them again as rdf-patch files in docker volume `stash2`, 
-grouped in folders who's names are the base64 translation of the graph iri.
+and will move them to folders in docker volume `stash2`. 
 4. **resourcesync_generator** reads the docker volume `stash2`, packages the files
 it finds there in zips and publishes the metadata as resource dumps under the
 [Resource Sync Framework](http://www.openarchives.org/rs/1.0/resourcesync) in a
@@ -95,10 +94,10 @@ the_quad_logger_1       | Dump reported in '/output/rdfpatch-0d000000000116'
 the_quad_logger_1       | # at checkpoint   20160802090158
 the_quad_logger_1       | # dump started    2016-08-02 09:01:58.768298
 the_quad_logger_1       | # dump completed  2016-08-02 09:01:59.885697
-the_quad_logger_1       | # quad count      1158
-the_quad_logger_1       | # excluded graphs http://www.openlinksw ...
+the_quad_logger_1       | # quad count      1584
+the_quad_logger_1       | # file count      18
 ```
-The original 1158 quads in the Virtuoso quad store are now dumped to several files in the
+The original 1584 quads in the Virtuoso quad store are now dumped to several files in the
 directory `output`, which is mapped to the docker volume `stash1`. We set some
 environment variables in the `docker-compose-example-setup.yml` to values that will 
 demonstrate the working of the components. Of course writing 10 quads in each file
@@ -106,7 +105,7 @@ and packaging 10 such files in a zip is not a practical scenario.
 
 After a while the graph splitter wakes up and finds the files produced by the quad logger
 in it's directory `input` which is mapped to the docker volume `stash1`.
-It will split the quads along graph iri and write them to new rdf-patch files that are stored in folders
+It will subdivide the files along graph iri and move them to folders
 in the directory `output` which is mapped to the docker volume `stash2`. The folder
 names in the `output` directory are the base64 translation of the graph iris.
 ```
@@ -147,12 +146,16 @@ deleted [N-Quads](https://www.w3.org/TR/n-quads/) in a
 [RDF-patch](https://afs.github.io/rdf-patch/) format.
 
 Initally it will insert several stored procedures in the Virtuoso server that will do the work on that part.
-The names of these stored procedures all start with `vql_*`. Then it will dump all N-Quads found in the 
+The names of these stored procedures all start with `vql_*`. 
+
+Then it will dump all N-Quads found in the 
 Virtuoso quad store into files in it's output directory. The names of the files of the initial dump are of the pattern
-`rdfpatch-0dxxxxxxxxxxxx`, where `xxxxxxxxxxx` is a 12 digit serial number. After that it will repeatedly
+`rdf_out_00000000000000-xxxxxxxxxxxxxx`, where `xxxxxxxxxxxxxx` is a 14 digit serial number. 
+After that it will repeatedly
 poll the Virtuoso server for new transaction logs and, if found, process mutations found in these transaction logs
-into rdf-patch files, who's names have the pattern `rdfpatch-yyyymmddhhmmss`, where `yyyymmddhhmmss` is the
-timestamp corresponding to that of the transaction log.  [VIRTUOSO_CONFIG.md](/VIRTUOSO_CONFIG.md) details
+into rdf-patch files, who's names have the pattern `rdf_out_yyyymmddhhmmss-xxxxxxxxxxxxxx`, where `yyyymmddhhmmss` 
+is a timestamp corresponding to local time of the machine on which the procedure is running.
+[VIRTUOSO_CONFIG.md](/VIRTUOSO_CONFIG.md) details
 how to configure Virtuoso to make this all work.
 
 ### Environment variables for quad-logger
@@ -186,7 +189,7 @@ Default value is `dba`.
 **LOG_FILE_LOCATION** - The location of transaction logs on the Virtuoso server.  
 Default value is `/usr/local/var/lib/virtuoso/db`.
 
-<a id="DUMP_DIR"></a>**DUMP_DIR** - The directory for (temporary) storage of the rdf-patch files.  
+**DUMP_DIR** - The directory for (temporary) storage of the rdf-patch files.  
 Default value is `/output`.
 
 **INSERT_PROCEDURES** - Should stored procedures be automatically inserted on the 
@@ -211,8 +214,8 @@ Possible values: `y|n`. Default value is `y`.
 **DUMP_AND_EXIT** - Dump the current state of the quad store and then exit.  
 Possible values: `y|n`. Default value is `n`.
 
-**MAX_QUADS_PER_DUMP_FILE** - The maximum number of quads that should go into one 
-dump file. On average 100000 quads will give file sizes of approximately 12.5 MB.  
+**MAX_QUADS_PER_FILE** - The maximum number of quads that should go into one 
+output file. On average 100000 quads will give file sizes of approximately 12.5 MB.  
 Default value is `100000`.
 
 **EXCLUDED_GRAPHS** - Space-separated list of graph iris that are excluded from the dump.
@@ -226,8 +229,8 @@ As per default the following graphs are excluded from the dump:
 
 ## The graph-splitter
 
-Splits the N-Quads in rdf-patch files in it's input directory over graph iri and stores them in new
-rdf-patch files in it's output directory. 
+Splits the rdf-patch files in it's input directory over graph iri and stores them in folders
+in it's output directory. 
 
 Files in the output directory are stored in separate folders per graph iri. The names of these folders are 
 the base64 translation of the graph iri. The graph splitter is an optional part of the processing chain.
@@ -295,7 +298,7 @@ the Http server. (See SINK_DIR). This URL is used to generate links in the resou
 **BUILDER_CLASS** - The Python class responsible for compression of the rdf-patch files. Default this is
 a class that compresses in the g-zip format. If you want to provide a builder class, this class should
 have a constructor compatible with the constructor of class `Synchronizer` and support the method
-`publish` which should return a boolean indicating whether the state of the sink directory has changed.
+`publish`.
 Apart from duck typing you can use the abstract base class `Synchronizer` as a starting point. 
 See [synchronizer.py](/resourcesync-generator/oai-rs/synchronizer.py).  
 Default value is `zipsynchronizer.ZipSynchronizer`.
@@ -378,16 +381,16 @@ Upgrade to a newer version of Virtuoso.
 
 **message:**
 ```
-Error: 'rdfpatch-*' files found in '/datadir'. Remove 'rdfpatch-*' and 'rdfdump-*' files before dumping.
+Error: 'rdf_out_*' files found in '/datadir'. Remove 'rdf_out_*' files before dumping.
 ```
 **origin:** _the_quad_logger_
 
 **cause:** _the_quad_logger_ wants to do a fresh dump (`DUMP_INITIAL_STATE=y` and
 the file `rdfdump_info.txt` is missing or invalid) but there are old 
-`rdfpatch-*` files in the output directory or volume `stash1`.
+`rdf_out_*` files in the output directory or volume `stash1`.
 
 **remedy:**
-Remove `rdfpatch-*` files from the dump directory.
+Remove `rdf_out_*` files from the dump directory.
 
 ### No handshake
 
@@ -398,7 +401,7 @@ Error: No source handshake found. Not interfering with status quo.
 
 **origin:** _the_graph_splitter_ or _resourcesync_generator_
 
-**cause:** The handshake file `started_at.txt` is missing from the input directory. The
+**cause:** The handshake file `vql_started_at.txt` is missing from the input directory. The
 service cannot verify synchronized action with the previous service in the chain
 and is maintaining status quo.
 
@@ -417,7 +420,7 @@ Error: No publish_handshake found and /output not empty. Not interfering with st
 
 **origin:** _the_graph_splitter_ or _resourcesync_generator_
 
-**cause:** The handshake file `started_at.txt` is missing from the output directory
+**cause:** The handshake file `vql_started_at.txt` is missing from the output directory
 and the output directory is not empty. The _the_graph_splitter_ or
 _resourcesync_generator_ cannot verify synchronized action with the previous service in the chain
 and is maintaining status quo.
@@ -438,15 +441,31 @@ WARNING: Total of exported N-Quads not equal to total of filed N-Quads.
 
 **origin:** _the_graph_splitter_
 
-**cause:** The accounting files `nquads_count.txt` in the _the_graph_splitter_ directories input and output 
+**cause:** The files `vql_nquads_count.txt` in the _the_graph_splitter_ directories input and output 
 give different readings of the amount of N-Quads that have been exported by _the_quad_logger_ and the
 amount of N-Quads that have been filed by _the_graph_splitter_ respectively.
 
 **remedy:**
 This could be a temporary issue; the warning should go away after another run of _the_graph_splitter_. If not,
 you can either live with it (in the above example you miss one N-Quad) or start from scratch by
-emptying the output directory of _the_quad_logger_ (`stash1`). 
+emptying the output directory of _the_quad_logger_ (`stash1`). `# rm vql_* rdf_out_*`
 
+### Mismatch in file count
 
+**message:**
+```
+INFO: File count out of sync: exported files=19, filed files=2
+WARNING: Accounting files is out of sync. Files filed: 2, resources synchronized 19
+```
 
+**origin:** _the_graph_splitter_ or _resourcesync_generator_
 
+**cause:** The files `vql_files_count.txt` in the input and output directories
+give different readings of the amount of files that have been exported, subdivided or packaged
+by _the_quad_logger_, _the_graph_splitter_ and/or _resourcesync_generator_
+
+**remedy:**
+This could be a temporary issue; the warning should go away after another run of the reporting module, or at
+least when the system has completely come to rest and all modules have finished processing resources.
+If not, start from scratch by emptying the output directory of _the_quad_logger_ (`stash1`). 
+`# rm vql_* rdf_out_*`

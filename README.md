@@ -22,9 +22,9 @@ in this chain are:
 1. **quad-logger** generates logs of all initial, added, mutated or 
 deleted [N-Quads](https://www.w3.org/TR/n-quads/) in a
 [Virtuoso quad store](http://virtuoso.openlinksw.com/rdf-quad-store/) in the
-[RDF-patch](https://afs.github.io/rdf-patch/) format.
-2. **graph-splitter** will subdivide the N-Quads in these rdf-patch files into 
-other rdf-patch files grouped by graph iri. If a subdivision along graph iri is not nescesary 
+[RDF-patch](https://afs.github.io/rdf-patch/) format, grouped in files per graph.
+2. **graph-splitter** will subdivide these rdf-patch files into 
+directories per graph. If a subdivision along graph iri is not nescesary 
 or not wanted, the graph-splitter can be left out of the chain.
 3. **resourcesync-generator** enables the synchronization of the produced resources over the 
 internet by means
@@ -44,7 +44,7 @@ The `quad-logger` interacts
 with the Virtuoso server by means of the Interactive SQL interface. It reads the 
 transaction logs and transforms them to rdf-patch formatted files.  
 The `graph-splitter`
-will subdivide the N-Quads in these rdf-patch files into other rdf-patch files grouped 
+will subdivide the rdf-patch files and group them
 in folders per graph iri. Folder names are the base64 translation of the graph iri.
 If a subdivision along graph iri is not nescesary or not wanted, 
 the graph-splitter can be left out of the chain.  

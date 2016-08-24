@@ -1,7 +1,7 @@
 #! /usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-import os, re, shutil, resync.w3c_datetime as w3cdt
+import os, re, shutil, base64, resync.w3c_datetime as w3cdt
 from glob import glob
 from synchronizer import Synchronizer, PREFIX_MANIFEST, PREFIX_COMPLETED_PART, PREFIX_END_PART, \
     RS_RESOURCE_DUMP_XML, RS_CAPABILITY_LIST_XML
@@ -54,19 +54,20 @@ class ZipSynchronizer(Synchronizer):
         """
         Try and publish or remove zip end if something went wrong.
 
-        :return:
+        :return: (  boolean indicating if change in sink directory or subdirectories,
+                    amount of resources definitively packaged,
+                    the difference of resources provisionally packaged)
         """
         if not os.path.isdir(self.resource_dir):
             os.makedirs(self.resource_dir)
-            print "Created %s" % self.resource_dir
+            #print "Created %s" % self.resource_dir
 
         if not os.path.isdir(self.publish_dir):
             os.makedirs(self.publish_dir)
-            print "Created %s" % self.publish_dir
+            #print "Created %s" % self.publish_dir
 
         try:
-            state_changed = self.do_publish()
-            return state_changed
+            return self.do_publish()
         except:
             # Something went wrong. Best we can do is clean up end of zip chain.
             zip_end_files = glob(os.path.join(self.publish_dir, PREFIX_END_PART + "*.zip"))
@@ -117,10 +118,14 @@ class ZipSynchronizer(Synchronizer):
 
         WARNING: This method removes resources that are published in packages marked as complete from resource_dir.
 
-        :return: boolean indicating whether the state of the sink directory has changed
+        :return: (  boolean indicating if change in sink directory or subdirectories,
+                    amount of resources definitively packaged,
+                    the difference of resources provisionally packaged)
         """
-
+        count_def_resources = 0
+        diff_end_resources = 0
         path_zip_end_old, rl_end_old = self.get_state_published()
+
         new_zips = ResourceDump()
         state_changed = False
         exhausted = False
@@ -130,6 +135,7 @@ class ZipSynchronizer(Synchronizer):
 
             if len(resourcelist) == self.max_files_compressed:  # complete zip
                 state_changed = True
+                count_def_resources += len(resourcelist)
                 zip_resource = self.create_zip(resourcelist, PREFIX_COMPLETED_PART, False,
                                                self.write_separate_manifest)
                 new_zips.add(zip_resource)
@@ -144,6 +150,7 @@ class ZipSynchronizer(Synchronizer):
                 assert exhausted
                 state_changed = True
                 if len(resourcelist) > 0:
+                    diff_end_resources += len(resourcelist)
                     zip_resource = self.create_zip(resourcelist, PREFIX_END_PART, True,
                                                    self.write_separate_manifest)
                     new_zips.add(zip_resource)
@@ -152,8 +159,10 @@ class ZipSynchronizer(Synchronizer):
         if state_changed:
             self.publish_metadata(new_zips, path_zip_end_old)
 
-        # remove old zip end file, resource list and manifest.
+        # remove old zip end file, resource list and manifest;
+        # account for difference of resources provisionally packaged.
         if state_changed and path_zip_end_old:
+            diff_end_resources -= len(rl_end_old)
             os.remove(path_zip_end_old)
             os.remove(os.path.splitext(path_zip_end_old)[0] + ".xml")
             manifest = PREFIX_MANIFEST + os.path.splitext(os.path.basename(path_zip_end_old))[0] + ".xml"
@@ -161,7 +170,7 @@ class ZipSynchronizer(Synchronizer):
             if os.path.isfile(manifest_file):
                 os.remove(manifest_file)
 
-        return state_changed
+        return state_changed, count_def_resources, diff_end_resources
 
     def publish_metadata(self, new_zips, exluded_zip=None):
         """
@@ -169,7 +178,6 @@ class ZipSynchronizer(Synchronizer):
         metadata.
         :param new_zips: a resourcelist with newly created zip resources
         :param exluded_zip: local path to zip file that will be removed from previously published metadata.
-        :return: None
         """
         rs_dump_url = self.publish_url + RS_RESOURCE_DUMP_XML
         rs_dump_path = os.path.join(self.publish_dir, RS_RESOURCE_DUMP_XML)
@@ -205,7 +213,13 @@ class ZipSynchronizer(Synchronizer):
         with open(rs_dump_path, "w") as rs_dump_file:
             rs_dump_file.write(rs_dump.as_xml())
 
-        print "Published %d dumps in %s. See %s" % (len(rs_dump), rs_dump_path, rs_dump_url)
+        # There are several ways to decode base64, among them
+        # iri = base64.b64decode(os.path.basename(self.publish_dir)).rstrip('\n')
+        # iri = base64.b64decode(os.path.basename(self.publish_dir), '-_').rstrip('\n')
+        iri = base64.urlsafe_b64decode(os.path.basename(self.publish_dir)).rstrip('\n')
+
+        print "New %s for graph %s" % (RS_RESOURCE_DUMP_XML, iri)
+        print "See %s" % rs_dump_url
 
         # Write capability-list.xml
         if not os.path.isfile(capa_list_path):
@@ -215,7 +229,7 @@ class ZipSynchronizer(Synchronizer):
             with open(capa_list_path, "w") as capa_list_file:
                 capa_list_file.write(capa_list.as_xml())
 
-            print "Published capability list. See %s" % capa_list_url
+            print "New %s. See %s" % (RS_CAPABILITY_LIST_XML, capa_list_url)
 
     def get_state_published(self):
         """
@@ -255,6 +269,7 @@ class ZipSynchronizer(Synchronizer):
         :param write_manifest: True if a separate manifest file should be written to disc, False otherwise. Default: True
         :return: the created zip as a resync.Resource.
         """
+
         md_at = None  # w3cdt.datetime_to_str(no_fractions=True) # attribute gets lost in read > write cycle with resync library.
         index = -1
         zipfiles = sorted(glob(os.path.join(self.publish_dir, prefix + "*.zip")))
@@ -275,7 +290,7 @@ class ZipSynchronizer(Synchronizer):
         dump.path_prefix = self.resource_dir
         dump.write_zip(resourcelist, zip_path)  # paths in resourcelist will be stripped.
         md_completed = None  # w3cdt.datetime_to_str(no_fractions=True) # attribute gets lost in read > write cycle with resync library.
-        print "Zipped %d resources in %s" % (len(resourcelist), zip_path)
+        #print "Zipped %d resources in %s" % (len(resourcelist), zip_path)
 
         loc = self.publish_url + zip_name + ".zip"  # mandatory
         lastmod = self.last_modified(resourcelist)  # optional

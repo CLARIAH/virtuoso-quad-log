@@ -8,9 +8,10 @@ SOURCE_DIR="${SOURCE_DIR:-/input}"
 SINK_DIR="${SINK_DIR:-/output}"
 BUILDER_CLASS="${BUILDER_CLASS:-zipsynchronizer.ZipSynchronizer}"
 
+echo "Starting resourcesync-generator. RUN_INTERVAL=$RUN_INTERVAL" >&2
+
 while true; do
-  echo "sleep $RUN_INTERVAL."
-  sleep ${RUN_INTERVAL}
+
   ./rsync.py --source_dir "$SOURCE_DIR" \
   --sink_dir "$SINK_DIR" \
   --publish_url "${HTTP_SERVER_URL}" \
@@ -22,4 +23,6 @@ while true; do
   if [ -n "${CHOWN_TO_ID:-}" ]; then
         chown -R "$CHOWN_TO_ID:$CHOWN_TO_ID" "$PUBLISH_DIR"
   fi
+
+  sleep ${RUN_INTERVAL}
 done

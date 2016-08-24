@@ -2,14 +2,14 @@
 set -o nounset
 set -o errexit
 
-# Source directory with rdf-patch files not split over graph iri's.
+# Source directory with rdf-patch files not subdivided over graph iri's.
 SOURCE_DIR="${SOURCE_DIR:-/input}"
 if [ ! -e "$SOURCE_DIR" ]; then
     mkdir -p "$SOURCE_DIR"
     echo "Created $SOURCE_DIR"
 fi
 
-# Sink directory for rdf-patch files split over graph iri's in base64-encoded directories.
+# Sink directory for rdf-patch files subdivided over graph iri's in base64-encoded directories.
 SINK_DIR="${SINK_DIR:-/output}"
 if [ ! -e "$SINK_DIR" ]; then
     mkdir -p "$SINK_DIR"
@@ -17,20 +17,22 @@ if [ ! -e "$SINK_DIR" ]; then
 fi
 
 # Files constituting handshake between this service and chained services.
-HS_SOURCE_FILE="$SOURCE_DIR/started_at.txt"
-HS_SINK_FILE="$SINK_DIR/started_at.txt"
+HS_SOURCE_FILE="$SOURCE_DIR/vql_started_at.txt"
+HS_SINK_FILE="$SINK_DIR/vql_started_at.txt"
 
-# File mapping between graph iri and base64-translated directory name. Also indicates that sources have been split.
-INDEX_FILE="$SINK_DIR/graph_folder.csv"
+# File containing mapping between graph iri and base64-translated directory name.
+INDEX_FILE="$SINK_DIR/vql_graph_folder.csv"
 
-# File enabling processing of last real 'rdfpatch-*' file by chained processes
-SHAM_PATCH_FILE="rdfpatch-99999999999999"
+# File enabling processing of last real 'rdf_out_*' file by chained processes
+SHAM_PATCH_FILE="rdf_out_99999999999999-99999999999999"
 
+###############################
+# Keep track of exported (by quad-logger) and filed (by graph-splitter) quads.
 # File with total number of exported N-Quads thus far
-EXPORTED_NQUADS_FILE="$SOURCE_DIR/nquads_count.txt"
+EXPORTED_NQUADS_FILE="$SOURCE_DIR/vql_nquads_count.txt"
 
 # File with total number filed N-Quads thus far.
-FILED_NQUADS_FILE="$SINK_DIR/nquads_count.txt"
+FILED_NQUADS_FILE="$SINK_DIR/vql_nquads_count.txt"
 
 # Exported N-Quads thus far - Read only.
 [ -f "$EXPORTED_NQUADS_FILE" ] && { EXPORTED_NQUADS=$(<"$EXPORTED_NQUADS_FILE"); } || { EXPORTED_NQUADS=0; }
@@ -38,93 +40,92 @@ FILED_NQUADS_FILE="$SINK_DIR/nquads_count.txt"
 # Filed N-Quads by this routine thus far
 [ -f "$FILED_NQUADS_FILE" ] && { FILED_NQUADS=$(<"$FILED_NQUADS_FILE"); } || { FILED_NQUADS=0; }
 
+###############################
+# Keep track of exported (by quad-logger) and filed (by graph-splitter) files.
+# File with total number of exported files thus far
+EXPORTED_FILES_FILE="$SOURCE_DIR/vql_files_count.txt"
+
+# File with total number filed files thus far.
+FILED_FILES_FILE="$SINK_DIR/vql_files_count.txt"
+
+# Exported files thus far - Read only.
+[ -f "$EXPORTED_FILES_FILE" ] && { EXPORTED_FILES=$(<"$EXPORTED_FILES_FILE"); } || { EXPORTED_FILES=0; }
+
+# Filed files by this routine thus far
+[ -f "$FILED_FILES_FILE" ] && { FILED_FILES=$(<"$FILED_FILES_FILE"); } || { FILED_FILES=0; }
+
+
 # Count N-Quads this run
 COUNT_NQUADS=0
 
+# Count of files this run
+COUNT_FILES=0
+
 
 ###############################
-# process_nquad
-# File given N-Quad per graph iri in sink directory.
-# N-Quads will be stored in files with names equal to their source file, under a directory
-# with a name that is the base64 translation of their graph iri. All will go into the sink directory.
+# process_file
+# Read the header of the file and move the file to the appropriate directory. The name of the target directory is the
+# base64 translation of the graph iri.
 #
-# Globals:      SINK_DIR
-# Arguments:    filename: the name of the file in SOURCE_DIR
-#               comments: an array of comment lines found at the beginning of the file in SOURCE_DIR
-#               line: the N-Quad to file
+# Globals:      SOURCE_DIR, SINK_DIR, COUNT_FILES, COUNT_NQUADS
+# Arguments:    filename: the base name of the file to process.
 # Returns:      None
-process_nquad() {
-    local filename="$1"
-    declare -a header=("${!2}")
-    local line="$3"
+process_file() {
 
-    # Split line on spaces, position of graph iri is second to last in resulting array...
-    local arr=($(IFS=$'\n'; echo $line | egrep -o '"[^"]*"|\S+'))
-    local pos=$((${#arr[@]}-2))
-    local iri_ref="${arr[$pos]}"
-    local graph="${iri_ref:1:${#iri_ref}-2}"
+    filename="$1"
+    src_file="$SOURCE_DIR/$filename"
 
-    # File under base64 of graph
-    local dir=$(echo $graph | base64)
-    if [ ! -d "$SINK_DIR/$dir" ]; then
-        mkdir -p "$SINK_DIR/$dir"
-        echo -E "$graph,$dir" >> "$INDEX_FILE"
+    header=$(head -n 3 "$src_file")
+    graph=$(echo "$header" | sed -n 's/.*# graph         \(.*\) /\1/p')
+    # base=$(echo "$header" | sed -n 's/.*# base64        \(.*\) /\1/p')
+
+    if [ "$graph" == "" ]; then
+        # this is a message file, ending a dump ar patch run from quad-logger.
+        # should have been removed but just in case...
+        return 0
     fi
-    local file="$SINK_DIR/$dir/$filename"
-    # Use echo to write lines. echo -E = Disable the interpretation of backslash-escaped characters
-    if [ ! -e "$file" ]; then
-        # if new file stringify header array with line breaks and write header first.
-        local cs=$(IFS=$'\n'; echo "${header[*]}")
-        echo -E "$cs" > "$file"
+
+    # The outcome of encode_base64 in Virtuoso is a block of a certain width, each line in the block
+    # ending with a new line. Useful in mail and dating back to the time when machines could only handle 64
+    # characters per line. As such the Virtuoso routine is not useful for URL encoding.
+    # select encode_base64('http://www.telegraphis.net/ontology/geography/geography#');
+    # gives:              aHR0cDovL3d3dy50ZWxlZ3JhcGhpcy5uZXQvb250b2xvZ3kvZ2VvZ3JhcGh5L2dlb2dyYXBo
+    #                     eSM=
+    # while it should be: aHR0cDovL3d3dy50ZWxlZ3JhcGhpcy5uZXQvb250b2xvZ3kvZ2VvZ3JhcGh5L2dlb2dyYXBoeSMK
+    # With Unix base64 you can disable line wrap - and you should.
+    # -w, --wrap=COLS Wrap encoded lines after COLS character (default 76). Use 0 to disable line wrapping.
+    base=$(echo $graph | base64 -w 0)
+
+    if [ ! -d "$SINK_DIR/$base" ]; then
+        mkdir -p "$SINK_DIR/$base"
+        printf "$graph,$base\n" >> "$INDEX_FILE"
     fi
-    # add line
-    echo -E "$line" >> "$file"
+
+    snk_file="$SINK_DIR/$base/$filename"
+    mv "$src_file" "$snk_file"
+
+    # Statistics..
+    COUNT_FILES=$((COUNT_FILES + 1))
+
+    # each file has 2 header lines
+    local nquads=$(($(wc -l "$snk_file" | grep -o '[0-9]\+' | head -1) - 2))
+    COUNT_NQUADS=$((COUNT_NQUADS + nquads))
 }
 
 ###############################
-# process_lines_in_file
-# Process the lines in a file one by one.
-# Lines containing N-Quads will be shifted to files in the sink directory in accordance with the graph they
-# belong to. We assume that comment lines are all at the beginning of a file.
+# distribute_files_per_graph_iri
+# Distribute rdf-patch files in the source directory over directories per graph in the sink directory..
 #
-# Globals:      SOURCE_DIR
-# Arguments:    filename: the name of the file in SOURCE_DIR
+# Globals:      SOURCE_DIR, SINK_DIR
+# Arguments:    None
 # Returns:      None
-process_lines_in_file() {
-    local filename="$1"
-    local path="$SOURCE_DIR/$filename"
-    local comments=("# origin $filename")
-    local line_count=0
+distribute_files_per_graph_iri() {
 
-    while read -r line || [ -n "$line" ];  # or: in case last line in file does not end with new line character.
-    do
-        if [[ "$line" == \#* ]]; then
-            comments+=("$line")
-        else
-            process_nquad "$filename" comments[@] "$line"
-            line_count=$((line_count+1))
-        fi
-    done < "$path"
-    echo "Extracted $line_count N-Quads from $path" >&2
-    COUNT_NQUADS=$(($COUNT_NQUADS+$line_count))
-}
-
-###############################
-# split_files_over_graph_iri
-# Split rdf-patch files in the source directory into rdf-patch files in the sink directory per graph.
-# The produced files in the sink directory will be in subdirectories with names that are the base64
-# translation of the graph iri. Processed files in the source directory will be removed.
-#
-# Globals:      SOURCE_DIR
-# Arguments:    prefix: common prefix of the files in SOURCE_DIR
-# Returns:      None
-split_files_over_graph_iri() {
-    local prefix="$1"
+    local prefix="rdf_out_*"
     local arr=()
 
     for path in $SOURCE_DIR/$prefix; do
-        local filename=$(basename "$path")
-        arr+=("$filename")
+        arr+=($(basename "$path"))
     done
     if [ ${#arr[@]} -gt 0 ]; then
         # do not process the last file (alphabetically) - chained source services may be handling those.
@@ -132,15 +133,14 @@ split_files_over_graph_iri() {
     fi
     echo "Found ${#arr[@]} files with prefix $prefix in $SOURCE_DIR" >&2
     if [ ${#arr[@]} -gt 0 ]; then
-        local file_count=0
         for filename in "${arr[@]}"; do
-            process_lines_in_file "$filename"
-            rm "$SOURCE_DIR/$filename"
-            file_count=$((file_count+1))
+            process_file "$filename"
         done
-        echo "Done splitting $file_count '$prefix' files over graph iri." >&2
+        echo "Done distributing by graph: $COUNT_NQUADS N-Quads in $COUNT_FILES files" >&2
     fi
 }
+
+
 
 ###############################
 # verify_handshake
@@ -155,7 +155,7 @@ verify_handshake() {
     [ -f "$HS_SINK_FILE" ] && { hs_sink=$(<"$HS_SINK_FILE"); } || { hs_sink=0; }
 
     if [ "$HS_SOURCE" == 0 ]; then
-        echo "Error: No source handshake found. Not interfering with status quo." >&2
+        echo "WARNING: No source handshake found. Not interfering with status quo." >&2
         exit 1
     fi
 
@@ -174,6 +174,8 @@ verify_handshake() {
 
     if [ "$hs_sink" == 0 ]; then
         printf "$HS_SOURCE" > "$HS_SINK_FILE"
+        FILED_NQUADS=0
+        FILED_FILES=0
         echo "Signed new handshake: $HS_SOURCE" >&2
     fi
 
@@ -182,7 +184,7 @@ verify_handshake() {
 
 ###############################
 # disable_processing_of_last_patch
-# Disable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+# Disable processing of last real 'rdf_out_*' file in sink directories by chained processes.
 #
 # Globals:      SINK_DIR, SHAM_PATCH_FILE
 # Arguments:    None
@@ -197,7 +199,7 @@ disable_processing_of_last_patch() {
 
 ###############################
 # enable_processing_of_last_patch
-# Enable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+# Enable processing of last real 'rdf_out_*' file in sink directories by chained processes.
 #
 # Globals:      SINK_DIR, SHAM_PATCH_FILE
 # Arguments:    None
@@ -212,6 +214,7 @@ enable_processing_of_last_patch() {
 
 ###############################
 # change_owner_if_needed
+# Check if chown is requested, if so recursively change the owner of the files in SINK_DIR.
 #
 # Globals:      SINK_DIR, CHOWN_TO_ID
 # Arguments:    None
@@ -224,32 +227,51 @@ change_owner_if_needed()
 	fi
 }
 
+###############################
+# report_totals
+# Keep track of filed files and N-Quads, echo the results of this run to the console.
+#
+# Globals:      COUNT_NQUADS, COUNT_FILES, FILED_NQUADS, FILED_FILES, EXPORTED_NQUADS, EXPORTED_FILES, HS_SOURCE
+# Arguments:    None
+# Returns:      None
+report_totals()
+{
+    if [ "$COUNT_NQUADS" > 0 ] || [ "$COUNT_FILES" > 0 ]; then
+        FILED_FILES=$((FILED_FILES + COUNT_FILES))
+        FILED_NQUADS=$((FILED_NQUADS + COUNT_NQUADS))
+        printf "$FILED_FILES" > "$FILED_FILES_FILE"
+        printf "$FILED_NQUADS" > "$FILED_NQUADS_FILE"
+    fi
+
+    if [ "$EXPORTED_NQUADS" != "$FILED_NQUADS" ]; then
+        echo "INFO: Quad count out of sync: exported N-Quads=$EXPORTED_NQUADS, filed N-Quads=$FILED_NQUADS" >&2
+    fi
+
+    if [ "$EXPORTED_FILES" != "$FILED_FILES" ]; then
+        echo "INFO: File count out of sync: exported files=$EXPORTED_FILES, filed files=$FILED_FILES" >&2
+    fi
+
+    echo -e "Filed since $HS_SOURCE: $FILED_NQUADS N-Quads in \t $FILED_FILES files" >&2
+}
+
 # Verify that handshake files in source directory and sink directory are equal.
 verify_handshake
 
-# Disable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+# Disable processing of last real 'rdf_out_*' file in sink directories by chained processes.
 disable_processing_of_last_patch
 
-# Split rdf-patch files in the source directory into rdf-patch files in the sink directory per graph.
-split_files_over_graph_iri "rdfpatch-*"
+# distribute rdf-patch files in the source directory over directories per graph in the sink directory.
+distribute_files_per_graph_iri
 
-# Enable processing of last real 'rdfpatch-*' file in sink directory by chained processes.
+# Enable processing of last real 'rdf_out_-*' file in sink directories by chained processes.
 enable_processing_of_last_patch
 
-if [ "$COUNT_NQUADS" -gt 0 ]; then
-    FILED_NQUADS=$((FILED_NQUADS+COUNT_NQUADS))
-    printf "$FILED_NQUADS" > "$FILED_NQUADS_FILE"
-fi
-
-echo "Filed $COUNT_NQUADS N-Quads during this run" >&2
-echo "========= Total of filed N-Quads since $HS_SOURCE: $FILED_NQUADS" >&2
-
-if [ "$EXPORTED_NQUADS" != "$FILED_NQUADS" ]; then
-    diff=$((EXPORTED_NQUADS-FILED_NQUADS))
-    echo -e "WARNING: Total of exported N-Quads not equal to total of filed N-Quads. \
-    \n\texported: $EXPORTED_NQUADS, filed: $FILED_NQUADS, difference: $diff"
-fi
-
+# Check if chown is requested, if so recursively change the owner of the files in SINK_DIR.
 change_owner_if_needed
+
+# Keep track of filed files and N-Quads, echo the results of this run to the console.
+report_totals
+
+
 
 
