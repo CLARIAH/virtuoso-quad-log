@@ -8,7 +8,7 @@ import shutil
 from resync.sitemap import Sitemap
 from resync.source_description import SourceDescription
 from synchronizer import RS_RESOURCESYNC, RS_WELL_KNOWN, RS_CAPABILITY_LIST_XML, RS_RESOURCE_DUMP_XML, \
-    PREFIX_MANIFEST, PREFIX_END_PART, PREFIX_COMPLETED_PART
+    PREFIX_MANIFEST, PREFIX_END_PART, PREFIX_COMPLETED_PART, PATTERN_RDF_OUT
 
 FILE_HANDSHAKE = "vql_started_at.txt"
 FILE_INDEX = "vql_graph_folder.csv"
@@ -223,6 +223,7 @@ class SyncDirector(object):
             publish_handshake = None
 
         if resource_handshake and publish_handshake is None:
+            self.walk_publish_dir(remove_our_files=True)
             with open(path_publish_handshake, "w") as w_file:
                 w_file.write(resource_handshake)
             print "Signed new handshake: %s" % resource_handshake
@@ -251,6 +252,7 @@ class SyncDirector(object):
         return a_file.startswith((FILE_HANDSHAKE,
                                   FILE_INDEX,
                                   FILE_SYNCED_FILES,
+                                  PATTERN_RDF_OUT,
                                   RS_RESOURCE_DUMP_XML,
                                   RS_CAPABILITY_LIST_XML,
                                   PREFIX_MANIFEST,

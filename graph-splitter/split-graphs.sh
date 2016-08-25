@@ -168,7 +168,8 @@ verify_handshake() {
     if [ "$HS_SOURCE" != "$hs_sink" ]; then
         echo "Handshake not equal. source=$HS_SOURCE sink=$hs_sink" >&2
         echo "Cleaning $SINK_DIR" >&2
-        rm -Rf "$SINK_DIR/*"
+        rm -Rf "$SINK_DIR"/*
+
         hs_sink=0
     fi
 
