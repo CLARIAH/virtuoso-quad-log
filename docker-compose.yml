@@ -37,6 +37,7 @@ services:
       environment:
         - RUN_INTERVAL=3600
         - HTTP_SERVER_URL=http://localhost:8080 # Required. this is used to generate links in the xml files. It should be the public url
+        - MAX_FILES_COMPRESSED=100 # Default is 50000, the maximum according to 'community-defined limits' of the sitemap protocol
       volumes:
         - ./stash2:/input
         - ./stash3:/output
