@@ -70,8 +70,8 @@ non-negative integer, greater than 0.
 CheckpointInterval  = 60
 ```
 After making a database checkpoint Virtuoso will start a new transaction log file. This will enable the
-quad-logger to read the previous transaction log file and to parse mutations to a corresponding
-```rdfpatch-{timestamp}``` file, where *timestamp* is the same for both patch and transaction log file.
+quad-logger to read the previous transaction log file and to parse mutations to a 
+rdf-patch file.
 
 In interactive SQL you can find the value of the CheckpointInterval parameter by typing
 ```
@@ -96,11 +96,10 @@ The following settings of the ```virtuoso.ini``` file are not critical, but may 
 order to ease or to enhance the behavior of the quad-logger.
 
 ### [Parameters] AutoCheckpointLogSize
-The size of transaction log in bytes after which an automatic checkpoint is initiated. Transaction log files 
-and rdfpatch files are coupled one-on-one. So the size of rdfpatch files ultimately is determined 
-by the maximum size of transaction logs. Virtuoso may delay the setting of a checkpoint while large
-transactions take place. This may result in huge transaction log files and consequently large
-rdfpatch files. Setting this parameter to a reasonable value will prevent such unwanted behavior.
+The size of transaction log in bytes after which an automatic checkpoint is initiated. Virtuoso may 
+delay the setting of a checkpoint while large
+transactions take place. This may result in huge transaction log files. Setting this parameter 
+to a reasonable value will prevent such unwanted behavior.
 ```
 ; For a maximum transaction log file size of 10MB.
 AutoCheckpointLogSize  = 10485760
